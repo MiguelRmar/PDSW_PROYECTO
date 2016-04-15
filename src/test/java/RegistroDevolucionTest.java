@@ -39,9 +39,9 @@ public class RegistroDevolucionTest {
     public RegistroDevolucionTest(){}
     
     @Test
-    public void TestOne(){
-    
-    
+    public void OneTest(){
+        //SqlSessionFactory sessionfact = getSqlSessionFactory();
+        //SqlSession sqlss = sessionfact.openSession(); 
     }
     
     

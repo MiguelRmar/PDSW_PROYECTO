@@ -1,11 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
-
-<root>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="eci.Pdsw.mybatis.mappers.EquipoMapper">
     
-</root>
+    <resultMap type='Usuario' id='UsuarioResult'>
+        <id property='id' column='id'/>
+        <result property='nombre' column='nombre'/>
+        <result property='correo' column='correo'/>      
+        <result property='contrasena' column='contrasena'/>
+        <collection property='prestamos' ofType='Prestamo' resultMap="PrestamoResult" columnPrefix="pre_"></collection>
+        <collection property='prestamosBasicos' ofType='PrestamoBasico' resultMap="PrestamoBasicoResult" columnPrefix="preb_"></collection>
+    </resultMap>
+    
+    <resultMap type='Prestamo' id='PrestamoResult'>
+        <id property='id' column='idCONSULTAS'/>
+        <result property='fechayHora' column='fecha_y_hora'/>
+        <result property='resumen' column='resumen'/>        
+    </resultMap>   
+    
+    <resultMap type='PrestamoBasico' id='PrestamoBasicoResult'>
+        <id property='id' column='idCONSULTAS'/>
+        <result property='fechayHora' column='fecha_y_hora'/>
+        <result property='resumen' column='resumen'/>        
+    </resultMap>
+
+
+
+
+</mapper>
+    

@@ -1,1 +1,9 @@
 eci/Pdsw/project/managedBeans/Equipostobean.class
+eci/pdsw/entities/PrestamoBasico.class
+eci/pdsw/mybatis/mappers/EquipoMapper.class
+eci/pdsw/entities/Rol.class
+eci/pdsw/entities/Prestamo.class
+eci/pdsw/entities/Usuario.class
+eci/pdsw/entities/EquipoBasico.class
+eci/pdsw/entities/Rol_Usuario.class
+eci/pdsw/entities/Equipo.class
