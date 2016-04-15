@@ -19,6 +19,8 @@ public class Equipostobean implements Serializable{
     //Pagina principal
     private int identificador;
     private String clave;
+    private String medidaLargo="790px";
+    private String medidaAncho="400px";
 
     /**
      * @return the identificador
@@ -46,5 +48,33 @@ public class Equipostobean implements Serializable{
      */
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    /**
+     * @return the medidaLargo
+     */
+    public String getMedidaLargo() {
+        return medidaLargo;
+    }
+
+    /**
+     * @param medidaLargo the medidaLargo to set
+     */
+    public void setMedidaLargo(String medidaLargo) {
+        this.medidaLargo = medidaLargo;
+    }
+
+    /**
+     * @return the medidaAncho
+     */
+    public String getMedidaAncho() {
+        return medidaAncho;
+    }
+
+    /**
+     * @param medidaAncho the medidaAncho to set
+     */
+    public void setMedidaAncho(String medidaAncho) {
+        this.medidaAncho = medidaAncho;
     }
 }

@@ -6,36 +6,37 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
-        <style type="text/csc">
-        body{
-            background-image:url("logo.jpg");
-            background-position:50% -50%;
-           }
-        </style>
     </h:head>
 
     <h:body>
         
         
-        <h:form>
-            <p:graphicImage library="imagenes" name="logo.jpg">
+        <h:form style="background-image: url(/imagenes/logoeci.jpg)">
+            <p:panel style="background-image: url(/imagenes/logoeci.jpg);margin-top:0px;height:#{Equipos.medidaLargo}" > 
                 
-            </p:graphicImage>
-            <p:graphicImage value="imagenes/logo.jpg"/>
-            <p:panel header="Login" style="width:500px">
-                <h:panelGrid columns="2" cellpadding="5">
-                  <h:outputLabel for="username" value="Usuario:" />
-                  <p:inputText value="#{Equipos.identificador}" id="username"
-                     required="true" label="username" />
-                  <h:outputLabel for="password" value="Clave:" />
-                  <p:password value="#{Equipos.clave}" id="password" required="true"
-                   label="password" />
-                <f:facet name="footer">
-                  <p:commandButton id="loginButton"/>
-                </f:facet>
-              </h:panelGrid>
+                
+                
+                <p:panel header="Login" style="margin-top:300px;width:#{Equipos.medidaAncho};margin-left:300px">
+                    
+                        <h:panelGrid columns="2" cellpadding="5">
+                          <h:outputLabel for="username" value="Usuario:" />
+                          <p:inputText value="#{Equipos.identificador}" id="username"
+                             required="true" label="username" />
+                          <h:outputLabel for="password" value="Clave:" />
+                          <p:password value="#{Equipos.clave}" id="password" required="true"
+                           label="password" />
+                        <f:facet name="footer">
+                          <p:commandButton id="loginButton"/>
+                        </f:facet>
+                      </h:panelGrid>
+                        
+                    </p:panel>
+                
             </p:panel>
-            
+                
+                    
+                    
+           
         </h:form>
            
     </h:body>
