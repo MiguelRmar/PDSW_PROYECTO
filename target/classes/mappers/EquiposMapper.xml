@@ -15,19 +15,29 @@
     </resultMap>
     
     <resultMap type='Prestamo' id='PrestamoResult'>
-        <id property='id' column='idCONSULTAS'/>
-        <result property='fechayHora' column='fecha_y_hora'/>
-        <result property='resumen' column='resumen'/>        
+        <id property='usuario_id' column='USUARIOS_id'/>
+        <id property='equipo_serial' column='EQUIPOS_serial'/>
+        <result property='fechaExpedicion' column='fechaExpedicion'/>
+        <result property='fechaVencimiento' column='fechaVencimiento'/>        
+        <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>   
     
     <resultMap type='PrestamoBasico' id='PrestamoBasicoResult'>
-        <id property='id' column='idCONSULTAS'/>
-        <result property='fechayHora' column='fecha_y_hora'/>
-        <result property='resumen' column='resumen'/>        
+        <id property='usuario_id' column='USUARIOS_id'/>
+        <id property='equipoBasico_nombre' column='EQUIPOS_BASICOS_nombre'/>
+        <result property='fechaExpedicion' column='fechaExpedicion'/>
+        <result property='fechaVencimiento' column='fechaVencimiento'/>        
+        <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>
 
-
-
-
+    <select id="loadUsuarioById" ParameterType="map" resultMap="UsuarioResult">
+        SELECT us.id,us.nombre,us.correo,us.contrasena,
+               pre.USUARIOS_id as pre_usuario_id,pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,
+               preb.USUARIOS_id as preb_usuario_id,preb.EQUIPOS_BASICOS_nombre as preb_equipoBasico_nombre,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo
+        FROM USUARIOS as us left join PRESTAMOS as pre on pre.USUARIOS_id=us.id,
+             USUARIOS as us left join PRESTAMOS_BASICOS as preb on preb.USUARIOS_id=us.id
+        WHERE us.id=#{idusuario}
+    </select>
+    
 </mapper>
     

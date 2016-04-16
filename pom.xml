@@ -172,6 +172,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- create local H2 database -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
@@ -185,8 +186,8 @@
                 </dependencies>
                 <configuration>
                     <driver>org.h2.Driver</driver>                    
-                    <url>jdbc:h2:file:./target/db/testdb2;MODE=MYSQL</url>
-                    <username></username>
+                    <url>jdbc:h2:file:./target/db/testdb;MODE=MYSQL</url>
+                    <username>anonymous</username>
                     <password></password>
                     <autocommit>false</autocommit>
                     <skip>${maven.test.skip}</skip>

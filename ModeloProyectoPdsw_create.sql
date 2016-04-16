@@ -8,7 +8,7 @@ CREATE TABLE ROLES (
 CREATE TABLE USUARIOS (
     id int NOT NULL,
     nombre varchar(100) NOT NULL,
-    correo varchar(50) NOT NULL,
+    correo varchar(100) NOT NULL,
     contrasena varchar(50) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -29,7 +29,7 @@ CREATE TABLE EQUIPOS (
     vidaUtil int NOT NULL,
     valor int NOT NULL,
     seguro bool NOT NULL,
-    foto blob NOT NULL,
+    foto blob NULL,
     placa int NULL,
     marca varchar(100) NOT NULL,
     descripcion varchar(200) NOT NULL,
@@ -37,6 +37,7 @@ CREATE TABLE EQUIPOS (
     estado varchar(50) NOT NULL,
     -- SEVIDOR, en ves de varchar enum('prestamo diario','prestamo 24 horas','mantenimiento','en almacen','prestamo indefinido','prestamo por semestre','dado de baja','en reparacion')
     subestados varchar(50) NOT NULL,
+    proveedor varchar(100) NULL,
     UNIQUE INDEX placa (placa),
     PRIMARY KEY (serial)
 )ENGINE=InnoDB;
@@ -45,7 +46,7 @@ CREATE TABLE EQUIPOS (
 CREATE TABLE EQUIPOS_BASICOS (
     nombre varchar(100) NOT NULL,
     valor int NULL,
-    foto int NOT NULL,
+    foto int NULL,
     descripcion varchar(200) NULL,
     cantidad int NOT NULL,
     PRIMARY KEY (nombre)

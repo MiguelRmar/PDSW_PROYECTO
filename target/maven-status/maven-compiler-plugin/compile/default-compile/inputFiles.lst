@@ -1,3 +1,4 @@
+<<<<<<< 1cc0d15c5969fb6fa1e873bef5590172f0903f7e
 C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\entities\Rol.java
 C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\entities\Usuario.java
 C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\entities\PrestamoBasico.java
@@ -7,3 +8,20 @@ C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\entities\Equipo.java
 C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\project\managedBeans\ServicioEquiposElectronicatobean.java
 C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\entities\Prestamo.java
 C:\Users\carlo\Desktop\PdswProject\src\main\java\eci\Pdsw\entities\EquipoBasico.java
+=======
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\persistence\DaoFactory.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\persistence\mybatisimpl\MyBatisDaoFactory.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\Equipo.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\mybatis\mappers\EquipoMapper.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\services\Services.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\Rol_Usuario.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\persistence\DaoUsuario.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\EquipoBasico.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\Prestamo.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\services\ServicesException.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\persistence\mybatisimpl\MyBatisDaoUsuario.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\Usuario.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\project\managedBeans\Equipostobean.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\PrestamoBasico.java
+C:\Users\Jhordy\Downloads\PdswProject\src\main\java\eci\Pdsw\entities\Rol.java
+>>>>>>> Continuando con parte logica y ordenando elementos para pruebas

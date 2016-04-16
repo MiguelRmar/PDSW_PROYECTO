@@ -99,7 +99,6 @@ public class Prestamo {
     
     @Override
     public String toString() {
-        return "("+usuario_id+","+equipo_serial+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+")"; //To change body of generated methods, choose Tools | Templates.
-    }
-    
+        return "("+usuario_id+","+equipo_serial+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+")";
+    }   
 }

@@ -14,16 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eci.pdsw.mybatis.mappers;
-import eci.pdsw.entities.Usuario;
-import org.apache.ibatis.annotations.Param;
+package eci.Pdsw.services;
 
 /**
  *
  * @author hcadavid
  */
-public interface EquipoMapper {
-    
-    public Usuario loadUsuarioById(@Param("idusuario") int id);
+public class ServicesException extends Exception {
+
+    public ServicesException() {
+    }
+
+    public ServicesException(String message) {
+        super(message);
+    }
+
+    public ServicesException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public ServicesException(Throwable cause) {
+        super(cause);
+    }
     
 }
