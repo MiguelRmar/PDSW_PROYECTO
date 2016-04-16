@@ -16,7 +16,7 @@
                 
                 
                 
-                <p:panel header="Login" style="margin-top:300px;width:#{Equipos.medidaAncho};margin-left:300px">
+                <p:panel header="Login" style="margin-top:300px;width:400px;margin-left:300px">
                     
                         <h:panelGrid columns="2" cellpadding="5">
                           <h:outputLabel for="username" value="Usuario:" />
@@ -26,7 +26,7 @@
                           <p:password value="#{Equipos.clave}" id="password" required="true"
                            label="password" />
                         <f:facet name="footer">
-                          <p:commandButton id="loginButton"/>
+                            <p:commandButton value="Login" id="loginButton" action="#{Equipos.accionBotonLogin}"/>
                         </f:facet>
                       </h:panelGrid>
                         

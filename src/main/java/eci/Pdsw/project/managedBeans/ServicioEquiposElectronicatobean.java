@@ -5,6 +5,8 @@
  */
 package eci.Pdsw.project.managedBeans;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -15,13 +17,44 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name="Equipos")
 @SessionScoped
-public class Equipostobean implements Serializable{
+public class ServicioEquiposElectronicatobean implements Serializable{
     //Pagina principal
     private int identificador;
     private String clave;
-    private String medidaLargo="790px";
-    private String medidaAncho="400px";
-
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private String medidaLargo=demeLargo();
+    private String medidaAncho=demeAncho();
+    
+    
+    private String demeLargo(){
+        return (screenSize.height-150)+"px";
+    }
+    private String demeAncho(){
+        return screenSize.width+"px";
+    }
+    
+    
+    /**
+     * Accion boton login en la pagina principal
+     * @return el string de la pagina a redireccionar
+     */
+    public String accionBotonLogin(){
+        boolean loEncontro=true;
+        String ans="";
+        //intenta buscar en base de datos, si no lo encuentra entonces LoEncontro=false
+        if(loEncontro){
+            //redirecciona a la pagina nueva
+            System.out.println(identificador);
+            System.out.println(clave);
+            ans="laboratorista";
+            //pone los atributos de la pagina laboratorista con los datos del usuario nuevo
+        }
+        else{
+            //no lo encontro, y se redirecciona a la misma pagina y lanza algun tipo de error
+        }
+        
+        return ans;
+    }
     /**
      * @return the identificador
      */
