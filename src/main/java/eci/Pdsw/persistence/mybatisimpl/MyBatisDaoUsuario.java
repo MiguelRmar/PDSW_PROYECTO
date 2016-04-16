@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.persistence.mybatisimpl;
+package eci.pdsw.persistence.mybatisimpl;
 
-import eci.Pdsw.persistence.DaoUsuario;
+import eci.pdsw.persistence.DaoUsuario;
 import eci.pdsw.entities.Usuario;
 import eci.pdsw.mybatis.mappers.EquipoMapper;
 import java.util.Set;

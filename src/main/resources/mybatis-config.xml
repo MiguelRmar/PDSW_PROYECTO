@@ -8,13 +8,13 @@
     </settings>
 
     <typeAliases>
-      <typeAlias type='eci.Pdsw.entities.Equipo' alias='Equipo'/>
-      <typeAlias type='eci.Pdsw.entities.EquipoBasico' alias='EquipoBasico'/>
-      <typeAlias type='eci.Pdsw.entities.Prestamo' alias='Prestamo'/>
-      <typeAlias type='eci.Pdsw.entities.PrestamoBasico' alias='PrestamoBasico'/>
-      <typeAlias type='eci.Pdsw.entities.Rol' alias='Rol'/>
-      <typeAlias type='eci.Pdsw.entities.Rol_Usuario' alias='Rol_Usuario'/>
-      <typeAlias type='eci.Pdsw.entities.Usuario' alias='Usuario'/>
+      <typeAlias type='eci.pdsw.entities.Equipo' alias='Equipo'/>
+      <typeAlias type='eci.pdsw.entities.EquipoBasico' alias='EquipoBasico'/>
+      <typeAlias type='eci.pdsw.entities.Prestamo' alias='Prestamo'/>
+      <typeAlias type='eci.pdsw.entities.PrestamoBasico' alias='PrestamoBasico'/>
+      <typeAlias type='eci.pdsw.entities.Rol' alias='Rol'/>
+      <typeAlias type='eci.pdsw.entities.Rol_Usuario' alias='Rol_Usuario'/>
+      <typeAlias type='eci.pdsw.entities.Usuario' alias='Usuario'/>
     </typeAliases>
     
     <environments default="development">
@@ -31,7 +31,7 @@
 
                         
     <mappers>
-        <mapper resource="mappers/PacienteMapper.xml"></mapper>
+        <mapper resource="mappers/EquiposMapper.xml"></mapper>
     </mappers> 
 
         

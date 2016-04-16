@@ -1,6 +1,6 @@
 eci\pdsw\services\ServicesException.class
 eci\pdsw\persistence\mybatisimpl\MyBatisDaoUsuario.class
-eci\pdsw\project\managedBeans\Equipostobean.class
+eci\pdsw\project\managedBeans\ServicioEquiposElectronicatobean.class
 eci\pdsw\persistence\DaoUsuario.class
 eci\pdsw\entities\Rol_Usuario.class
 eci\pdsw\mybatis\mappers\EquipoMapper.class

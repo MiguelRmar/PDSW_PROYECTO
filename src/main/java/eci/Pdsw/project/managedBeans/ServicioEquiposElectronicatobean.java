@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.project.managedBeans;
+package eci.pdsw.project.managedBeans;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

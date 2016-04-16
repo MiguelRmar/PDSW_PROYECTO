@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="eci.Pdsw.mybatis.mappers.EquipoMapper">
+<mapper namespace="eci.pdsw.mybatis.mappers.EquipoMapper">
     
     <resultMap type='Usuario' id='UsuarioResult'>
         <id property='id' column='id'/>
@@ -30,14 +30,17 @@
         <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>
 
-    <select id="loadUsuarioById" ParameterType="map" resultMap="UsuarioResult">
+    <select id='loadUsuarioById' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
                pre.USUARIOS_id as pre_usuario_id,pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,
                preb.USUARIOS_id as preb_usuario_id,preb.EQUIPOS_BASICOS_nombre as preb_equipoBasico_nombre,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo
-        FROM USUARIOS as us left join PRESTAMOS as pre on pre.USUARIOS_id=us.id,
-             USUARIOS as us left join PRESTAMOS_BASICOS as preb on preb.USUARIOS_id=us.id
-        WHERE us.id=#{idusuario}
+        FROM USUARIOS as us, PRESTAMOS as pre, PRESTAMOS_BASICOS as preb 
+        WHERE us.id=#{idusuario} and 
+              us.id in (SELECT USUARIOS_id from PRESTAMOS) and 
+              us.id in (SELECT USUARIOS_id from PRESTAMOS_BASICOS) and
+              us.id=pre.USUARIOS_id and 
+              us.id=preb.USUARIOS_id
     </select>
-    
 </mapper>
+    
     

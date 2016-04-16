@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.persistence;
+package eci.pdsw.persistence;
 
-import eci.Pdsw.persistence.mybatisimpl.MyBatisDaoFactory;
+import eci.pdsw.persistence.mybatisimpl.MyBatisDaoFactory;
 import java.util.Properties;
 import javax.persistence.PersistenceException;
 

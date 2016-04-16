@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.persistence.mybatisimpl;
+package eci.pdsw.persistence.mybatisimpl;
 
-import eci.Pdsw.persistence.DaoFactory;
-import eci.Pdsw.persistence.DaoUsuario;
+import eci.pdsw.persistence.DaoFactory;
+import eci.pdsw.persistence.DaoUsuario;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

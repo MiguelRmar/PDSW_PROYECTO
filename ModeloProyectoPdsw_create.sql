@@ -3,7 +3,7 @@
 CREATE TABLE ROLES (
     rol varchar(20) NOT NULL,
     PRIMARY KEY (rol)
-);
+)ENGINE = InnoDB;
 -- Table: USUARIOS
 CREATE TABLE USUARIOS (
     id int NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE USUARIOS (
     correo varchar(100) NOT NULL,
     contrasena varchar(50) NOT NULL,
     PRIMARY KEY (id)
-);
+)ENGINE = InnoDB;
 -- Table: ROLES_USUARIOS
 CREATE TABLE ROLES_USUARIOS (
     USUARIOS_id int NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE ROLES_USUARIOS (
     PRIMARY KEY (USUARIOS_id,ROLES_rol),
     CONSTRAINT ROLES_USUARIOS_ROLES FOREIGN KEY (ROLES_rol) REFERENCES ROLES (rol),
     CONSTRAINT ROLES_USUARIOS_USUARIOS FOREIGN KEY (USUARIOS_id) REFERENCES USUARIOS (id)
-);
+)ENGINE = InnoDB;
 -- Table: EQUIPOS
 CREATE TABLE EQUIPOS (
     serial int NOT NULL,
@@ -50,27 +50,27 @@ CREATE TABLE EQUIPOS_BASICOS (
     descripcion varchar(200) NULL,
     cantidad int NOT NULL,
     PRIMARY KEY (nombre)
-);
+)ENGINE = InnoDB;
 -- Table: PRESTAMOS
 CREATE TABLE PRESTAMOS (
     USUARIOS_id int NOT NULL,
     EQUIPOS_serial int NOT NULL,
-    fechaExpedicion date NOT NULL,
-    fechaVencimiento date NULL,
+    fechaExpedicion datetime NOT NULL,
+    fechaVencimiento datetime NULL,
     -- SEVIDOR, en ves de varchar enum('prestamo diario','prestamo 24 horas','mantenimiento','en almacen','prestamo indefinido','prestamo por semestre','dado de baja','en reparacion')
     tipoPrestamo varchar(50) NOT NULL,
     PRIMARY KEY (USUARIOS_id,EQUIPOS_serial),
-    CONSTRAINT EQUIPOS_USUARIOS_EQUIPOS FOREIGN KEY (EQUIPOS_serial) REFERENCES EQUIPOS(serial),
-    CONSTRAINT EQUIPOS_USUARIOS_USUARIOS FOREIGN KEY (USUARIOS_id) REFERENCES USUARIOS(id)
-);
+    CONSTRAINT PRESTAMOS_USUARIOS FOREIGN KEY (USUARIOS_id) REFERENCES USUARIOS(id),
+    CONSTRAINT PRESTAMOS_EQUIPOS FOREIGN KEY (EQUIPOS_serial) REFERENCES EQUIPOS(serial)
+)ENGINE = InnoDB;
 -- Table: PRESTAMOS_BASICOS
 CREATE TABLE PRESTAMOS_BASICOS (
     EQUIPOS_BASICOS_nombre varchar(100) NOT NULL,
     USUARIOS_id int NOT NULL,
-    fechaExpedicion date NOT NULL,
-    fechaVencimiento date NOT NULL,
-    tipoPrestamo varchar(20) NOT NULL,
+    fechaExpedicion datetime NOT NULL,
+    fechaVencimiento datetime NULL,
+    tipoPrestamo varchar(50) NOT NULL,
     PRIMARY KEY (EQUIPOS_BASICOS_nombre,USUARIOS_id),
-    CONSTRAINT PRESTAMOS_BASICOS_EQUIPOS_BASICOS FOREIGN KEY (EQUIPOS_BASICOS_nombre) REFERENCES EQUIPOS_BASICOS(nombre),
-    CONSTRAINT PRESTAMOS_BASICOS_USUARIOS FOREIGN KEY (USUARIOS_id) REFERENCES USUARIOS (id)
-);
+    CONSTRAINT PRESTAMOS_BASICOS_USUARIOS FOREIGN KEY (USUARIOS_id) REFERENCES USUARIOS (id),
+    CONSTRAINT PRESTAMOS_BASICOS_EQUIPOS_BASICOS FOREIGN KEY (EQUIPOS_BASICOS_nombre) REFERENCES EQUIPOS_BASICOS(nombre)
+)ENGINE = InnoDB;

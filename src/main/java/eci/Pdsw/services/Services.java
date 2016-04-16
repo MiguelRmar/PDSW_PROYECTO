@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.services;
+package eci.pdsw.services;
 
-import eci.Pdsw.persistence.DaoFactory;
+import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.entities.Usuario;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,10 +47,13 @@ public class Services {
         }        
         return instance;
     }
-
-    public Usuario loadPacienteById(int id) throws ServicesException{
+    
+    /*METODOS*/
+    
+    public Usuario loadUsuarioById(int id) throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
-        return df.getDaoUsuario().loadUsuarioById(id);
+        Usuario ans =df.getDaoUsuario().loadUsuarioById(id);
+        return ans;
     }    
 }
