@@ -1,14 +1,3 @@
-<<<<<<< 1cc0d15c5969fb6fa1e873bef5590172f0903f7e
-eci\pdsw\project\managedBeans\ServicioEquiposElectronicatobean.class
-eci\pdsw\entities\Rol_Usuario.class
-eci\pdsw\entities\EquipoBasico.class
-eci\pdsw\entities\Equipo.class
-eci\pdsw\entities\PrestamoBasico.class
-eci\pdsw\mybatis\mappers\EquipoMapper.class
-eci\pdsw\entities\Rol.class
-eci\pdsw\entities\Prestamo.class
-eci\pdsw\entities\Usuario.class
-=======
 eci\pdsw\services\ServicesException.class
 eci\pdsw\persistence\mybatisimpl\MyBatisDaoUsuario.class
 eci\pdsw\project\managedBeans\Equipostobean.class
@@ -24,4 +13,3 @@ eci\pdsw\entities\Prestamo.class
 eci\pdsw\entities\EquipoBasico.class
 eci\pdsw\services\Services.class
 eci\pdsw\entities\Rol.class
->>>>>>> Continuando con parte logica y ordenando elementos para pruebas
