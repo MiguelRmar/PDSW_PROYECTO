@@ -13,6 +13,10 @@ import java.sql.Date;
  */
 public class Prestamo {
     
+    public Prestamo(){
+        
+    }
+    
     private int usuario_id;
     private int equipo_serial;
     private Date fechaExpedicion;
@@ -26,20 +30,15 @@ public class Prestamo {
         this.fechaVencimiento = fechaVencimiento;
         this.tipoPrestamo = tipoPrestamo;
     }
-    
-    /**
-     * @return the usuario_id
-     */
+
     public int getUsuario_id() {
         return usuario_id;
     }
 
-    /**
-     * @param usuario_id the usuario_id to set
-     */
-    public void setUsuario_id(int usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setUsuario_id(int usuario) {
+        this.usuario_id = usuario;
     }
+    
 
     /**
      * @return the equipo_serial

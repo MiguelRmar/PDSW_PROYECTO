@@ -91,3 +91,4 @@ public class Equipo {
         this.subEstado = subEstado;
     }
 }
+

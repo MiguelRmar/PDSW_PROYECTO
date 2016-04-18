@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2015 hcadavid
  *
@@ -17,7 +18,9 @@
 package eci.pdsw.mybatis.mappers;
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
+import eci.pdsw.entities.Prestamo;
 import eci.pdsw.entities.Usuario;
+import java.util.Set;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -33,4 +36,6 @@ public interface EquipoMapper {
     public void registrarModeloNuevo(@Param("modelo")Modelo m);
     
     public Modelo loadModeloByName(@Param("modelo")String nombre);
+    
+    public Set<Prestamo> loadPrestamos();
 }

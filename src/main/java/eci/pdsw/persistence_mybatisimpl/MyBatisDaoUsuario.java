@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.pdsw.persistence.mybatisimpl;
+package eci.pdsw.persistence_mybatisimpl;
 
-import eci.pdsw.entities.Equipo;
-import eci.pdsw.entities.Modelo;
+import eci.pdsw.entities.Prestamo;
 import eci.pdsw.persistence.DaoUsuario;
 import eci.pdsw.entities.Usuario;
 import eci.pdsw.mybatis.mappers.EquipoMapper;
@@ -31,6 +30,9 @@ public class MyBatisDaoUsuario implements DaoUsuario{
         return emap.loadUsuarioById(id);
     }
 
-
+    @Override
+    public Set<Prestamo> loadPrestamos() throws PersistenceException {
+        return emap.loadPrestamos();
+    }
     
 }

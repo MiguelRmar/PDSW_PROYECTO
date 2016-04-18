@@ -18,13 +18,19 @@ public class PrestamoBasico {
     private Date fechaExpedicion;
     private Date fechaVencimiento;
     private String tipoPrestamo;
-    
-    public PrestamoBasico(int usuarios_id, String equipoBasico_nombre, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo) {
+    private int cantidadPrestada;
+
+    public PrestamoBasico(int usuarios_id, String equipoBasico_nombre, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo,int cantidadPrestada) {
         this.usuario_id = usuarios_id;
         this.equipoBasico_nombre = equipoBasico_nombre;
         this.fechaExpedicion = fechaExpedicion;
         this.fechaVencimiento = fechaVencimiento;
         this.tipoPrestamo = tipoPrestamo;
+        this.cantidadPrestada = cantidadPrestada;
+    }
+    
+    public PrestamoBasico(){
+        
     }
 
     /**
@@ -97,8 +103,16 @@ public class PrestamoBasico {
         this.tipoPrestamo = tipoPrestamo;
     }
     
+    public int getCantidadPrestada() {
+        return cantidadPrestada;
+    }
+
+    public void setCantidadPrestada(int cantidadPrestada) {
+        this.cantidadPrestada = cantidadPrestada;
+    }
+    
     @Override
     public String toString() {
-        return "("+usuario_id+","+equipoBasico_nombre+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+")";
+        return "("+usuario_id+","+equipoBasico_nombre+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+","+cantidadPrestada+")";
     }
 }

@@ -5,9 +5,9 @@
  */
 package eci.pdsw.persistence;
 
-import eci.pdsw.entities.Equipo;
-import eci.pdsw.entities.Modelo;
+import eci.pdsw.entities.Prestamo;
 import eci.pdsw.entities.Usuario;
+import java.util.Set;
 import javax.persistence.PersistenceException;
 
 /**
@@ -23,6 +23,7 @@ public interface DaoUsuario {
      * @throws PersistenceException
      */
     public Usuario loadUsuarioById(int id) throws PersistenceException;
-
+    
+    public Set<Prestamo> loadPrestamos() throws PersistenceException;
     
 }

@@ -20,6 +20,13 @@ public class Usuario {
     private String contrasena;
     private Set<Prestamo> prestamos;
     private Set<PrestamoBasico> prestamosBasicos;
+    private Set<Rol_Usuario> roles;
+    
+    public Usuario(){
+        prestamos=new LinkedHashSet<>();
+        prestamosBasicos=new LinkedHashSet<>();
+        roles=new LinkedHashSet<>();
+    }
     
     public Usuario(int id, String nombre, String correo, String contrasena) {
         this.id = id;
@@ -28,6 +35,7 @@ public class Usuario {
         this.contrasena = contrasena;
         prestamos=new LinkedHashSet<>();
         prestamosBasicos=new LinkedHashSet<>();
+        roles=new LinkedHashSet<>();
     }
 
     /**
@@ -59,7 +67,7 @@ public class Usuario {
     }
 
     /**
-     * @return the correo
+     * @return the corrulta() {eo
      */
     public String getCorreo() {
         return correo;
@@ -108,6 +116,19 @@ public class Usuario {
     }
 
     /**
+     * @return the roles
+     */
+    public Set<Rol_Usuario> getRoles() {
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(Set<Rol_Usuario> roles) {
+        this.roles = roles;
+    }
+    /**
      * @param prestamosBasicos the prestamosBasicos to set
      */
     public void setPrestamosBasicos(Set<PrestamoBasico> prestamosBasicos) {
@@ -122,6 +143,9 @@ public class Usuario {
         }
         for (PrestamoBasico k:prestamosBasicos){
             rep+="\t["+k+"]\n";
+        }
+        for (Rol_Usuario r:roles){
+            rep+="\t["+r+"]\n";
         }
         return rep;
     }

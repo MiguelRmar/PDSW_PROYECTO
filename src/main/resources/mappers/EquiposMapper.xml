@@ -12,24 +12,31 @@
         <result property='contrasena' column='contrasena'/>
         <collection property='prestamos' ofType='Prestamo' resultMap="PrestamoResult" columnPrefix="pre_"></collection>
         <collection property='prestamosBasicos' ofType='PrestamoBasico' resultMap="PrestamoBasicoResult" columnPrefix="preb_"></collection>
+        <collection property='roles' ofType='Rol_Usuario' resultMap="RolesUsuarioResult" columnPrefix="rol_"></collection>
     </resultMap>
     
     <resultMap type='Prestamo' id='PrestamoResult'>
-        <id property='usuario_id' column='USUARIOS_id'/>
-        <id property='equipo_serial' column='EQUIPOS_serial'/>
-        <result property='fechaExpedicion' column='fechaExpedicion'/>
-        <result property='fechaVencimiento' column='fechaVencimiento'/>        
-        <result property='tipoPrestamo' column='tipoPrestamo'/>
-    </resultMap>   
-    
-    <resultMap type='PrestamoBasico' id='PrestamoBasicoResult'>
-        <id property='usuario_id' column='USUARIOS_id'/>
-        <id property='equipoBasico_nombre' column='EQUIPOS_BASICOS_nombre'/>
+        <id property='usuario_id' column='usuario_id'></id>
+        <result property='equipo_serial' column='equipo_serial'></result>
         <result property='fechaExpedicion' column='fechaExpedicion'/>
         <result property='fechaVencimiento' column='fechaVencimiento'/>        
         <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>
+    
+    <resultMap type='PrestamoBasico' id='PrestamoBasicoResult'>
+        <id property='usuario_id' column='usuario_id'/>
+        <result property='equipoBasico_nombre' column='equipoBasico_nombre'/>
+        <result property='fechaExpedicion' column='fechaExpedicion'/>
+        <result property='fechaVencimiento' column='fechaVencimiento'/>        
+        <result property='tipoPrestamo' column='tipoPrestamo'/>
+        <result property='cantidadPrestada' column='cantidadPrestada'/>
+    </resultMap>
 
+    <resultMap type="Rol_Usuario" id='RolesUsuarioResult'>
+        <id property='usuario_id' column='usuario_id'/>
+        <result property='rol_r' column='rol_r'/>
+    </resultMap>
+    
     <resultMap type='Modelo' id='ModeloResult'>
         <id property='nombre' column='nombre'/>
         <result property='vidaUtilHoras' column='vidaUtil'/>
@@ -48,18 +55,25 @@
         <result property='subEstado' column='subestados'/>
         <result property='marca' column='marca'/>
     </resultMap>
-    
+        
     <select id='loadUsuarioById' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
                pre.USUARIOS_id as pre_usuario_id,pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,
-               preb.USUARIOS_id as preb_usuario_id,preb.EQUIPOS_BASICOS_nombre as preb_equipoBasico_nombre,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo
-        FROM USUARIOS as us, PRESTAMOS as pre, PRESTAMOS_BASICOS as preb 
-        WHERE us.id=#{idusuario} and 
-              us.id in (SELECT USUARIOS_id from PRESTAMOS) and 
-              us.id in (SELECT USUARIOS_id from PRESTAMOS_BASICOS) and
-              us.id=pre.USUARIOS_id and 
-              us.id=preb.USUARIOS_id
+               preb.USUARIOS_id as preb_usuario_id,preb.EQUIPOS_BASICOS_nombre as preb_equipoBasico_nombre,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo,preb.cantidadPrestada as preb_cantidadPrestada,
+               rol.USUARIOS_id as rol_usuario_id,rol.ROLES_rol as rol_rol_r 
+        FROM (((USUARIOS as us join PRESTAMOS as pre on us.id=pre.USUARIOS_id) 
+                 join PRESTAMOS_BASICOS as preb on us.id=preb.USUARIOS_id) 
+                 join ROLES_USUARIOS as rol on us.id=rol.USUARIOS_id)
+        WHERE us.id=#{idusuario} 
+                 
     </select>
+    
+    <select id='loadPrestamos' parameterType='map' resultMap='PrestamoResult'>
+        SELECT * FROM PRESTAMOS;
+    </select>
+    
 </mapper>
+    
+    
     
     

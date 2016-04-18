@@ -43,6 +43,27 @@ public class RegistroDevolucionTest {
     
     public RegistroDevolucionTest(){}
     
+    
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void clearDB() throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:h2:file:./target/db/testdb;MODE=MYSQL", "anonymous", "");
+        Statement stmt = conn.createStatement();
+        stmt.execute("delete from ROLES_USUARIOS");
+        stmt.execute("delete from ROLES");
+        stmt.execute("delete from PRESTAMOS");
+        stmt.execute("delete from EQUIPOS");
+        stmt.execute("delete from MODELOS");
+        stmt.execute("delete from PRESTAMOS_BASICOS");
+        stmt.execute("delete from EQUIPOS_BASICOS");
+        stmt.execute("delete from USUARIOS");
+        conn.commit();
+        conn.close();
+    }
+
     /**
      * Obtiene una conexion a la base de datos de prueba
      * @return
@@ -57,18 +78,35 @@ public class RegistroDevolucionTest {
         //Insertar datos en la base de datos de pruebas, de acuerdo con la clase
         //de equivalencia correspondiente
         Connection conn=getConnection();
-        Statement stmt=conn.createStatement();        
+        Statement stmt=conn.createStatement();       
+        stmt.execute("INSERT INTO ROLES(rol) values ('estudiante')");
+        stmt.execute("INSERT INTO ROLES(rol) values ('profesor')");
+        stmt.execute("INSERT INTO ROLES(rol) values ('laboratorista')");
+        stmt.execute("INSERT INTO ROLES(rol) values ('administrador')");
+        stmt.execute("INSERT INTO USUARIOS (id,nombre,correo,contrasena) VALUES (124,'PEDRO PEREZ','pedro.perez@mail.escuelaing.edu.co','1test1')");
         stmt.execute("INSERT INTO USUARIOS (id,nombre,correo,contrasena) VALUES (123,'PEDRO PEREZ','pedro.perez@mail.escuelaing.edu.co','1test1')");
-        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,modelo,clase,vidaUtil,valor,seguro,foto,placa,marca,descripcion,estado,subestados,proveedor) VALUES (456,'MultiTest',115,'abcd',100,200000,true,null,789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas')");
+        stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'laboratorista')");
+        stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'estudiante')");
+        stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
+        
+        
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        
         stmt.execute("INSERT INTO EQUIPOS_BASICOS (nombre,valor,foto,descripcion,cantidad) VALUES ('cables','5000',null,'un metro de longitud y 0.5 centimetros de diametro',500)");      
-        stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (123,456,'2015-01-01 00:00:00',null,'prestamo diario')");
-        stmt.execute("INSERT INTO PRESTAMOS_BASICOS (USUARIOS_id,EQUIPOS_BASICOS_nombre,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (123,'cables','2015-01-01 00:00:00','2015-01-01 03:00:00','prestamo 24 horas')");
+        
+        stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,567,'2015-01-01 00:00:00',null,'prestamo diario')");
+        stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,456,'2015-01-01 00:00:00',null,'prestamo diario')");
+        
+        stmt.execute("INSERT INTO PRESTAMOS_BASICOS (USUARIOS_id,EQUIPOS_BASICOS_nombre,fechaExpedicion,fechaVencimiento,tipoPrestamo,cantidadPrestada) VALUES (124,'cables','2015-01-01 00:00:00','2015-01-01 03:00:00','prestamo 24 horas',10)");
         conn.commit();
         conn.close();
         //Realizar la operacion de la logica y la prueba
         Services servicios=Services.getInstance("h2-applicationconfig.properties");
-        Usuario jhordy = servicios.loadUsuarioById(123);
-        
+        Usuario Jhordy = servicios.loadUsuarioById(124);
+        System.out.println(Jhordy.toString());
+        //Set<Prestamo> jhordy= servicios.loadPrestamos();
+        //System.out.println(jhordy.toString());
         //Prestamo ans = new Prestamo(123,456,java.sql.Date.valueOf("2015-01-01 00:00:00"),null,"prestamo diario");
         //Set<Prestamo> p_jhordy = jhordy.getPrestamos();
         //assertEquals(p_jhordy.contains(ans),true);*/

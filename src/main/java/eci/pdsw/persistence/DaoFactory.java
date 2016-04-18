@@ -5,8 +5,7 @@
  */
 package eci.pdsw.persistence;
 
-import eci.Pdsw.persistence.DaoEquipos;
-import eci.pdsw.persistence.mybatisimpl.MyBatisDaoFactory;
+import eci.pdsw.persistence_mybatisimpl.MyBatisDaoFactory;
 import java.util.Properties;
 import javax.persistence.PersistenceException;
 
@@ -48,3 +47,4 @@ public abstract class DaoFactory {
 
     public abstract void endSession() throws PersistenceException;
 }
+

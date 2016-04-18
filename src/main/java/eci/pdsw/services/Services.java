@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.services;
+package eci.pdsw.services;
 
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
+import eci.pdsw.entities.Prestamo;
 import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.entities.Usuario;
 import java.io.File;
@@ -51,21 +52,39 @@ public class Services {
     }
     
     /*METODOS*/
-    
-    public Usuario loadUsuarioById(int id) throws ServicesException{
+    /**
+     *
+     * @param id
+     * @return
+     * @throws eci.pdsw.services.ServicesException
+     * @throws ServicesException
+     */
+    public Usuario loadUsuarioById(int id){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
         Usuario ans =df.getDaoUsuario().loadUsuarioById(id);
+        df.commitTransaction();
+        df.endSession();
         return ans;
     }
-    public void registroEquipoNuevo(Equipo equipo) throws ServicesException{
+    
+    public Set<Prestamo> loadPrestamos(){
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        Set<Prestamo> ans =df.getDaoUsuario().loadPrestamos();
+        df.commitTransaction();
+        df.endSession();
+        return ans;
+    }
+    
+    public void registroEquipoNuevo(Equipo equipo){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
         df.getDaoEquipo().registroEquipoNuevo(equipo);
         df.commitTransaction();
         df.endSession();
     }
-    public void registroModeloNuevo(Modelo modelo) throws ServicesException{
+    public void registroModeloNuevo(Modelo modelo){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
         df.getDaoEquipo().registrarModeloNuevo(modelo);

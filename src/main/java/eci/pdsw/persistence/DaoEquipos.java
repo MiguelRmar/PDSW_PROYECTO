@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eci.Pdsw.persistence;
+package eci.pdsw.persistence;
 
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;

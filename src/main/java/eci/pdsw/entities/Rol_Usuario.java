@@ -10,27 +10,49 @@ package eci.pdsw.entities;
  * @author 2105461
  */
 public class Rol_Usuario {
-    public Rol rol;
-    public Usuario usuario;
 
-    public Rol getRol() {
-        return rol;
+    private int usuario_id;
+    private String rol_r;
+
+    public Rol_Usuario(int usuario_id, String rol_r) {
+        this.usuario_id = usuario_id;
+        this.rol_r = rol_r;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public Rol_Usuario() {
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    /**
+     * @return the usuario_id
+     */
+    public int getUsuario_id() {
+        return usuario_id;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    /**
+     * @param usuario_id the usuario_id to set
+     */
+    public void setUsuario_id(int usuario_id) {
+        this.usuario_id = usuario_id;
     }
-    public Rol_Usuario(Rol rol, Usuario usuario) {
-        this.rol = rol;
-        this.usuario = usuario;
+
+    /**
+     * @return the rol_r
+     */
+    public String getRol_r() {
+        return rol_r;
+    }
+
+    /**
+     * @param rol_r the rol_r to set
+     */
+    public void setRol_r(String rol_r) {
+        this.rol_r = rol_r;
     }
     
+    @Override
+    public String toString() {
+        return "("+usuario_id+","+rol_r+")";
+    } 
 }
+
