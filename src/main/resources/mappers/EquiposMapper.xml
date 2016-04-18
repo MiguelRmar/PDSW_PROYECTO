@@ -36,25 +36,6 @@
         <id property='usuario_id' column='usuario_id'/>
         <result property='rol_r' column='rol_r'/>
     </resultMap>
-    
-    <resultMap type='Modelo' id='ModeloResult'>
-        <id property='nombre' column='nombre'/>
-        <result property='vidaUtilHoras' column='vidaUtil'/>
-        <result property='valorComercial' column='valor'/>      
-        <result property='seguro' column='seguro'/>
-        <collection property='equipos' ofType='Equipo' resultMap="EquiposResult" columnPrefix="eq_"></collection>
-    </resultMap>
-    
-    <resultMap type='Equipo' id='EquipoResult'>
-        <id property='serial' column='serial'/>
-        <result property='modelo' column='Modelos_nombre'/>
-        <result property='placa' column='placa'/>
-        <result property='descripcion' column='descripcion'/>        
-        <result property='proveedor' column='proveedor'/>
-        <result property='estado' column='estado'/>
-        <result property='subEstado' column='subestados'/>
-        <result property='marca' column='marca'/>
-    </resultMap>
         
     <select id='loadUsuarioById' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
