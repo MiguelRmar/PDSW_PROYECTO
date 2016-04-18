@@ -5,6 +5,8 @@
  */
 package eci.pdsw.services;
 
+import eci.pdsw.entities.Equipo;
+import eci.pdsw.entities.Modelo;
 import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.entities.Usuario;
 import java.io.File;
@@ -55,5 +57,15 @@ public class Services {
         df.beginSession();
         Usuario ans =df.getDaoUsuario().loadUsuarioById(id);
         return ans;
-    }    
+    }
+    public void registroEquipoNuevo(Equipo equipo) throws ServicesException{
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        df.getDaoEquipo().registroEquipoNuevo(equipo);
+    }
+    public void registroModeloNuevo(Modelo modelo) throws ServicesException{
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        df.getDaoEquipo().registrarModeloNuevo(modelo);
+    }  
 }

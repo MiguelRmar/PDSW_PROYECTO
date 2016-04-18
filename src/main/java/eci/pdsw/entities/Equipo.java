@@ -27,10 +27,11 @@ public class Equipo {
         //Falta revisar que no ingresen un serial ya existente
         this.serial=serial;
         this.modelo=modelo;
-        //Fallta revisar que no ingresen una placa existente
+        //Falta revisar que no ingresen una placa existente
         this.placa=placa;
         this.descripcion=des;
         this.proveedor=prov;
+        //Falta que hacer si la información es suminstrada incorrectamente de estado y subestado
         if (estado.equals(estados.get(0))){
             for(String s:subEstadoActivo){
                 if (sub.equals(s)){

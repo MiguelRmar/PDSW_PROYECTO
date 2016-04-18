@@ -5,6 +5,8 @@
  */
 package eci.pdsw.persistence.mybatisimpl;
 
+import eci.pdsw.entities.Equipo;
+import eci.pdsw.entities.Modelo;
 import eci.pdsw.persistence.DaoUsuario;
 import eci.pdsw.entities.Usuario;
 import eci.pdsw.mybatis.mappers.EquipoMapper;
@@ -28,5 +30,7 @@ public class MyBatisDaoUsuario implements DaoUsuario{
     public Usuario loadUsuarioById(int id) throws PersistenceException {
         return emap.loadUsuarioById(id);
     }
+
+
     
 }

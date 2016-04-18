@@ -5,6 +5,8 @@
  */
 package eci.pdsw.persistence.mybatisimpl;
 
+import eci.Pdsw.persistence.DaoEquipos;
+import eci.Pdsw.persistence.mybatisimpl.MyBatisDaoEquipo;
 import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.persistence.DaoUsuario;
 import java.io.IOException;
@@ -84,5 +86,10 @@ public class MyBatisDaoFactory extends DaoFactory{
     public DaoUsuario getDaoUsuario() {
         return new MyBatisDaoUsuario(currentSession);
     }
+
+    @Override
+    public DaoEquipos getDaoEquipo() {
+        return new MyBatisDaoEquipo(currentSession);
+     }
     
 }
