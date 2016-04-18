@@ -5,13 +5,15 @@
  */
 package eci.pdsw.entities;
 
+import java.util.Set;
+
 /**
  *
  * @author 2105461
  */
 public class Rol {
     public String rol;
-
+    public Set<Rol_Usuario> rolesUsuarios;
     public String getRol() {
         return rol;
     }

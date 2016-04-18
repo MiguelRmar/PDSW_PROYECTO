@@ -27,6 +27,10 @@ import org.apache.ibatis.annotations.Param;
 public interface EquipoMapper {
     
     public Usuario loadUsuarioById(@Param("idusuario") int id);
+    
     public void registrarEquipoNuevo(@Param("equipo")Equipo e);
+    
     public void registrarModeloNuevo(@Param("modelo")Modelo m);
+    
+    public Modelo loadModeloByName(@Param("modelo")String nombre);
 }

@@ -23,12 +23,19 @@ public class MyBatisDaoEquipo implements DaoEquipos{
     }
     @Override
     public void registroEquipoNuevo(Equipo e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        emap.registrarEquipoNuevo(e);
     }
 
     @Override
     public void registrarModeloNuevo(Modelo m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        emap.registrarModeloNuevo(m);
+    }
+
+    @Override
+    public Modelo loadModelo(String nombre) {
+        //falta mandar una excepcion si mod es nulo indicando que no existe el modelo requerido.
+        Modelo mod=emap.loadModeloByName(nombre);
+        return mod;
     }
     
 }

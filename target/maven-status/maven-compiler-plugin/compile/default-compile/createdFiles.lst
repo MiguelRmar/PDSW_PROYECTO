@@ -1,11 +1,13 @@
 eci/pdsw/entities/Prestamo.class
 eci/pdsw/services/Services.class
 eci/pdsw/entities/PrestamoBasico.class
+eci/Pdsw/persistence/DaoEquipos.class
 eci/pdsw/services/ServicesException.class
 eci/pdsw/persistence/DaoFactory.class
 eci/pdsw/persistence/mybatisimpl/MyBatisDaoFactory.class
 eci/pdsw/entities/Rol_Usuario.class
 eci/pdsw/persistence/mybatisimpl/MyBatisDaoUsuario.class
+eci/Pdsw/persistence/mybatisimpl/MyBatisDaoEquipo.class
 eci/pdsw/entities/EquipoBasico.class
 eci/pdsw/entities/Usuario.class
 eci/pdsw/entities/Rol.class

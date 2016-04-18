@@ -17,5 +17,7 @@ public interface DaoEquipos {
     public void registroEquipoNuevo(Equipo e);
     
     public void registrarModeloNuevo(Modelo m);
+
+    public Modelo loadModelo(String nombre);
     
 }

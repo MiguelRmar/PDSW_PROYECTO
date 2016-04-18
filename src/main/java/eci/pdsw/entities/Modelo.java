@@ -5,6 +5,8 @@
  */
 package eci.pdsw.entities;
 
+import java.util.Set;
+
 /**
  *
  * @author 2107262
@@ -14,20 +16,25 @@ public class Modelo {
     public String nombre;
     public int vidaUtilHoras;
     public int valorComercial;
-    public String seguro;
+    public String clase;
+    public Boolean seguro;
     public String foto;
-    public Modelo(String nombre, int vida, int valor, String seguro, String foto){
+    public Set<Equipo> equipos;
+
+    public Modelo(String nombre, int vida, int valor, Boolean seguro, String foto, String clase){
         this.nombre=nombre;
         this.vidaUtilHoras=vida;
         this.valorComercial=valor;
         this.seguro=seguro;
         this.foto=foto;
+        this.clase=clase;
     }
-    public Modelo(String nombre, int vida, int valor, String seguro){
+    public Modelo(String nombre, int vida, int valor, Boolean seguro, String clase){
         this.nombre=nombre;
         this.vidaUtilHoras=vida;
         this.valorComercial=valor;
         this.seguro=seguro;
+        this.clase=clase;
     }
     public String getFoto() {
         return foto;
@@ -60,11 +67,19 @@ public class Modelo {
         this.valorComercial = valorComercial;
     }
 
-    public String getSeguro() {
+    public Boolean getSeguro() {
         return seguro;
     }
 
-    public void setSeguro(String seguro) {
+    public void setSeguro(Boolean seguro) {
         this.seguro = seguro;
     }   
+    
+    public Set<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    public void setEquipos(Set<Equipo> equipos) {
+        this.equipos = equipos;
+    }
 }

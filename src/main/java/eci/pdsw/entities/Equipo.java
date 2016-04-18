@@ -13,17 +13,15 @@ import java.util.Arrays;
  * @author 2105461
  */
 public class Equipo {
-    private final ArrayList<String> estados=new ArrayList<>(Arrays.asList("Activo", "Desactivo"));
-    private final ArrayList<String> subEstadoActivo =new ArrayList<>(Arrays.asList( "prestamo diario", "prestamo 24 horas" , "mantenimiento",  "en almacen" , "prestamo indefinido","prestamo por semestre"));
-    private final ArrayList<String> subEstadoInactivo =new ArrayList<>(Arrays.asList("dado de baja", "reparacion"));
     public int serial;
-    public Modelo modelo;
+    public String marca;
+    public String modelo;
     public int placa;
     public String descripcion;
     public String proveedor;
     public String estado;
     public String subEstado;
-    public Equipo( int serial, Modelo modelo, int placa, String des, String prov, String estado, String sub){
+    public Equipo( int serial, String modelo, int placa, String des, String prov, String estado, String sub, String marca){
         //Falta revisar que no ingresen un serial ya existente
         this.serial=serial;
         this.modelo=modelo;
@@ -31,26 +29,10 @@ public class Equipo {
         this.placa=placa;
         this.descripcion=des;
         this.proveedor=prov;
+        this.marca=marca;
         //Falta que hacer si la información es suminstrada incorrectamente de estado y subestado
-        if (estado.equals(estados.get(0))){
-            for(String s:subEstadoActivo){
-                if (sub.equals(s)){
-                    this.estado=estado;
-                    this.subEstado=sub;
-                }
-            }
-        }
-        else if(estado.equals(estados.get(1))){
-            for(String s:subEstadoInactivo){
-                if (sub.equals(s)){
-                    this.estado=estado;
-                    this.subEstado=sub;
-                }
-            }
-        }
-        else{
-        
-        }
+        this.estado=estado;
+        this.subEstado=sub;
     }
 
     public int getSerial() {
@@ -61,11 +43,11 @@ public class Equipo {
         this.serial = serial;
     }
 
-    public Modelo getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(Modelo modelo) {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 

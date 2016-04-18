@@ -30,6 +30,25 @@
         <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>
 
+    <resultMap type='Modelo' id='ModeloResult'>
+        <id property='nombre' column='nombre'/>
+        <result property='vidaUtilHoras' column='vidaUtil'/>
+        <result property='valorComercial' column='valor'/>      
+        <result property='seguro' column='seguro'/>
+        <collection property='equipos' ofType='Equipo' resultMap="EquiposResult" columnPrefix="eq_"></collection>
+    </resultMap>
+    
+    <resultMap type='Equipo' id='EquipoResult'>
+        <id property='serial' column='serial'/>
+        <result property='modelo' column='Modelos_nombre'/>
+        <result property='placa' column='placa'/>
+        <result property='descripcion' column='descripcion'/>        
+        <result property='proveedor' column='proveedor'/>
+        <result property='estado' column='estado'/>
+        <result property='subEstado' column='subestados'/>
+        <result property='marca' column='marca'/>
+    </resultMap>
+    
     <select id='loadUsuarioById' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
                pre.USUARIOS_id as pre_usuario_id,pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,

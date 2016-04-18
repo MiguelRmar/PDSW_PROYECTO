@@ -62,10 +62,21 @@ public class Services {
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
         df.getDaoEquipo().registroEquipoNuevo(equipo);
+        df.commitTransaction();
+        df.endSession();
     }
     public void registroModeloNuevo(Modelo modelo) throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
         df.getDaoEquipo().registrarModeloNuevo(modelo);
+        df.commitTransaction();
+        df.endSession();
     }  
+    public Modelo loadModeloByName(String nombre){
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        Modelo ans =df.getDaoEquipo().loadModelo(nombre);
+        df.endSession();
+        return ans;
+    }
 }
