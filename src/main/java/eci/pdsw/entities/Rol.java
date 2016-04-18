@@ -10,5 +10,16 @@ package eci.pdsw.entities;
  * @author 2105461
  */
 public class Rol {
-    
+    public String rol;
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+    public Rol(String rol){
+        this.rol=rol;
+    }
 }

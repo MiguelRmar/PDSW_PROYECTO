@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package eci.pdsw.mybatis.mappers;
+import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Usuario;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,5 +26,6 @@ import org.apache.ibatis.annotations.Param;
 public interface EquipoMapper {
     
     public Usuario loadUsuarioById(@Param("idusuario") int id);
+    public void registrarEquipo(@Param("equipo")Equipo e);
     
 }

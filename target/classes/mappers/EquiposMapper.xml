@@ -11,6 +11,7 @@
         <result property='correo' column='correo'/>      
         <result property='contrasena' column='contrasena'/>
         <collection property='prestamos' ofType='Prestamo' resultMap="PrestamoResult" columnPrefix="pre_"></collection>
+        <collection property='prestamosBasicos' ofType='PrestamoBasico' resultMap="PrestamoBasicoResult" columnPrefix="preb_"></collection>
     </resultMap>
     
     <resultMap type='Prestamo' id='PrestamoResult'>
@@ -20,12 +21,26 @@
         <result property='fechaVencimiento' column='fechaVencimiento'/>        
         <result property='tipoPrestamo' column='tipoPrestamo'/>
     </resultMap>   
-   
+    
+    <resultMap type='PrestamoBasico' id='PrestamoBasicoResult'>
+        <id property='usuario_id' column='USUARIOS_id'/>
+        <id property='equipoBasico_nombre' column='EQUIPOS_BASICOS_nombre'/>
+        <result property='fechaExpedicion' column='fechaExpedicion'/>
+        <result property='fechaVencimiento' column='fechaVencimiento'/>        
+        <result property='tipoPrestamo' column='tipoPrestamo'/>
+    </resultMap>
+
     <select id='loadUsuarioById' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
-               pre.USUARIOS_id as pre_usuario_id,pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo
-        FROM USUARIOS as us left join PRESTAMOS as pre on pre.USUARIOS_id=us.id 
-        WHERE us.id=#{idusuario}        
+               pre.USUARIOS_id as pre_usuario_id,pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,
+               preb.USUARIOS_id as preb_usuario_id,preb.EQUIPOS_BASICOS_nombre as preb_equipoBasico_nombre,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo
+        FROM USUARIOS as us, PRESTAMOS as pre, PRESTAMOS_BASICOS as preb 
+        WHERE us.id=#{idusuario} and 
+              us.id in (SELECT USUARIOS_id from PRESTAMOS) and 
+              us.id in (SELECT USUARIOS_id from PRESTAMOS_BASICOS) and
+              us.id=pre.USUARIOS_id and 
+              us.id=preb.USUARIOS_id
     </select>
 </mapper>
+    
     
