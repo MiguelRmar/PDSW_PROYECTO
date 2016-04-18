@@ -26,8 +26,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String medidaAncho=demeAncho();
     
     
+    //pagina usuario
+    private int id;
+    private String nombre;
+    private String correo;
+    //botonesDisponibles        
+    private boolean botonRegistrarEquipoEnInventario=false;
+    private boolean botonRegistrarUnaDevolucion=false;
+            
+            
+            
     private String demeLargo(){
-        return (screenSize.height-150)+"px";
+        return (screenSize.height-100)+"px";
     }
     private String demeAncho(){
         return screenSize.width+"px";
@@ -46,7 +56,14 @@ public class ServicioEquiposElectronicatobean implements Serializable{
             //redirecciona a la pagina nueva
             System.out.println(identificador);
             System.out.println(clave);
-            ans="laboratorista";
+            ans="usuario";
+            
+            //prueba
+            id=2105534;
+            nombre="Carlos Andres Sanchez";
+            correo="Carlos.sanchez-v@mail.escuelaing.edu.co";
+            botonRegistrarEquipoEnInventario=true;
+            botonRegistrarUnaDevolucion=true;
             //pone los atributos de la pagina laboratorista con los datos del usuario nuevo
         }
         else{
@@ -109,5 +126,75 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setMedidaAncho(String medidaAncho) {
         this.medidaAncho = medidaAncho;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the correo
+     */
+    public String getCorreo() {
+        return correo;
+    }
+
+    /**
+     * @param correo the correo to set
+     */
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    /**
+     * @return the botonRegistrarEquipoEnInventario
+     */
+    public boolean isBotonRegistrarEquipoEnInventario() {
+        return botonRegistrarEquipoEnInventario;
+    }
+
+    /**
+     * @param botonRegistrarEquipoEnInventario the botonRegistrarEquipoEnInventario to set
+     */
+    public void setBotonRegistrarEquipoEnInventario(boolean botonRegistrarEquipoEnInventario) {
+        this.botonRegistrarEquipoEnInventario = botonRegistrarEquipoEnInventario;
+    }
+
+    /**
+     * @return the botonRegistrarUnaDevolucion
+     */
+    public boolean isBotonRegistrarUnaDevolucion() {
+        return botonRegistrarUnaDevolucion;
+    }
+
+    /**
+     * @param botonRegistrarUnaDevolucion the botonRegistrarUnaDevolucion to set
+     */
+    public void setBotonRegistrarUnaDevolucion(boolean botonRegistrarUnaDevolucion) {
+        this.botonRegistrarUnaDevolucion = botonRegistrarUnaDevolucion;
     }
 }
