@@ -16,7 +16,7 @@ public class Modelo {
     public String nombre;
     public int vidaUtilHoras;
     public int valorComercial;
-    public String clase;
+    private String clase;
     public Boolean seguro;
     public String foto;
     public Set<Equipo> equipos;
@@ -81,5 +81,19 @@ public class Modelo {
 
     public void setEquipos(Set<Equipo> equipos) {
         this.equipos = equipos;
+    }
+
+    /**
+     * @return the clase
+     */
+    public String getClase() {
+        return clase;
+    }
+
+    /**
+     * @param clase the clase to set
+     */
+    public void setClase(String clase) {
+        this.clase = clase;
     }
 }

@@ -6,9 +6,12 @@
  */
 package eci.pdsw.project.managedBeans;
 
+import eci.pdsw.entities.Modelo;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -28,15 +31,24 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
     
     //pagina usuario
+    private List<Modelo> listaModelos;
     private int id;
     private String nombre;
     private String correo;
-    //botonesDisponibles        
+    //botonesDisponibles 
+    //laboratorista
     private boolean botonRegistrarEquipoEnInventario=false;
     private boolean botonRegistrarUnaDevolucion=false;
             
+    //pagina registrarUnEquipo
+    private String modeloABuscar;
+    private boolean textoLuegoConsultarModelo=false;
+    private String textoSalidaModelo;
             
-            
+    
+    
+    
+    
     private String demeLargo(){
         return (screenSize.height-100)+"px";
     }
@@ -44,7 +56,30 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         return screenSize.width+"px";
     }
     
+    /**
+     * 
+     */
     
+    public void accionBotonBuscarModelo(){
+        textoLuegoConsultarModelo=true;
+        System.out.println("entro");
+        textoSalidaModelo="siii el modelo si existe, yei";
+        //CONSULTAR A VER SI EL MODELO YA EXISTE EL MODELO ES LA VARIABLE modeloABuscar
+        
+    }
+    /**
+     * 
+     */
+    public String accionBotonRegistrarUnaDevolucion(){
+        return "registrarunadevolucion";
+    }
+    
+    /**
+     * 
+     */
+    public String accionBotonRegistrarUnEquipo(){
+        return "registrarunequipo";
+    }
     /**
      * Accion boton login en la pagina principal
      * @return el string de la pagina a redireccionar
@@ -55,8 +90,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         //intenta buscar en base de datos, si no lo encuentra entonces LoEncontro=false
         if(loEncontro){
             //redirecciona a la pagina nueva
-            System.out.println(identificador);
-            System.out.println(clave);
+            
             ans="usuario";
             
             //prueba
@@ -197,5 +231,63 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setBotonRegistrarUnaDevolucion(boolean botonRegistrarUnaDevolucion) {
         this.botonRegistrarUnaDevolucion = botonRegistrarUnaDevolucion;
+    }
+
+    /**
+     * @return the listaConsultas
+     */
+    public List<Modelo> getListaModelos() {
+        listaModelos=new ArrayList<Modelo>();
+        listaModelos.add(new Modelo("modelo nuevo", 1,1,true,"sin foto"));
+        return listaModelos;
+    }
+
+    /**
+     * @param listaConsultas the listaConsultas to set
+     */
+    public void setListaModelos(List<Modelo> listaConsultas) {
+        this.listaModelos = listaConsultas;
+    }
+
+    /**
+     * @return the modeloABuscar
+     */
+    public String getModeloABuscar() {
+        return modeloABuscar;
+    }
+
+    /**
+     * @param modeloABuscar the modeloABuscar to set
+     */
+    public void setModeloABuscar(String modeloABuscar) {
+        this.modeloABuscar = modeloABuscar;
+    }
+
+    /**
+     * @return the textoLuegoConsultarModelo
+     */
+    public boolean isTextoLuegoConsultarModelo() {
+        return textoLuegoConsultarModelo;
+    }
+
+    /**
+     * @param textoLuegoConsultarModelo the textoLuegoConsultarModelo to set
+     */
+    public void setTextoLuegoConsultarModelo(boolean textoLuegoConsultarModelo) {
+        this.textoLuegoConsultarModelo = textoLuegoConsultarModelo;
+    }
+
+    /**
+     * @return the textoSalidaModelo
+     */
+    public String getTextoSalidaModelo() {
+        return textoSalidaModelo;
+    }
+
+    /**
+     * @param textoSalidaModelo the textoSalidaModelo to set
+     */
+    public void setTextoSalidaModelo(String textoSalidaModelo) {
+        this.textoSalidaModelo = textoSalidaModelo;
     }
 }

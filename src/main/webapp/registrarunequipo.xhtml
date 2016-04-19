@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>registrar un equipo</title>
+    </h:head>
+
+    <h:body>
+        
+        <h:form id="form0">
+            <p:panel style="background-image: url(/imagenes/logoeci.jpg);height:#{Equipos.medidaLargo}" > 
+                <p:layout >
+                    <p:layoutUnit position="north">
+                        <p:panel header="Datos de usuario" style="height:150px">
+                           
+                            <p:panelGrid columns="2">
+                                <h:outputLabel value="id:" />
+                                <h:outputText value="#{Equipos.id}"/>
+                                <h:outputLabel value="Nombre:" />
+                                <h:outputText value="#{Equipos.nombre}"/>
+                                <h:outputLabel value="Correo:" />
+                                <h:outputText value="#{Equipos.correo}"/>
+                            </p:panelGrid>
+                            
+                        </p:panel>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="west">
+                        <p:panel style="width:200px">
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{Equipos.botonRegistrarEquipoEnInventario}" action="#{Equipos.accionBotonRegistrarUnEquipo()}"/>
+                            <p:commandButton value="Registrar Una Devolucion" rendered="#{Equipos.botonRegistrarUnaDevolucion}" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+
+                        </p:panel>
+                    </p:layoutUnit>
+                    <p:layoutUnit  position="center">
+                        <p:panel >
+                            
+                            <p:dataTable id="consultaModelo" var="consultaModelo" value="#{Equipos.listaModelos}">
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{consultaModelo.nombre}"/>
+                                </p:column>
+                                <p:column headerText="Vida">
+                                    <h:outputText value="#{consultaModelo.vidaUtilHoras}"/>
+                                </p:column>
+                                <p:column headerText="Valor">
+                                    <h:outputText value="#{consultaModelo.valorComercial}"/>
+                                </p:column>
+                                <p:column headerText="Seguro">
+                                    <h:outputText value="#{consultaModelo.seguro}"/>
+                                </p:column>
+                                <p:column headerText="Foto">
+                                    <h:outputText value="#{consultaModelo.foto}"/>
+                                </p:column>
+                                <p:column headerText="Clase">
+                                    <h:outputText value="#{consultaModelo.clase}"/>
+                                </p:column>
+                            </p:dataTable>
+                            
+                            <p:panelGrid columns="3">
+                                <h:outputLabel value="Introduzca modelo a buscar" />
+                                <h:inputText value="#{Equipos.modeloABuscar}"/>
+                                <p:commandButton value="Buscar" actionListener="#{Equipos.accionBotonBuscarModelo()}" update="form0" />
+                            </p:panelGrid>
+                            <h:form id="form1">
+                            <h:outputText id="value1" value="#{Equipos.textoSalidaModelo}" rendered="#{Equipos.textoLuegoConsultarModelo}" />
+                           </h:form>
+                            
+
+                        </p:panel>       
+                    </p:layoutUnit>
+                </p:layout>
+            </p:panel>
+        </h:form>
+           
+    </h:body>
+</html>
