@@ -7,7 +7,7 @@ package eci.pdsw.services;
 
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
-import eci.pdsw.entities.Prestamo;
+import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.entities.Usuario;
 import java.io.File;
@@ -68,10 +68,10 @@ public class Services {
         return ans;
     }
     
-    public Set<Prestamo> loadPrestamos(){
+    public Set<PrestamoUsuario> loadPrestamos(){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
-        Set<Prestamo> ans =df.getDaoUsuario().loadPrestamos();
+        Set<PrestamoUsuario> ans =df.getDaoUsuario().loadPrestamos();
         df.commitTransaction();
         df.endSession();
         return ans;

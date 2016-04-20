@@ -54,7 +54,7 @@ CREATE TABLE EQUIPOS (
 CREATE TABLE EQUIPOS_BASICOS (
     nombre varchar(100) NOT NULL,
     valor int NULL,
-    foto int NULL,
+    foto blob NULL,
     descripcion varchar(200) NULL,
     cantidad int NOT NULL,
     PRIMARY KEY (nombre)

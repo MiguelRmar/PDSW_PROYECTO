@@ -10,10 +10,14 @@
     <typeAliases>
       <typeAlias type='eci.pdsw.entities.Equipo' alias='Equipo'/>
       <typeAlias type='eci.pdsw.entities.EquipoBasico' alias='EquipoBasico'/>
-      <typeAlias type='eci.pdsw.entities.Prestamo' alias='Prestamo'/>
-      <typeAlias type='eci.pdsw.entities.PrestamoBasico' alias='PrestamoBasico'/>
+      <typeAlias type='eci.pdsw.entities.PrestamoBasicoEquipo' alias='PrestamoBasicoEquipo'/>
+      <typeAlias type='eci.pdsw.entities.PrestamoBasicoUsuario' alias='PrestamoBasicoUsuario'/>
+      <typeAlias type='eci.pdsw.entities.PrestamoEquipo' alias='PrestamoEquipo'/>
+      <typeAlias type='eci.pdsw.entities.PrestamoUsuario' alias='PrestamoUsuario'/>
+      <typeAlias type='eci.pdsw.entities.Modelo' alias='Modelo'/>
       <typeAlias type='eci.pdsw.entities.Rol' alias='Rol'/>
-      <typeAlias type='eci.pdsw.entities.Rol_Usuario' alias='Rol_Usuario'/>
+      <typeAlias type='eci.pdsw.entities.RolRol' alias='RolRol'/>
+      <typeAlias type='eci.pdsw.entities.RolUsuario' alias='RolUsuario'/>
       <typeAlias type='eci.pdsw.entities.Usuario' alias='Usuario'/>
     </typeAliases>
     

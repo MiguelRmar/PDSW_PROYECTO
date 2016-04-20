@@ -5,7 +5,6 @@
  */
 package eci.pdsw.persistence_mybatisimpl;
 
-import eci.pdsw.persistence.DaoEquipos;
 
 import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.persistence.DaoUsuario;
@@ -17,6 +16,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import eci.pdsw.persistence.DaoEquipo;
 
 /**
  *
@@ -88,7 +88,7 @@ public class MyBatisDaoFactory extends DaoFactory{
     }
 
     @Override
-    public DaoEquipos getDaoEquipo() {
+    public DaoEquipo getDaoEquipo() {
         return new MyBatisDaoEquipo(currentSession);
      }
     

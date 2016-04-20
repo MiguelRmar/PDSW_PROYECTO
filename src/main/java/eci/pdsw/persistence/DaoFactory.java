@@ -39,7 +39,7 @@ public abstract class DaoFactory {
 
     public abstract DaoUsuario getDaoUsuario();
     
-    public abstract DaoEquipos getDaoEquipo();
+    public abstract DaoEquipo getDaoEquipo();
 
     public abstract void commitTransaction() throws PersistenceException;
 

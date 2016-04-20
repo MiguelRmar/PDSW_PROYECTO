@@ -18,9 +18,9 @@ public class Usuario {
     private String nombre;
     private String correo;
     private String contrasena;
-    private Set<Prestamo> prestamos;
-    private Set<PrestamoBasico> prestamosBasicos;
-    private Set<Rol_Usuario> roles;
+    private Set<PrestamoUsuario> prestamos;
+    private Set<PrestamoBasicoUsuario> prestamosBasicos;
+    private Set<RolUsuario> roles;
     
     public Usuario(){
         prestamos=new LinkedHashSet<>();
@@ -33,9 +33,9 @@ public class Usuario {
         this.nombre = nombre;
         this.correo = correo;
         this.contrasena = contrasena;
-        prestamos=new LinkedHashSet<>();
-        prestamosBasicos=new LinkedHashSet<>();
-        roles=new LinkedHashSet<>();
+        this.prestamos=new LinkedHashSet<>();
+        this.prestamosBasicos=new LinkedHashSet<>();
+        this.roles=new LinkedHashSet<>();
     }
 
     /**
@@ -97,54 +97,54 @@ public class Usuario {
     /**
      * @return the prestamos
      */
-    public Set<Prestamo> getPrestamos() {
+    public Set<PrestamoUsuario> getPrestamos() {
         return prestamos;
     }
 
     /**
      * @param prestamos the prestamos to set
      */
-    public void setPrestamos(Set<Prestamo> prestamos) {
+    public void setPrestamos(Set<PrestamoUsuario> prestamos) {
         this.prestamos = prestamos;
     }
 
     /**
      * @return the prestamosBasicos
      */
-    public Set<PrestamoBasico> getPrestamosBasicos() {
+    public Set<PrestamoBasicoUsuario> getPrestamosBasicos() {
         return prestamosBasicos;
     }
 
     /**
      * @return the roles
      */
-    public Set<Rol_Usuario> getRoles() {
+    public Set<RolUsuario> getRoles() {
         return roles;
     }
 
     /**
      * @param roles the roles to set
      */
-    public void setRoles(Set<Rol_Usuario> roles) {
+    public void setRoles(Set<RolUsuario> roles) {
         this.roles = roles;
     }
     /**
      * @param prestamosBasicos the prestamosBasicos to set
      */
-    public void setPrestamosBasicos(Set<PrestamoBasico> prestamosBasicos) {
+    public void setPrestamosBasicos(Set<PrestamoBasicoUsuario> prestamosBasicos) {
         this.prestamosBasicos = prestamosBasicos;
     }
     
     @Override
     public String toString() {
         String rep="Paciente:["+id+","+nombre+","+correo+","+contrasena+"]\n";
-        for (Prestamo c:prestamos){
+        for (PrestamoUsuario c:prestamos){
             rep+="\t["+c+"]\n";
         }
-        for (PrestamoBasico k:prestamosBasicos){
+        for (PrestamoBasicoUsuario k:prestamosBasicos){
             rep+="\t["+k+"]\n";
         }
-        for (Rol_Usuario r:roles){
+        for (RolUsuario r:roles){
             rep+="\t["+r+"]\n";
         }
         return rep;

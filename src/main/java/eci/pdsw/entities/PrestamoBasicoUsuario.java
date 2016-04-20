@@ -11,40 +11,23 @@ import java.sql.Date;
  *
  * @author 2105461
  */
-public class PrestamoBasico {
+public class PrestamoBasicoUsuario {
 
-    private int usuario_id;
     private String equipoBasico_nombre;
     private Date fechaExpedicion;
     private Date fechaVencimiento;
     private String tipoPrestamo;
     private int cantidadPrestada;
+    
+    public PrestamoBasicoUsuario() {
+    }
 
-    public PrestamoBasico(int usuarios_id, String equipoBasico_nombre, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo,int cantidadPrestada) {
-        this.usuario_id = usuarios_id;
+    public PrestamoBasicoUsuario(String equipoBasico_nombre, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo, int cantidadPrestada) {
         this.equipoBasico_nombre = equipoBasico_nombre;
         this.fechaExpedicion = fechaExpedicion;
         this.fechaVencimiento = fechaVencimiento;
         this.tipoPrestamo = tipoPrestamo;
         this.cantidadPrestada = cantidadPrestada;
-    }
-    
-    public PrestamoBasico(){
-        
-    }
-
-    /**
-     * @return the usuarios_id
-     */
-    public int getUsuarios_id() {
-        return usuario_id;
-    }
-
-    /**
-     * @param usuarios_id the usuarios_id to set
-     */
-    public void setUsuarios_id(int usuarios_id) {
-        this.usuario_id = usuarios_id;
     }
 
     /**
@@ -102,17 +85,23 @@ public class PrestamoBasico {
     public void setTipoPrestamo(String tipoPrestamo) {
         this.tipoPrestamo = tipoPrestamo;
     }
-    
+
+    /**
+     * @return the cantidadPrestada
+     */
     public int getCantidadPrestada() {
         return cantidadPrestada;
     }
 
+    /**
+     * @param cantidadPrestada the cantidadPrestada to set
+     */
     public void setCantidadPrestada(int cantidadPrestada) {
         this.cantidadPrestada = cantidadPrestada;
     }
     
     @Override
     public String toString() {
-        return "("+usuario_id+","+equipoBasico_nombre+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+","+cantidadPrestada+")";
+        return "("+equipoBasico_nombre+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+","+cantidadPrestada+")";
     }
 }

@@ -5,6 +5,7 @@
  */
 package eci.pdsw.entities;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -12,75 +13,41 @@ import java.util.Set;
  * @author 2107262
  */
 public class Modelo {
-    //Modelo, nombre, clase, vida útil en horas, valor comercial aproximado, si está asegurado o no y su fotografía
-    public String nombre;
-    public int vidaUtilHoras;
-    public int valorComercial;
+
+    private String nombre;
     private String clase;
-    public Boolean seguro;
-    public String foto;
-    public Set<Equipo> equipos;
-
-    public Modelo(String nombre, int vida, int valor, Boolean seguro, String foto, String clase){
-        this.nombre=nombre;
-        this.vidaUtilHoras=vida;
-        this.valorComercial=valor;
-        this.seguro=seguro;
-        this.foto=foto;
-        this.clase=clase;
+    private int vidaUtilHoras;
+    private int valorComercial;
+    private Boolean seguro;
+    private String foto;
+    private Set<Equipo> equipos;
+    
+    public Modelo() {
+        this.equipos = new LinkedHashSet<>();
     }
-    public Modelo(String nombre, int vida, int valor, Boolean seguro, String clase){
-        this.nombre=nombre;
-        this.vidaUtilHoras=vida;
-        this.valorComercial=valor;
-        this.seguro=seguro;
-        this.clase=clase;
-    }
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
+    
+    public Modelo(String nombre, String clase, int vidaUtilHoras, int valorComercial, Boolean seguro, String foto) {
+        this.nombre = nombre;
+        this.clase = clase;
+        this.vidaUtilHoras = vidaUtilHoras;
+        this.valorComercial = valorComercial;
+        this.seguro = seguro;
         this.foto = foto;
+        this.equipos = new LinkedHashSet<>();
     }
+
+    /**
+     * @return the nombre
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * @param nombre the nombre to set
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public int getVidaUtilHoras() {
-        return vidaUtilHoras;
-    }
-
-    public void setVidaUtilHoras(int vidaUtilHoras) {
-        this.vidaUtilHoras = vidaUtilHoras;
-    }
-
-    public int getValorComercial() {
-        return valorComercial;
-    }
-
-    public void setValorComercial(int valorComercial) {
-        this.valorComercial = valorComercial;
-    }
-
-    public Boolean getSeguro() {
-        return seguro;
-    }
-
-    public void setSeguro(Boolean seguro) {
-        this.seguro = seguro;
-    }   
-    
-    public Set<Equipo> getEquipos() {
-        return equipos;
-    }
-
-    public void setEquipos(Set<Equipo> equipos) {
-        this.equipos = equipos;
     }
 
     /**
@@ -95,5 +62,84 @@ public class Modelo {
      */
     public void setClase(String clase) {
         this.clase = clase;
+    }
+
+    /**
+     * @return the vidaUtilHoras
+     */
+    public int getVidaUtilHoras() {
+        return vidaUtilHoras;
+    }
+
+    /**
+     * @param vidaUtilHoras the vidaUtilHoras to set
+     */
+    public void setVidaUtilHoras(int vidaUtilHoras) {
+        this.vidaUtilHoras = vidaUtilHoras;
+    }
+
+    /**
+     * @return the valorComercial
+     */
+    public int getValorComercial() {
+        return valorComercial;
+    }
+
+    /**
+     * @param valorComercial the valorComercial to set
+     */
+    public void setValorComercial(int valorComercial) {
+        this.valorComercial = valorComercial;
+    }
+
+    /**
+     * @return the seguro
+     */
+    public Boolean getSeguro() {
+        return seguro;
+    }
+
+    /**
+     * @param seguro the seguro to set
+     */
+    public void setSeguro(Boolean seguro) {
+        this.seguro = seguro;
+    }
+
+    /**
+     * @return the foto
+     */
+    public String getFoto() {
+        return foto;
+    }
+
+    /**
+     * @param foto the foto to set
+     */
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    /**
+     * @return the equipos
+     */
+    public Set<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    /**
+     * @param equipos the equipos to set
+     */
+    public void setEquipos(Set<Equipo> equipos) {
+        this.equipos = equipos;
+    }
+    
+    @Override
+    public String toString() {
+        String rep = "Modelo:["+nombre+","+clase+","+vidaUtilHoras+","+valorComercial+","+seguro+","+foto+"]\n";
+        for (Equipo e:equipos){
+            rep+="\t["+e+"]\n";
+        }
+        return rep;
     }
 }

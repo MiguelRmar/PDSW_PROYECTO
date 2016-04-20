@@ -9,49 +9,37 @@ import java.sql.Date;
 
 /**
  *
- * @author 2105461
+ * @author Jhordy
  */
-public class Prestamo {
-    
-    public Prestamo(){
-        
-    }
-    
+public class PrestamoEquipo {
+
     private int usuario_id;
-    private int equipo_serial;
     private Date fechaExpedicion;
     private Date fechaVencimiento;
     private String tipoPrestamo;
-
-    public Prestamo(int usuario_id, int equipo_serial, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo) {
+    
+    public PrestamoEquipo() {
+    }
+     
+    public PrestamoEquipo(int usuario_id, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo) {
         this.usuario_id = usuario_id;
-        this.equipo_serial = equipo_serial;
         this.fechaExpedicion = fechaExpedicion;
         this.fechaVencimiento = fechaVencimiento;
         this.tipoPrestamo = tipoPrestamo;
     }
 
+    /**
+     * @return the usuario_id
+     */
     public int getUsuario_id() {
         return usuario_id;
     }
 
-    public void setUsuario_id(int usuario) {
-        this.usuario_id = usuario;
-    }
-    
-
     /**
-     * @return the equipo_serial
+     * @param usuario_id the usuario_id to set
      */
-    public int getEquipo_serial() {
-        return equipo_serial;
-    }
-
-    /**
-     * @param equipo_serial the equipo_serial to set
-     */
-    public void setEquipo_serial(int equipo_serial) {
-        this.equipo_serial = equipo_serial;
+    public void setUsuario_id(int usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
     /**
@@ -98,6 +86,6 @@ public class Prestamo {
     
     @Override
     public String toString() {
-        return "("+usuario_id+","+equipo_serial+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+")";
-    }   
+        return "("+usuario_id+","+fechaExpedicion+","+fechaVencimiento+","+tipoPrestamo+")";
+    } 
 }

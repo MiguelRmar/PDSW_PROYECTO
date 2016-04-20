@@ -18,7 +18,7 @@
 package eci.pdsw.mybatis.mappers;
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
-import eci.pdsw.entities.Prestamo;
+import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.entities.Usuario;
 import java.util.Set;
 import org.apache.ibatis.annotations.Param;
@@ -31,11 +31,13 @@ public interface EquipoMapper {
     
     public Usuario loadUsuarioById(@Param("idusuario") int id);
     
-    public void registrarEquipoNuevo(@Param("equipo")Equipo e);
+    public Modelo loadModeloByName(@Param("nombremodelo")String nombre);
+    
+    public Equipo loadModeloBySerial(@Param("serialequipo")String serial);
     
     public void registrarModeloNuevo(@Param("modelo")Modelo m);
     
-    public Modelo loadModeloByName(@Param("modelo")String nombre);
-    
-    public Set<Prestamo> loadPrestamos();
+    public void registrarEquipoNuevo(@Param("equipo")Equipo e);
+
+    public Set<PrestamoUsuario> loadPrestamos();
 }

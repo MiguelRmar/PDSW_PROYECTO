@@ -5,17 +5,17 @@
  */
 package eci.pdsw.persistence_mybatisimpl;
 
-import eci.pdsw.persistence.DaoEquipos;
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
 import eci.pdsw.mybatis.mappers.EquipoMapper;
 import org.apache.ibatis.session.SqlSession;
+import eci.pdsw.persistence.DaoEquipo;
 
 /**
  *
  * @author 2107262
  */
-public class MyBatisDaoEquipo implements DaoEquipos{
+public class MyBatisDaoEquipo implements DaoEquipo{
     private EquipoMapper emap=null;
 
     public MyBatisDaoEquipo(SqlSession session) {        

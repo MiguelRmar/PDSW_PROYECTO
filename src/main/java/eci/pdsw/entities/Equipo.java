@@ -5,90 +5,174 @@
  */
 package eci.pdsw.entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  *
  * @author 2105461
  */
 public class Equipo {
-    public int serial;
-    public String marca;
-    public String modelo;
-    public int placa;
-    public String descripcion;
-    public String proveedor;
-    public String estado;
-    public String subEstado;
-    public Equipo( int serial, String modelo, int placa, String des, String prov, String estado, String sub, String marca){
-        //Falta revisar que no ingresen un serial ya existente
-        this.serial=serial;
-        this.modelo=modelo;
-        //Falta revisar que no ingresen una placa existente
-        this.placa=placa;
-        this.descripcion=des;
-        this.proveedor=prov;
-        this.marca=marca;
-        //Falta que hacer si la información es suminstrada incorrectamente de estado y subestado
-        this.estado=estado;
-        this.subEstado=sub;
+
+    private int serial;
+    private String nombre;
+    private int placa;
+    private String marca;
+    private String descripcion;
+    private String estado;
+    private String subEstado;
+    private String proveedor;
+    private Set<PrestamoEquipo> prestamos;
+    
+    public Equipo() {
+        this.prestamos = new LinkedHashSet<>();
+    }
+    
+    public Equipo(int serial, String nombre, int placa, String marca, String descripcion, String estado, String subEstado, String proveedor) {
+        this.serial = serial;
+        this.nombre = nombre;
+        this.placa = placa;
+        this.marca = marca;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.subEstado = subEstado;
+        this.proveedor = proveedor;
+        this.prestamos = new LinkedHashSet<>();
     }
 
+    /**
+     * @return the serial
+     */
     public int getSerial() {
         return serial;
     }
 
+    /**
+     * @param serial the serial to set
+     */
     public void setSerial(int serial) {
         this.serial = serial;
     }
 
-    public String getModelo() {
-        return modelo;
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
+    /**
+     * @return the placa
+     */
     public int getPlaca() {
         return placa;
     }
 
+    /**
+     * @param placa the placa to set
+     */
     public void setPlaca(int placa) {
         this.placa = placa;
     }
 
+    /**
+     * @return the marca
+     */
+    public String getMarca() {
+        return marca;
+    }
+
+    /**
+     * @param marca the marca to set
+     */
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    /**
+     * @return the descripcion
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * @param descripcion the descripcion to set
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
-
+    /**
+     * @return the estado
+     */
     public String getEstado() {
         return estado;
     }
 
+    /**
+     * @param estado the estado to set
+     */
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
+    /**
+     * @return the subEstado
+     */
     public String getSubEstado() {
         return subEstado;
     }
 
+    /**
+     * @param subEstado the subEstado to set
+     */
     public void setSubEstado(String subEstado) {
         this.subEstado = subEstado;
+    }
+
+    /**
+     * @return the proveedor
+     */
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    /**
+     * @param proveedor the proveedor to set
+     */
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    /**
+     * @return the prestamos
+     */
+    public Set<PrestamoEquipo> getPrestamos() {
+        return prestamos;
+    }
+
+    /**
+     * @param prestamos the prestamos to set
+     */
+    public void setPrestamos(Set<PrestamoEquipo> prestamos) {
+        this.prestamos = prestamos;
+    }
+    
+    @Override
+    public String toString() {
+        String rep = "Equipo:["+serial+","+nombre+","+placa+","+marca+","+descripcion+","+estado+","+subEstado+","+proveedor+"]\n";
+        for (PrestamoEquipo p:prestamos){
+            rep+="\t["+p+"]\n";
+        }
+        return rep;
     }
 }
 
