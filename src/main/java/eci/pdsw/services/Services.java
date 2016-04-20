@@ -6,6 +6,7 @@
 package eci.pdsw.services;
 
 import eci.pdsw.entities.Equipo;
+import eci.pdsw.entities.EquipoBasico;
 import eci.pdsw.entities.Modelo;
 import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.persistence.DaoFactory;
@@ -68,6 +69,30 @@ public class Services {
         return ans;
     }
     
+    public Modelo loadModeloByName(String nombre){
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        Modelo ans =df.getDaoEquipo().loadModeloByName(nombre);
+        df.endSession();
+        return ans;
+    }
+    
+    public Equipo loadEquipoBySerial(int serial){
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        Equipo ans =df.getDaoEquipo().loadEquipoBySerial(serial);
+        df.endSession();
+        return ans;
+    }
+    
+    public EquipoBasico loadEquipoBasicoByName(String name){
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        EquipoBasico ans =df.getDaoEquipo().loadEquipoBasicoByName(name);
+        df.endSession();
+        return ans; 
+    }
+    
     public Set<PrestamoUsuario> loadPrestamos(){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
@@ -91,11 +116,6 @@ public class Services {
         df.commitTransaction();
         df.endSession();
     }  
-    public Modelo loadModeloByName(String nombre){
-        DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        Modelo ans =df.getDaoEquipo().loadModelo(nombre);
-        df.endSession();
-        return ans;
-    }
+    
+    
 }

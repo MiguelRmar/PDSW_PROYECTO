@@ -17,6 +17,7 @@
  */
 package eci.pdsw.mybatis.mappers;
 import eci.pdsw.entities.Equipo;
+import eci.pdsw.entities.EquipoBasico;
 import eci.pdsw.entities.Modelo;
 import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.entities.Usuario;
@@ -33,11 +34,15 @@ public interface EquipoMapper {
     
     public Modelo loadModeloByName(@Param("nombremodelo")String nombre);
     
-    public Equipo loadModeloBySerial(@Param("serialequipo")String serial);
+    public Equipo loadEquipoBySerial(@Param("serialequipo")int serial);
+    
+    public EquipoBasico loadEquipoBasicoByName(@Param("nombreequipobasico")String nombre);
+    
+    public Set<PrestamoUsuario> loadPrestamos();
     
     public void registrarModeloNuevo(@Param("modelo")Modelo m);
     
     public void registrarEquipoNuevo(@Param("equipo")Equipo e);
 
-    public Set<PrestamoUsuario> loadPrestamos();
+    
 }

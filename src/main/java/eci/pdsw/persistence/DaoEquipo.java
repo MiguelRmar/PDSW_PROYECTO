@@ -6,6 +6,7 @@
 package eci.pdsw.persistence;
 
 import eci.pdsw.entities.Equipo;
+import eci.pdsw.entities.EquipoBasico;
 import eci.pdsw.entities.Modelo;
 
 /**
@@ -14,10 +15,15 @@ import eci.pdsw.entities.Modelo;
  */
 public interface DaoEquipo {
     
+    public Modelo loadModeloByName(String nombre);
+    
+    public Equipo loadEquipoBySerial(int serial);
+    
+    public EquipoBasico loadEquipoBasicoByName(String nombre);
+    
     public void registroEquipoNuevo(Equipo e);
     
     public void registrarModeloNuevo(Modelo m);
-
-    public Modelo loadModelo(String nombre);
+    
     
 }

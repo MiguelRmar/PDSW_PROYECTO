@@ -6,6 +6,7 @@
 package eci.pdsw.persistence_mybatisimpl;
 
 import eci.pdsw.entities.Equipo;
+import eci.pdsw.entities.EquipoBasico;
 import eci.pdsw.entities.Modelo;
 import eci.pdsw.mybatis.mappers.EquipoMapper;
 import org.apache.ibatis.session.SqlSession;
@@ -32,10 +33,21 @@ public class MyBatisDaoEquipo implements DaoEquipo{
     }
 
     @Override
-    public Modelo loadModelo(String nombre) {
-        //falta mandar una excepcion si mod es nulo indicando que no existe el modelo requerido.
+    public Modelo loadModeloByName(String nombre) {
         Modelo mod=emap.loadModeloByName(nombre);
         return mod;
+    }
+
+    @Override
+    public Equipo loadEquipoBySerial(int serial) {
+        Equipo eq=emap.loadEquipoBySerial(serial);
+        return eq;
+    }
+
+    @Override
+    public EquipoBasico loadEquipoBasicoByName(String nombre) {
+        EquipoBasico eqb=emap.loadEquipoBasicoByName(nombre);
+        return eqb;
     }
     
 }

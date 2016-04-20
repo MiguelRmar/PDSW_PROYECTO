@@ -21,7 +21,7 @@ public class PrestamoUsuario {
     public PrestamoUsuario(){ 
     }
     
-    public PrestamoUsuario(int usuario_id, int equipo_serial, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo) {
+    public PrestamoUsuario(int equipo_serial, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo) {
         this.equipo_serial = equipo_serial;
         this.fechaExpedicion = fechaExpedicion;
         this.fechaVencimiento = fechaVencimiento;

@@ -7,35 +7,18 @@
 
 import eci.pdsw.services.Services;
 import eci.pdsw.services.ServicesException;
-import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.PrestamoBasicoUsuario;
 import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.entities.RolUsuario;
 import eci.pdsw.entities.Usuario;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
-import eci.pdsw.mybatis.mappers.EquipoMapper;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import junit.framework.Assert;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -150,8 +133,8 @@ public class RegistroDevolucionTest {
         rol_ans.add(new RolUsuario("laboratorista"));
         ans.setRoles(rol_ans);
         Set<PrestamoUsuario> prestamo_ans=new LinkedHashSet<>();
-        prestamo_ans.add(new PrestamoUsuario(124,456,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
-        prestamo_ans.add(new PrestamoUsuario(124,567,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
+        prestamo_ans.add(new PrestamoUsuario(456,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
+        prestamo_ans.add(new PrestamoUsuario(567,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
         ans.setPrestamos(prestamo_ans);
         ////respuesta obtenida
         Usuario Jhordy = servicios.loadUsuarioById(124);
@@ -232,8 +215,8 @@ public class RegistroDevolucionTest {
         rol_ans.add(new RolUsuario("profesor"));
         ans.setRoles(rol_ans);
         Set<PrestamoUsuario> prestamo_ans=new LinkedHashSet<>();
-        prestamo_ans.add(new PrestamoUsuario(124,456,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
-        prestamo_ans.add(new PrestamoUsuario(124,567,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
+        prestamo_ans.add(new PrestamoUsuario(456,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
+        prestamo_ans.add(new PrestamoUsuario(567,java.sql.Date.valueOf("2015-01-01"),null,"prestamo diario"));
         ans.setPrestamos(prestamo_ans);
         Set<PrestamoBasicoUsuario> prestamob_ans=new LinkedHashSet<>();
         prestamob_ans.add(new PrestamoBasicoUsuario("cables",java.sql.Date.valueOf("2015-01-01"),java.sql.Date.valueOf("2015-01-01"),"prestamo 24 horas",10));
@@ -244,5 +227,7 @@ public class RegistroDevolucionTest {
         //prueba
         assertEquals(ans.toString(),Jhordy.toString());       
     }
+    
+    //Prueba 5:
     
 }

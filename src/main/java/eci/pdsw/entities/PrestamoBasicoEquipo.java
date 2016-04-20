@@ -13,7 +13,7 @@ import java.sql.Date;
  */
 public class PrestamoBasicoEquipo {
 
-    private String usuario_id;
+    private int usuario_id;
     private Date fechaExpedicion;
     private Date fechaVencimiento;
     private String tipoPrestamo;
@@ -22,7 +22,7 @@ public class PrestamoBasicoEquipo {
     public PrestamoBasicoEquipo() {
     }
     
-    public PrestamoBasicoEquipo(String usuario_id, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo, int cantidadPrestada) {
+    public PrestamoBasicoEquipo(int usuario_id, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo, int cantidadPrestada) {
         this.usuario_id = usuario_id;
         this.fechaExpedicion = fechaExpedicion;
         this.fechaVencimiento = fechaVencimiento;
@@ -33,14 +33,14 @@ public class PrestamoBasicoEquipo {
     /**
      * @return the usuario_id
      */
-    public String getUsuario_id() {
+    public int getUsuario_id() {
         return usuario_id;
     }
 
     /**
      * @param usuario_id the usuario_id to set
      */
-    public void setUsuario_id(String usuario_id) {
+    public void setUsuario_id(int usuario_id) {
         this.usuario_id = usuario_id;
     }
 
