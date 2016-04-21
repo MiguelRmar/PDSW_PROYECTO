@@ -22,9 +22,9 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="Equipos")
 @SessionScoped
 public class ServicioEquiposElectronicatobean implements Serializable{
+    
+    private static ServicioEquiposElectronicatobean instance;
     //Pagina principal
-    private int identificador;
-    private String clave;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private String medidaLargo=demeLargo();
     private String medidaAncho=demeAncho();
@@ -35,10 +35,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int id;
     private String nombre;
     private String correo;
-    //botonesDisponibles 
-    //laboratorista
-    private boolean botonRegistrarEquipoEnInventario=false;
-    private boolean botonRegistrarUnaDevolucion=false;
+    
             
     //pagina registrarUnEquipo
     private String modeloABuscar;
@@ -80,61 +77,10 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public String accionBotonRegistrarUnEquipo(){
         return "registrarunequipo";
     }
-    /**
-     * Accion boton login en la pagina principal
-     * @return el string de la pagina a redireccionar
-     */
-    public String accionBotonLogin(){
-        boolean loEncontro=true;
-        String ans="";
-        //intenta buscar en base de datos, si no lo encuentra entonces LoEncontro=false
-        if(loEncontro){
-            //redirecciona a la pagina nueva
-            
-            ans="usuario";
-            
-            //prueba
-            id=2105534;
-            nombre="Carlos Andres Sanchez";
-            correo="Carlos.sanchez-v@mail.escuelaing.edu.co";
-            botonRegistrarEquipoEnInventario=true;
-            botonRegistrarUnaDevolucion=true;
-            //pone los atributos de la pagina laboratorista con los datos del usuario nuevo
-        }
-        else{
-            //no lo encontro, y se redirecciona a la misma pagina y lanza algun tipo de error
-        }
-        
-        return ans;
-    }
-    /**
-     * @return the identificador
-     */
-    public int getIdentificador() {
-        return identificador;
-    }
+   
 
-    /**
-     * @param identificador the identificador to set
-     */
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
-    }
-
-    /**
-     * @return the clave
-     */
-    public String getClave() {
-        return clave;
-    }
-
-    /**
-     * @param clave the clave to set
-     */
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
+    
+   
     /**
      * @return the medidaLargo
      */
@@ -205,33 +151,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         this.correo = correo;
     }
 
-    /**
-     * @return the botonRegistrarEquipoEnInventario
-     */
-    public boolean isBotonRegistrarEquipoEnInventario() {
-        return botonRegistrarEquipoEnInventario;
-    }
-
-    /**
-     * @param botonRegistrarEquipoEnInventario the botonRegistrarEquipoEnInventario to set
-     */
-    public void setBotonRegistrarEquipoEnInventario(boolean botonRegistrarEquipoEnInventario) {
-        this.botonRegistrarEquipoEnInventario = botonRegistrarEquipoEnInventario;
-    }
-
-    /**
-     * @return the botonRegistrarUnaDevolucion
-     */
-    public boolean isBotonRegistrarUnaDevolucion() {
-        return botonRegistrarUnaDevolucion;
-    }
-
-    /**
-     * @param botonRegistrarUnaDevolucion the botonRegistrarUnaDevolucion to set
-     */
-    public void setBotonRegistrarUnaDevolucion(boolean botonRegistrarUnaDevolucion) {
-        this.botonRegistrarUnaDevolucion = botonRegistrarUnaDevolucion;
-    }
 
     /**
      * @return the listaConsultas
@@ -289,5 +208,17 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setTextoSalidaModelo(String textoSalidaModelo) {
         this.textoSalidaModelo = textoSalidaModelo;
+    }
+    
+    
+    /**
+     * get instance
+     */
+    public static ServicioEquiposElectronicatobean getCurrentInstance(){
+        if (instance==null){
+            instance= new ServicioEquiposElectronicatobean();
+        }
+        return instance;
+    
     }
 }

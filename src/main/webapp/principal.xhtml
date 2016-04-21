@@ -21,13 +21,13 @@
                     
                         <h:panelGrid columns="2" cellpadding="5">
                           <h:outputLabel for="username" value="Usuario:" />
-                          <p:inputText value="#{Equipos.identificador}" id="username"
+                          <p:inputText value="#{loginBean.username}" id="username"
                              required="true" label="username" />
                           <h:outputLabel for="password" value="Clave:" />
-                          <p:password value="#{Equipos.clave}" id="password" required="true"
+                          <p:password value="#{loginBean.password}" id="password" required="true"
                            label="password" />
                         <f:facet name="footer">
-                            <p:commandButton value="Login" id="loginButton" action="#{Equipos.accionBotonLogin}"/>
+                            <p:commandButton value="Login" id="loginButton" action="#{loginBean.doLogin()}"/>
                         </f:facet>
                       </h:panelGrid>
                         
