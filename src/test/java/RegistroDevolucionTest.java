@@ -105,7 +105,29 @@ public class RegistroDevolucionTest {
         //prueba
         assertEquals(ans.toString(),Jhordy.toString());       
     }
-    
+    /*
+    Connection conn=getConnection();
+        Statement stmt=conn.createStatement();       
+        stmt.execute("INSERT INTO ROLES(rol) values ('estudiante')");
+        stmt.execute("INSERT INTO ROLES(rol) values ('profesor')");
+        stmt.execute("INSERT INTO ROLES(rol) values ('laboratorista')");
+        stmt.execute("INSERT INTO ROLES(rol) values ('administrador')");
+        stmt.execute("INSERT INTO USUARIOS (id,nombre,correo,contrasena) VALUES (124,'PEDRO PEREZ','pedro.perez@mail.escuelaing.edu.co','1test1')");
+        stmt.execute("INSERT INTO USUARIOS (id,nombre,correo,contrasena) VALUES (123,'PEDRO PEREZ','pedro.perez@mail.escuelaing.edu.co','1test1')");
+        stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'laboratorista')");
+        stmt.execute("INSERT INTO ROLES_USUARIOS(USUARIOS_id,ROLES_rol) values (124,'estudiante')");
+        stmt.execute("INSERT INTO MODELOS (nombre,clase,vidaUtil,valor,seguro,foto) values ('modelo1','abcd',100,200000,true,null)");              
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (456,'MultiTest',789,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS (serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) VALUES (567,'MultiTest',245,'La Ultima','tamano y altura promedio con buena calidad','activo','prestamo diario','Jhordy Salinas','modelo1')");
+        stmt.execute("INSERT INTO EQUIPOS_BASICOS (nombre,valor,foto,descripcion,cantidad) VALUES ('cables','5000',null,'un metro de longitud y 0.5 centimetros de diametro',500)");      
+        stmt.execute("INSERT INTO EQUIPOS_BASICOS (nombre,valor,foto,descripcion,cantidad) VALUES ('antenas','3000',null,'un metro de long',300)");      
+        stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,567,'2015-01-01 00:00:00',null,'prestamo diario')");
+        stmt.execute("INSERT INTO PRESTAMOS (USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) VALUES (124,456,'2015-01-01 00:00:00',null,'prestamo diario')");
+        stmt.execute("INSERT INTO PRESTAMOS_BASICOS (USUARIOS_id,EQUIPOS_BASICOS_nombre,fechaExpedicion,fechaVencimiento,tipoPrestamo,cantidadPrestada) VALUES (124,'cables','2015-01-01 00:00:00','2015-01-01 03:00:00','prestamo 24 horas',10)");
+        stmt.execute("INSERT INTO PRESTAMOS_BASICOS (USUARIOS_id,EQUIPOS_BASICOS_nombre,fechaExpedicion,fechaVencimiento,tipoPrestamo,cantidadPrestada) VALUES (124,'antenas','2015-01-01 00:00:00','2015-01-01 03:00:00','prestamo 24 horas',10)");
+        conn.commit();
+        conn.close();
+*/
     //Prueba 2: un usuario con prestamos de equipos normales, pero sin prestamos de eqipos basicos con rol de estudiante y laboratorista
     @Test
     public void TwoTest() throws SQLException, ServicesException{
@@ -227,7 +249,5 @@ public class RegistroDevolucionTest {
         //prueba
         assertEquals(ans.toString(),Jhordy.toString());       
     }
-    
-    //Prueba 5:
     
 }
