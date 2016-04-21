@@ -30,8 +30,8 @@
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
                         <p:panel style="width:200px">
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{Equipos.botonRegistrarEquipoEnInventario}" action="#{Equipos.accionBotonRegistrarUnEquipo()}"/>
-                            <p:commandButton value="Registrar Una Devolucion" rendered="#{Equipos.botonRegistrarUnaDevolucion}" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
+                            <p:commandButton value="Registrar Una Devolucion" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="/laboratorista/registrarunadevolucion"/>
 
                         </p:panel>
                     </p:layoutUnit>
@@ -60,7 +60,7 @@
                             </p:dataTable>
                             
                             <p:panelGrid columns="3">
-                                <h:outputLabel value="Introduzca modelo a buscar" />
+                                <h:outputLabel value="Introduzca el nombre del modelo a buscar" />
                                 <h:inputText value="#{Equipos.modeloABuscar}"/>
                                 <p:commandButton value="Buscar" actionListener="#{Equipos.accionBotonBuscarModelo()}" update="form0" />
                             </p:panelGrid>

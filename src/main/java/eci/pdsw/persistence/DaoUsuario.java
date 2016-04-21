@@ -26,4 +26,5 @@ public interface DaoUsuario {
     
     public Set<PrestamoUsuario> loadPrestamos() throws PersistenceException;
     
+    public Set<Usuario> loadUsuarios();
 }

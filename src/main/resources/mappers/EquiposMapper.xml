@@ -114,7 +114,16 @@
         SELECT pre.USUARIOS_id as usuario_id,pre.EQUIPOS_serial as equipo_serial,pre.fechaExpedicion,pre.fechaVencimiento,pre.tipoPrestamo FROM PRESTAMOS as pre;
     </select>
     
-    
+    <select id='loadUsuarios' parameterType='map' resultMap='UsuarioResult'>
+        SELECT us.id,us.nombre,us.correo,us.contrasena,
+               pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,
+               preb.EQUIPOS_BASICOS_nombre as preb_equipoBasico_nombre,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo,preb.cantidadPrestada as preb_cantidadPrestada,
+               rol.ROLES_rol as rol_rol_r 
+        FROM  USUARIOS as us 
+                       left join PRESTAMOS as pre on us.id=pre.USUARIOS_id
+                       left join PRESTAMOS_BASICOS as preb on  us.id=preb.USUARIOS_id
+                       left join ROLES_USUARIOS as rol on us.id=rol.USUARIOS_id
+    </select>
     
     
 </mapper>

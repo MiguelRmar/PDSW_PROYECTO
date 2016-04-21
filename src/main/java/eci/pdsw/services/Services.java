@@ -116,6 +116,13 @@ public class Services {
         df.commitTransaction();
         df.endSession();
     }  
-    
+    public Set<Usuario> loadUsuarios(){
+        DaoFactory df= DaoFactory.getInstance(properties);
+        df.beginSession();
+        Set<Usuario> usuarios = df.getDaoUsuario().loadUsuarios();
+        df.commitTransaction();
+        df.endSession();
+        return usuarios;
+    }
     
 }
