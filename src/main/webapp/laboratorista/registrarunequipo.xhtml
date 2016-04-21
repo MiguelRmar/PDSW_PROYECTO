@@ -61,19 +61,45 @@
                             
                             <p:panelGrid columns="3">
                                 <h:outputLabel value="Introduzca el nombre del modelo a buscar" />
-                                <h:inputText value="#{Equipos.modeloABuscar}"/>
+                                <h:inputText value="#{Equipos.nombreDeModelo}"/>
                                 <p:commandButton value="Buscar" actionListener="#{Equipos.accionBotonBuscarModelo()}" update="form0" />
                             </p:panelGrid>
-                            <h:form id="form1">
-                            <h:outputText id="value1" value="#{Equipos.textoSalidaModelo}" rendered="#{Equipos.textoLuegoConsultarModelo}" />
-                           </h:form>
-                            
-
+                            <br/>
+                            <br/>
+                            <h:form id="form1" rendered="#{Equipos.yaBusqueModelo}">
+                            <h:outputText id="value1" value="#{Equipos.textoSalidaModelo}"/>
+                            <br/>
+                            <p:commandButton value="Crear Equipo" rendered="#{Equipos.elModeloYaExiste}" onclick="PF('crearEquipo').show();"/>
+                            <p:commandButton value="Crear Modelo" rendered="#{Equipos.elModeloNoExiste}" onclick="PF('crearModelo').show();"/>
+                            </h:form> 
                         </p:panel>       
                     </p:layoutUnit>
                 </p:layout>
             </p:panel>
         </h:form>
-           
+        
+        
+        <p:dialog header="Crear Equipo" widgetVar="crearEquipo" modal="true" height="100">
+            
+        </p:dialog>
+                            
+        <p:dialog header="Crear Modelo" modal="true" widgetVar="crearModelo" height="350">
+            <p:panel style="height:250px">               
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="Clase: " />
+                    <h:inputText value="#{Equipos.claseModelo}"/>
+                    <h:outputLabel value="Vida util en horas: " />
+                    <h:inputText value="#{Equipos.vidaUtilEnHorasModelo}"/>
+                    <h:outputLabel value="Valor comercial: " />
+                    <h:inputText value="#{Equipos.valorComercialModelo}"/>
+                    <h:outputLabel value="Esta asegurado?: " />
+                    <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" />
+                    <h:outputLabel value="Imagen: " />
+                    <p:selectBooleanCheckbox />
+                </p:panelGrid>                
+            </p:panel>
+            <br/>
+            <p:commandButton value="Crear Modelo"/>
+        </p:dialog>       
     </h:body>
 </html>
