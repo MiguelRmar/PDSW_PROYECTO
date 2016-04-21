@@ -12,13 +12,15 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+
 @ManagedBean(name = "loginBean")
-@ViewScoped
+@SessionScoped
 public class ShiroLoginBean implements Serializable {
 private static final Logger log = LoggerFactory.getLogger(ShiroLoginBean.class);
 private String username;
@@ -39,42 +41,51 @@ return SecurityUtils.getSubject();
 * Try and authenticate the user
 */
 public void doLogin() {
-Subject subject = SecurityUtils.getSubject();
-UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword(), getRememberMe());
-try {
-subject.login(token);
-if (subject.hasRole("laboratorista")) {
-    botonRegistrarEquipoEnInventario=true;
-    botonRegistrarUnaDevolucion=true;
-    FacesContext.getCurrentInstance().getExternalContext().redirect("usuario.xhtml");
-}
-else {
-FacesContext.getCurrentInstance().getExternalContext().redirect("principal.xhtml");
-}
-}
-catch (UnknownAccountException ex) {
-facesError("Unknown account");
-log.error(ex.getMessage(), ex);
-}
-catch (IncorrectCredentialsException ex) {
-facesError("Wrong password");
-log.error(ex.getMessage(), ex);
-}
-catch (LockedAccountException ex) {
-facesError("Locked account");
-log.error(ex.getMessage(), ex);
-}
-catch (AuthenticationException ex) {
-facesError("Unknown error: " + ex.getMessage());
-log.error(ex.getMessage(), ex);
-}
-catch (IOException ex){
-facesError("Unknown error: " + ex.getMessage());
-log.error(ex.getMessage(), ex);
-}
-finally {
-token.clear();
-}
+    Subject subject = SecurityUtils.getSubject();
+    UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
+    try {
+        subject.login(token);
+        if (subject.hasRole("laboratorista")) {
+            botonRegistrarEquipoEnInventario=true;
+            botonRegistrarUnaDevolucion=true;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
+        }
+        else if (subject.hasRole("administrador")) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
+        }
+        else if (subject.hasRole("profesor")) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
+        }
+        else if (subject.hasRole("estudiante")) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
+        }
+        else {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("principal.xhtml");
+        }
+    }
+    catch (UnknownAccountException ex) {
+        facesError("Unknown account");
+        log.error(ex.getMessage(), ex);
+    }
+    catch (IncorrectCredentialsException ex) {
+    facesError("Wrong password");
+    log.error(ex.getMessage(), ex);
+    }
+    catch (LockedAccountException ex) {
+    facesError("Locked account");
+    log.error(ex.getMessage(), ex);
+    }
+    catch (AuthenticationException ex) {
+    facesError("Unknown error: " + ex.getMessage());
+    log.error(ex.getMessage(), ex);
+    }
+    catch (IOException ex){
+    facesError("Unknown error: " + ex.getMessage());
+    log.error(ex.getMessage(), ex);
+    }
+    finally {
+    token.clear();
+    }
 }
 /**
 * Adds a new SEVERITY_ERROR FacesMessage for the ui

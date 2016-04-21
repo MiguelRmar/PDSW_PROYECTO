@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -23,7 +24,9 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ServicioEquiposElectronicatobean implements Serializable{
     
-    private static ServicioEquiposElectronicatobean instance;
+    @ManagedProperty(value = "#{loginBean}")    
+    private ShiroLoginBean loginBean;
+
     //Pagina principal
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private String medidaLargo=demeLargo();
@@ -32,7 +35,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
     //pagina usuario
     private List<Modelo> listaModelos;
-    private int id;
+    private String id;
     private String nombre;
     private String correo;
     
@@ -63,23 +66,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         textoSalidaModelo="siii el modelo si existe, yei";
         //CONSULTAR A VER SI EL MODELO YA EXISTE EL MODELO ES LA VARIABLE modeloABuscar
         
-    }
-    /**
-     * 
-     */
-    public String accionBotonRegistrarUnaDevolucion(){
-        return "registrarunadevolucion";
-    }
-    
-    /**
-     * 
-     */
-    public String accionBotonRegistrarUnEquipo(){
-        return "registrarunequipo";
-    }
-   
-
-    
+    }    
    
     /**
      * @return the medidaLargo
@@ -112,15 +99,16 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     /**
      * @return the id
      */
-    public int getId() {
+    public String getId() {
+        id=getLoginBean().getUsername();
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        id=getLoginBean().getUsername();
     }
 
     /**
@@ -209,16 +197,19 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void setTextoSalidaModelo(String textoSalidaModelo) {
         this.textoSalidaModelo = textoSalidaModelo;
     }
-    
-    
+
     /**
-     * get instance
+     * @return the loginBean
      */
-    public static ServicioEquiposElectronicatobean getCurrentInstance(){
-        if (instance==null){
-            instance= new ServicioEquiposElectronicatobean();
-        }
-        return instance;
-    
+    public ShiroLoginBean getLoginBean() {
+        return loginBean;
     }
+
+    /**
+     * @param loginBean the loginBean to set
+     */
+    public void setLoginBean(ShiroLoginBean loginBean) {
+        this.loginBean = loginBean;
+    }
+    
 }
