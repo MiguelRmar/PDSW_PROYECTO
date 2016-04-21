@@ -12,8 +12,11 @@ import java.awt.Toolkit;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
+
 
 /**
  *
@@ -41,7 +44,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String modeloABuscar;
     private boolean textoLuegoConsultarModelo=false;
     private String textoSalidaModelo;
-            
+    
+    
+    //pagina registrarUnaDevolucion
     
     
     
@@ -68,6 +73,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * 
      */
     public String accionBotonRegistrarUnaDevolucion(){
+        
         return "registrarunadevolucion";
     }
     
@@ -135,6 +141,15 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    /**
+     * Accede a la base de datos para traer el nombre de usuario
+     * @return retorna el nombre de usuario que tiene el equipo en prestamo 
+     */
+    public String getNombreUsuario(){
+        this.nombre = "            ";
+        return nombre;
     }
 
     /**
@@ -221,4 +236,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         return instance;
     
     }
+    
+    
+    
 }

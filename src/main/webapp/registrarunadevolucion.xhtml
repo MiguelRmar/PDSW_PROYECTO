@@ -30,16 +30,46 @@
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
-                        <p:panel style="width:200px">
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{Equipos.botonRegistrarEquipoEnInventario}" action="#{Equipos.accionBotonRegistrarUnEquipo()}"/>
-                            <p:commandButton value="Registrar Una Devolucion" rendered="#{Equipos.botonRegistrarUnaDevolucion}" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+                        <p:panel style="width:220px">
+                            <p:commandButton value="Registrar Equipo En Inventario" action="#{Equipos.accionBotonRegistrarUnEquipo()}"/>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Registrar Una Devolución" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
 
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
-                        <p:panel >
-
-                        </p:panel>       
+                        <p:panel  header = "Equipo" style="height: 150px">
+                            <p:panelGrid columns="6">
+                                <p:outputLabel value="Serial:" />
+                                <p:inputText />
+                                <p:commandButton value ="OK" />
+                                <p:outputLabel value="Usuario:" />
+                                <h:outputText value ="#{Equipos.nombreUsuario}"  style= " height: 150px" />
+                                
+                                                                                             
+                            </p:panelGrid>  
+                        </p:panel> 
+                        <br/>
+                        <p:commandButton value="Devolver" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+                        <br/>
+                        <br/>
+                        <p:panel header ="Equipos Basicos" style="height: 150px">
+                            <p:panelGrid columns="6">
+                                <p:outputLabel value="Codigo Estudiante:" />
+                                <p:inputText />
+                                <p:outputLabel value="Tipo Equipo:" />
+                                <p:inputText />
+                                <p:outputLabel value="Número de items:" />
+                                <p:inputText />
+                                
+                                
+                            </p:panelGrid>
+                        </p:panel>
+                        
+                        <br/>
+                        <p:commandButton value="Devolver" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+                        
                     </p:layoutUnit>
                 </p:layout>
             </p:panel>
@@ -47,3 +77,4 @@
            
     </h:body>
 </html>
+
