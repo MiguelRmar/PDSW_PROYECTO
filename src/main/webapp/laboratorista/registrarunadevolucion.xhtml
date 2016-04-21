@@ -30,22 +30,21 @@
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
-<<<<<<< HEAD:src/main/webapp/registrarunadevolucion.xhtml
+
                         <p:panel style="width:220px">
                             <p:commandButton value="Registrar Equipo En Inventario" action="#{Equipos.accionBotonRegistrarUnEquipo()}"/>
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Una Devolución" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
-=======
+
                         <p:panel style="width:200px">
                             <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
                             <p:commandButton value="Registrar Una Devolucion" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="/laboratorista/registrarunadevolucion"/>
->>>>>>> f463969a049e18650022c4acb1ef07bbe75e5bce:src/main/webapp/laboratorista/registrarunadevolucion.xhtml
+
 
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
-<<<<<<< HEAD:src/main/webapp/registrarunadevolucion.xhtml
                         <p:panel  header = "Equipo" style="height: 150px">
                             <p:panelGrid columns="6">
                                 <p:outputLabel value="Serial:" />
@@ -76,12 +75,8 @@
                         
                         <br/>
                         <p:commandButton value="Devolver" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
-                        
-=======
-                        <p:panel >
-                          
-                        </p:panel>       
->>>>>>> f463969a049e18650022c4acb1ef07bbe75e5bce:src/main/webapp/laboratorista/registrarunadevolucion.xhtml
+                           
+
                     </p:layoutUnit>
                 </p:layout>
             </p:panel>

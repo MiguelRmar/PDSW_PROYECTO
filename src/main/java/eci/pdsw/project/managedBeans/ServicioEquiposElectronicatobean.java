@@ -44,12 +44,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
             
     //pagina registrarUnEquipo
-    private String modeloABuscar;
-    private boolean textoLuegoConsultarModelo=false;
+    private String nombreDeModelo;
+    private boolean elModeloYaExiste=false;
     private String textoSalidaModelo;
-    
-    
-    //pagina registrarUnaDevolucion
+
+    private boolean yaBusqueModelo=false;
+    private boolean elModeloNoExiste=false;
+    //datos para un modelo nuevo
+    private String claseModelo;
+    private int vidaUtilEnHorasModelo;
+    private int valorComercialModelo;
+    private boolean estaAseguradoModelo;
+    private String fotoModelo;
+            
+
     
     
     
@@ -61,39 +69,29 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         return screenSize.width+"px";
     }
     
+    
+    
     /**
      * 
      */
-    
     public void accionBotonBuscarModelo(){
-        textoLuegoConsultarModelo=true;
-        System.out.println("entro");
-        textoSalidaModelo="siii el modelo si existe, yei";
-        //CONSULTAR A VER SI EL MODELO YA EXISTE EL MODELO ES LA VARIABLE modeloABuscar
+        //CONSULTAR A VER SI EL MODELO YA EXISTE EL NOMBRE DEL MODELO ES LA VARIABLE modeloABuscar
+        if(false){//mira si el modelo existe
+            setElModeloYaExiste(true);
+            setYaBusqueModelo(true);
+            setElModeloNoExiste(false);
+            textoSalidaModelo="siii el modelo si existe, yei";
+        }
+        else{ // el modelo no existe
+            setElModeloYaExiste(false);
+            setYaBusqueModelo(true);
+            setElModeloNoExiste(true);
+            textoSalidaModelo="el modelo no existe,:c";
+        }
         
-<<<<<<< HEAD
-    }
-    /**
-     * 
-     */
-    public String accionBotonRegistrarUnaDevolucion(){
-        
-        return "registrarunadevolucion";
-    }
-    
-    /**
-     * 
-     */
-    public String accionBotonRegistrarUnEquipo(){
-        return "registrarunequipo";
-    }
-   
 
-    
-=======
-    }    
->>>>>>> f463969a049e18650022c4acb1ef07bbe75e5bce
-   
+    }   
+
     /**
      * @return the medidaLargo
      */
@@ -141,7 +139,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the nombre
      */
     public String getNombre() {
-        return nombre;
+        return "Carlos Andres Sanchez Venegas";
     }
 
     /**
@@ -164,7 +162,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the correo
      */
     public String getCorreo() {
-        return correo;
+        return "carlos.sanchez-v@mail.escuelaing.edu.co";
     }
 
     /**
@@ -192,34 +190,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     }
 
     /**
-     * @return the modeloABuscar
-     */
-    public String getModeloABuscar() {
-        return modeloABuscar;
-    }
-
-    /**
-     * @param modeloABuscar the modeloABuscar to set
-     */
-    public void setModeloABuscar(String modeloABuscar) {
-        this.modeloABuscar = modeloABuscar;
-    }
-
-    /**
-     * @return the textoLuegoConsultarModelo
-     */
-    public boolean isTextoLuegoConsultarModelo() {
-        return textoLuegoConsultarModelo;
-    }
-
-    /**
-     * @param textoLuegoConsultarModelo the textoLuegoConsultarModelo to set
-     */
-    public void setTextoLuegoConsultarModelo(boolean textoLuegoConsultarModelo) {
-        this.textoLuegoConsultarModelo = textoLuegoConsultarModelo;
-    }
-
-    /**
      * @return the textoSalidaModelo
      */
     public String getTextoSalidaModelo() {
@@ -239,10 +209,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public ShiroLoginBean getLoginBean() {
         return loginBean;
     }
-<<<<<<< HEAD
-    
-    
-=======
 
     /**
      * @param loginBean the loginBean to set
@@ -250,6 +216,133 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void setLoginBean(ShiroLoginBean loginBean) {
         this.loginBean = loginBean;
     }
->>>>>>> f463969a049e18650022c4acb1ef07bbe75e5bce
+
+    /**
+     * @return the elModeloYaExiste
+     */
+    public boolean isElModeloYaExiste() {
+        return elModeloYaExiste;
+    }
+
+    /**
+     * @param elModeloYaExiste the elModeloYaExiste to set
+     */
+    public void setElModeloYaExiste(boolean elModeloYaExiste) {
+        this.elModeloYaExiste = elModeloYaExiste;
+    }
+
+    /**
+     * @return the yaBusqueModelo
+     */
+    public boolean isYaBusqueModelo() {
+        return yaBusqueModelo;
+    }
+
+
+    /**
+     * @param yaBusqueModelo the yaBusqueModelo to set
+     */
+    public void setYaBusqueModelo(boolean yaBusqueModelo) {
+        this.yaBusqueModelo = yaBusqueModelo;
+    }
+
+    /**
+     * @return the elModeloNoExiste
+     */
+    public boolean isElModeloNoExiste() {
+        return elModeloNoExiste;
+    }
+
+    /**
+     * @param elModeloNoExiste the elModeloNoExiste to set
+     */
+    public void setElModeloNoExiste(boolean elModeloNoExiste) {
+        this.elModeloNoExiste = elModeloNoExiste;
+    }
+
+    /**
+     * @return the nombreDeModelo
+     */
+    public String getNombreDeModelo() {
+        return nombreDeModelo;
+    }
+
+    /**
+     * @param nombreDeModelo the nombreDeModelo to set
+     */
+    public void setNombreDeModelo(String nombreDeModelo) {
+        this.nombreDeModelo = nombreDeModelo;
+    }
+
+ 
+    /**
+     * @return the claseModelo
+     */
+    public String getClaseModelo() {
+        return claseModelo;
+    }
+
+    /**
+     * @param claseModelo the claseModelo to set
+     */
+    public void setClaseModelo(String claseModelo) {
+        this.claseModelo = claseModelo;
+    }
+
+    /**
+     * @return the vidaUtilEnHorasModelo
+     */
+    public int getVidaUtilEnHorasModelo() {
+        return vidaUtilEnHorasModelo;
+    }
+
+    /**
+     * @param vidaUtilEnHorasModelo the vidaUtilEnHorasModelo to set
+     */
+    public void setVidaUtilEnHorasModelo(int vidaUtilEnHorasModelo) {
+        this.vidaUtilEnHorasModelo = vidaUtilEnHorasModelo;
+    }
+
+    /**
+     * @return the valorComercialModelo
+     */
+    public int getValorComercialModelo() {
+        return valorComercialModelo;
+    }
+
+    /**
+     * @param valorComercialModelo the valorComercialModelo to set
+     */
+    public void setValorComercialModelo(int valorComercialModelo) {
+        this.valorComercialModelo = valorComercialModelo;
+    }
+
+    /**
+     * @return the estaAseguradoModelo
+     */
+    public boolean isEstaAseguradoModelo() {
+        return estaAseguradoModelo;
+    }
+
+    /**
+     * @param estaAseguradoModelo the estaAseguradoModelo to set
+     */
+    public void setEstaAseguradoModelo(boolean estaAseguradoModelo) {
+        this.estaAseguradoModelo = estaAseguradoModelo;
+    }
+
+    /**
+     * @return the fotoModelo
+     */
+    public String getFotoModelo() {
+        return fotoModelo;
+    }
+
+    /**
+     * @param fotoModelo the fotoModelo to set
+     */
+    public void setFotoModelo(String fotoModelo) {
+        this.fotoModelo = fotoModelo;
+    }
     
 }
