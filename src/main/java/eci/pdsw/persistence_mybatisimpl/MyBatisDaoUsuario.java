@@ -34,5 +34,9 @@ public class MyBatisDaoUsuario implements DaoUsuario{
     public Set<PrestamoUsuario> loadPrestamos() throws PersistenceException {
         return emap.loadPrestamos();
     }
+    @Override
+    public Set<Usuario> loadUsuarios() {
+        return emap.loadUsuarios();
+    }
     
 }
