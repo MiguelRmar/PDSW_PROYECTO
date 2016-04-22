@@ -16,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 
@@ -56,6 +57,15 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int valorComercialModelo;
     private boolean estaAseguradoModelo;
     private String fotoModelo;
+    //datos para equipo nuevo
+    private int serialEquipo;
+    private String nombreEquipo;
+    private int placaEquipo;
+    private String marcaEquipo;
+    private String descripcionEquipo;
+    private String estadoEquipo;
+    private String subEstadoEquipo;
+    private String proveedorEquipo;
             
 
     
@@ -70,7 +80,19 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     }
     
     
+    public void mensajeCreacionEquipoExitoso(){
+        
+        //mira si se hizo el registro bien
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
+        
+    }
     
+    public void mensajeCreacionModeloExitoso(){
+        
+        //mira si se hizo el registro bien
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el modelo con exito"));
+        
+    }
     /**
      * 
      */
@@ -343,6 +365,118 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setFotoModelo(String fotoModelo) {
         this.fotoModelo = fotoModelo;
+    }
+
+    /**
+     * @return the serialEquipo
+     */
+    public int getSerialEquipo() {
+        return serialEquipo;
+    }
+
+    /**
+     * @param serialEquipo the serialEquipo to set
+     */
+    public void setSerialEquipo(int serialEquipo) {
+        this.serialEquipo = serialEquipo;
+    }
+
+    /**
+     * @return the nombreEquipo
+     */
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
+
+    /**
+     * @param nombreEquipo the nombreEquipo to set
+     */
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
+    }
+
+    /**
+     * @return the placaEquipo
+     */
+    public int getPlacaEquipo() {
+        return placaEquipo;
+    }
+
+    /**
+     * @param placaEquipo the placaEquipo to set
+     */
+    public void setPlacaEquipo(int placaEquipo) {
+        this.placaEquipo = placaEquipo;
+    }
+
+    /**
+     * @return the marcaEquipo
+     */
+    public String getMarcaEquipo() {
+        return marcaEquipo;
+    }
+
+    /**
+     * @param marcaEquipo the marcaEquipo to set
+     */
+    public void setMarcaEquipo(String marcaEquipo) {
+        this.marcaEquipo = marcaEquipo;
+    }
+
+    /**
+     * @return the descripcionEquipo
+     */
+    public String getDescripcionEquipo() {
+        return descripcionEquipo;
+    }
+
+    /**
+     * @param descripcionEquipo the descripcionEquipo to set
+     */
+    public void setDescripcionEquipo(String descripcionEquipo) {
+        this.descripcionEquipo = descripcionEquipo;
+    }
+
+    /**
+     * @return the estadoEquipo
+     */
+    public String getEstadoEquipo() {
+        return estadoEquipo;
+    }
+
+    /**
+     * @param estadoEquipo the estadoEquipo to set
+     */
+    public void setEstadoEquipo(String estadoEquipo) {
+        this.estadoEquipo = estadoEquipo;
+    }
+
+    /**
+     * @return the subEstadoEquipo
+     */
+    public String getSubEstadoEquipo() {
+        return subEstadoEquipo;
+    }
+
+    /**
+     * @param subEstadoEquipo the subEstadoEquipo to set
+     */
+    public void setSubEstadoEquipo(String subEstadoEquipo) {
+        this.subEstadoEquipo = subEstadoEquipo;
+    }
+
+    /**
+     * @return the proveedorEquipo
+     */
+    public String getProveedorEquipo() {
+        return proveedorEquipo;
+    }
+
+    /**
+     * @param proveedorEquipo the proveedorEquipo to set
+     */
+    public void setProveedorEquipo(String proveedorEquipo) {
+        this.proveedorEquipo = proveedorEquipo;
     }
     
 }

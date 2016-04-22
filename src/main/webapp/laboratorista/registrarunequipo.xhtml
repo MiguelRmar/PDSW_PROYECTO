@@ -30,9 +30,10 @@
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
                         <p:panel style="width:200px">
+                            <h:form>
                             <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
                             <p:commandButton value="Registrar Una Devolucion" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="/laboratorista/registrarunadevolucion"/>
-
+                            </h:form>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit  position="center">
@@ -60,9 +61,11 @@
                             </p:dataTable>
                             
                             <p:panelGrid columns="3">
+                                
                                 <h:outputLabel value="Introduzca el nombre del modelo a buscar" />
-                                <h:inputText value="#{Equipos.nombreDeModelo}"/>
+                                <h:inputText value="#{Equipos.nombreDeModelo}" required="true"/>
                                 <p:commandButton value="Buscar" actionListener="#{Equipos.accionBotonBuscarModelo()}" update="form0" />
+                                
                             </p:panelGrid>
                             <br/>
                             <br/>
@@ -79,27 +82,69 @@
         </h:form>
         
         
-        <p:dialog header="Crear Equipo" widgetVar="crearEquipo" modal="true" height="100">
-            
+        <p:dialog header="Crear Equipo" widgetVar="crearEquipo" modal="true" height="450" draggable="false" resizable="false">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Serial: " />
+                    <h:inputText value="#{Equipos.serialEquipo}" required="true"/>
+                    <h:outputLabel value="Nombre: " />
+                    <h:inputText value="#{Equipos.nombreEquipo}" required="true"/>
+                    <h:outputLabel value="Placa: " />
+                    <h:inputText value="#{Equipos.placaEquipo}" required="true"/>
+                    <h:outputLabel value="Marca: " />
+                    <h:inputText value="#{Equipos.marcaEquipo}" required="true"/>
+                    <h:outputLabel value="Descripcion: " />
+                    <h:inputTextarea value="#{Equipos.descripcionEquipo}" required="true"/>
+                    <h:outputLabel value="Estado: " />
+                    <h:inputText value="#{Equipos.estadoEquipo}" required="true"/>
+                    <h:outputLabel value="Sub estado: " />
+                    <h:inputText value="#{Equipos.subEstadoEquipo}" required="true"/>
+                    <h:outputLabel value="Proveedor: " />
+                    <h:inputText value="#{Equipos.proveedorEquipo}" required="true"/>
+                    <h:outputLabel value="Modelo: " />
+                    <h:outputLabel value="#{Equipos.nombreDeModelo}"/>
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Crear Equipo" oncomplete="/restricted/usuario;PF('crearEquipo').hide();" actionListener="#{Equipos.mensajeCreacionEquipoExitoso}"/>
+            </h:form>
         </p:dialog>
                             
-        <p:dialog header="Crear Modelo" modal="true" widgetVar="crearModelo" height="350">
-            <p:panel style="height:250px">               
-                <p:panelGrid columns="2">
-                    <h:outputLabel value="Clase: " />
-                    <h:inputText value="#{Equipos.claseModelo}"/>
-                    <h:outputLabel value="Vida util en horas: " />
-                    <h:inputText value="#{Equipos.vidaUtilEnHorasModelo}"/>
-                    <h:outputLabel value="Valor comercial: " />
-                    <h:inputText value="#{Equipos.valorComercialModelo}"/>
-                    <h:outputLabel value="Esta asegurado?: " />
-                    <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" />
+        <p:dialog header="Crear Modelo" modal="true" widgetVar="crearModelo" height="350" draggable="false" resizable="false">
+            <h:form>              
+                <p:panelGrid columns="3" id="grid">
+                    <h:outputLabel for="claseModelo" value="Clase: " />
+                    <h:inputText value="#{Equipos.claseModelo}" required="true" id="claseModelo"/>
+                    <p:message for="claseModelo"/>
+                    <h:outputLabel value="Vida util en horas: " for="vidaUtilEnHorasModelo"/>
+                    <h:inputText value="#{Equipos.vidaUtilEnHorasModelo}" required="true" id="vidaUtilEnHorasModelo"/>
+                    <p:message for="vidaUtilEnHorasModelo"/>
+                    <h:outputLabel value="Valor comercial: " for="valorComercialModelo"/>
+                    <h:inputText value="#{Equipos.valorComercialModelo}" required="true" id="valorComercialModelo"/>
+                    <p:message for="valorComercialModelo"/>
+                    <h:outputLabel value="Esta asegurado?: " for="estaAseguradoModelo" />
+                    <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" required="true" id="estaAseguradoModelo"/>
+                    <p:message for="estaAseguradoModelo"/>
                     <h:outputLabel value="Imagen: " />
                     <p:selectBooleanCheckbox />
+                    <br/>
+                    <p:commandButton value="Crear Modelo"  oncomplete="PF('crearModelo').hide();PF('crearEquipoLuegoDeModelo').show();" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" update="grid"/>
+                    
                 </p:panelGrid>                
-            </p:panel>
-            <br/>
-            <p:commandButton value="Crear Modelo"/>
-        </p:dialog>       
+            
+            </h:form>
+        </p:dialog>
+        
+        
+        <p:dialog modal="true" widgetVar="crearEquipoLuegoDeModelo" height="70" header="Que desea hacer ahora?" draggable="false" resizable="false">
+            <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:commandButton value="Crear Equipo" onclick="PF('crearEquipoLuegoDeModelo').hide();PF('crearEquipo').show()"/>
+                    <p:commandButton value="Salir" oncomplete="PF('crearEquipoLuegoDeModelo').hide();" action="/restricted/usuario"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        
+        
     </h:body>
 </html>
