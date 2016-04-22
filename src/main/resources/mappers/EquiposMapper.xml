@@ -124,7 +124,10 @@
                        left join PRESTAMOS_BASICOS as preb on  us.id=preb.USUARIOS_id
                        left join ROLES_USUARIOS as rol on us.id=rol.USUARIOS_id
     </select>
-    
+    <insert id='registrarEquipoNuevo'>
+        INSERT INTO EQUIPOS(serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre)
+        VALUES(#{equipo.getSerial()},#{equipo.getNombre()},#{equipo.getPlaca()},#{equipo.getMarca)},#{equipo.getDescripcion()},#{equipo.getEstado()},#{equipo.getSubEstado()},#{equipo.getProveedor()});
+    </insert>
     
 </mapper>
     

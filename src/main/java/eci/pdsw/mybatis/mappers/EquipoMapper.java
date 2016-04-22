@@ -45,4 +45,7 @@ public interface EquipoMapper {
     public void registrarEquipoNuevo(@Param("equipo")Equipo e);
 
     public Set<Usuario> loadUsuarios();
+    
+    public Set<Modelo> loadModelos();
+    
 }

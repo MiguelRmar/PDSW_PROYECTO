@@ -49,5 +49,6 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         EquipoBasico eqb=emap.loadEquipoBasicoByName(nombre);
         return eqb;
     }
+
     
 }
