@@ -14,7 +14,7 @@
         
         <h:form>
             <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
-            <p:panel style="background-image: url(/imagenes/logoeci.jpg);height:#{Equipos.medidaLargo}" > 
+            <p:panel style="background-image: url(/imagenes/logoeci.jpg);height:850px" > 
                 <p:layout>
                     <p:layoutUnit position="north">
                         <p:panel header="Datos de usuario" style="height:150px">
@@ -36,7 +36,7 @@
                             <p:commandButton value="Registrar Una Devolucion" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="/laboratorista/registrarunadevolucion"/>
                         </p:panel>
                     </p:layoutUnit>
-                    <p:layoutUnit position="center">
+                    <p:layoutUnit position="center" visible="false" >
                         <p:panel >
 
                         </p:panel>       

@@ -31,12 +31,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     @ManagedProperty(value = "#{loginBean}")    
     private ShiroLoginBean loginBean;
 
-    //Pagina principal
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private String medidaLargo=demeLargo();
-    private String medidaAncho=demeAncho();
-    
-    
+        
     //pagina usuario
     private List<Modelo> listaModelos;
     private String id;
@@ -71,28 +66,28 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
     
     
-    
-    private String demeLargo(){
-        return (screenSize.height-100)+"px";
-    }
-    private String demeAncho(){
-        return screenSize.width+"px";
-    }
+
     
     
     public void mensajeCreacionEquipoExitoso(){
         
         //mira si se hizo el registro bien
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
-        
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('crearEquipo').hide();");
     }
     
     public void mensajeCreacionModeloExitoso(){
         
-        //mira si se hizo el registro bien
+       //mira si se hizo bien el registro
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el modelo con exito"));
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('crearModelo').hide();PF('crearEquipoLuegoDeModelo').show();");
         
     }
+    
+    
+    
     /**
      * 
      */
@@ -114,33 +109,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
 
     }   
 
-    /**
-     * @return the medidaLargo
-     */
-    public String getMedidaLargo() {
-        return medidaLargo;
-    }
-
-    /**
-     * @param medidaLargo the medidaLargo to set
-     */
-    public void setMedidaLargo(String medidaLargo) {
-        this.medidaLargo = medidaLargo;
-    }
-
-    /**
-     * @return the medidaAncho
-     */
-    public String getMedidaAncho() {
-        return medidaAncho;
-    }
-
-    /**
-     * @param medidaAncho the medidaAncho to set
-     */
-    public void setMedidaAncho(String medidaAncho) {
-        this.medidaAncho = medidaAncho;
-    }
+   
 
     /**
      * @return the id
