@@ -68,7 +68,28 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
 
     
-    
+    public void limpiarPaginaRegistrarUnEquipo(){
+        nombreDeModelo=null;
+        elModeloYaExiste=false;
+        textoSalidaModelo=null;
+        yaBusqueModelo=false;
+        elModeloNoExiste=false;
+        //datos para un modelo nuevo
+        claseModelo=null;
+        vidaUtilEnHorasModelo=0;
+        valorComercialModelo=0;
+        estaAseguradoModelo=false;
+        fotoModelo=null;
+        //datos para equipo nuevo
+        serialEquipo=0;
+        nombreEquipo=null;
+        placaEquipo=0;
+        marcaEquipo=null;
+        descripcionEquipo=null;
+        estadoEquipo=null;
+        subEstadoEquipo=null;
+        proveedorEquipo=null;
+    }
     public void mensajeCreacionEquipoExitoso(){
         
         //mira si se hizo el registro bien
