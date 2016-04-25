@@ -23,7 +23,7 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         emap=session.getMapper(EquipoMapper.class);
     }
     @Override
-    public void registroEquipoNuevo(Equipo e) {
+    public void registrarEquipoNuevo(Equipo e) {
         emap.registrarEquipoNuevo(e);
     }
 
@@ -48,6 +48,11 @@ public class MyBatisDaoEquipo implements DaoEquipo{
     public EquipoBasico loadEquipoBasicoByName(String nombre) {
         EquipoBasico eqb=emap.loadEquipoBasicoByName(nombre);
         return eqb;
+    }
+
+    @Override
+    public void registrarEquipoBasicoNuevo(EquipoBasico eq) {
+        emap.registrarEquipoBasicoNuevo(eq);
     }
 
     

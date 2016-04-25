@@ -192,7 +192,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public List<Modelo> getListaModelos() {
         listaModelos=new ArrayList<Modelo>();
-        listaModelos.add(new Modelo("modelo nuevo","alta",1,1,true,"sin foto"));
+        listaModelos.add(new Modelo("modelo nuevo","alta",1,1,true,null));
         return listaModelos;
     }
 

@@ -11,16 +11,10 @@ import eci.pdsw.entities.Modelo;
 import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.persistence.DaoFactory;
 import eci.pdsw.entities.Usuario;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.PersistenceException;
 
 /**
  *
@@ -70,9 +64,9 @@ public class Services {
     }
     
     public Modelo loadModeloByName(String nombre){
-        DaoFactory df=DaoFactory.getInstance(properties);
+        DaoFactory df=  DaoFactory.getInstance(properties);
         df.beginSession();
-        Modelo ans =df.getDaoEquipo().loadModeloByName(nombre);
+        Modelo ans = df.getDaoEquipo().loadModeloByName(nombre);
         df.endSession();
         return ans;
     }
@@ -105,7 +99,7 @@ public class Services {
     public void registroEquipoNuevo(Equipo equipo){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
-        df.getDaoEquipo().registroEquipoNuevo(equipo);
+        df.getDaoEquipo().registrarEquipoNuevo(equipo);
         df.commitTransaction();
         df.endSession();
     }
@@ -116,6 +110,14 @@ public class Services {
         df.commitTransaction();
         df.endSession();
     }  
+    public void registroEquipoBasicoNuevo(EquipoBasico equipobasico){
+        DaoFactory df=DaoFactory.getInstance(properties);
+        df.beginSession();
+        df.getDaoEquipo().registrarEquipoBasicoNuevo(equipobasico);
+        df.commitTransaction();
+        df.endSession();
+    }
+    
     public Set<Usuario> loadUsuarios(){
         DaoFactory df= DaoFactory.getInstance(properties);
         df.beginSession();

@@ -21,9 +21,11 @@ public interface DaoEquipo {
     
     public EquipoBasico loadEquipoBasicoByName(String nombre);
     
-    public void registroEquipoNuevo(Equipo e);
+    public void registrarEquipoNuevo(Equipo e);
     
     public void registrarModeloNuevo(Modelo m);
+    
+    public void registrarEquipoBasicoNuevo(EquipoBasico eq);
     
     
 }

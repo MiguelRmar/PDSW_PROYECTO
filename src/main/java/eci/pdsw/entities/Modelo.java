@@ -19,14 +19,14 @@ public class Modelo {
     private int vidaUtilHoras;
     private int valorComercial;
     private Boolean seguro;
-    private String foto;
+    private byte[] foto;
     private Set<Equipo> equipos;
     
     public Modelo() {
         this.equipos = new LinkedHashSet<>();
     }
     
-    public Modelo(String nombre, String clase, int vidaUtilHoras, int valorComercial, Boolean seguro, String foto) {
+    public Modelo(String nombre, String clase, int vidaUtilHoras, int valorComercial, Boolean seguro, byte[] foto) {
         this.nombre = nombre;
         this.clase = clase;
         this.vidaUtilHoras = vidaUtilHoras;
@@ -109,14 +109,14 @@ public class Modelo {
     /**
      * @return the foto
      */
-    public String getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
     /**
      * @param foto the foto to set
      */
-    public void setFoto(String foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 

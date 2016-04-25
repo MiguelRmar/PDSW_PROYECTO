@@ -124,11 +124,18 @@
                        left join PRESTAMOS_BASICOS as preb on  us.id=preb.USUARIOS_id
                        left join ROLES_USUARIOS as rol on us.id=rol.USUARIOS_id
     </select>
+    
     <insert id='registrarEquipoNuevo'>
-        INSERT INTO EQUIPOS(serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre)
-        VALUES(#{equipo.getSerial()},#{equipo.getNombre()},#{equipo.getPlaca()},#{equipo.getMarca)},#{equipo.getDescripcion()},#{equipo.getEstado()},#{equipo.getSubEstado()},#{equipo.getProveedor()});
+        INSERT into EQUIPOS(serial,nombre,placa,marca,descripcion,estado,subestados,proveedor) values (#{equipo.serial},#{equipo.nombre},#{equipo.placa},#{equipo.marca},#{equipo.descripcion},#{equipo.estado},#{equipo.subEstado},#{equipo.proveedor});
     </insert>
     
+    <insert id='registrarModeloNuevo'>
+        INSERT into MODELOS(nombre,clase,vidaUtil,valor,seguro,foto) values (#{modelo.nombre},#{modelo.clase},#{modelo.vidaUtilHoras},#{modelo.valorComercial},#{modelo.seguro},#{modelo.foto})
+    </insert>
+    
+    <insert id='registrarEquipoBasicoNuevo'>
+        INSERT into EQUIPOS_BASICOS(nombre,valor,foto,descripcion,cantidad) values (#{equipoBasico.nombre},#{equipoBasico.valor},#{equipoBasico.foto},#{equipoBasico.descripcion},#{equipoBasico.cantidadInventario})
+    </insert>
 </mapper>
     
     
