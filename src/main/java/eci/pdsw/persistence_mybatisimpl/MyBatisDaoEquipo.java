@@ -11,6 +11,7 @@ import eci.pdsw.entities.Modelo;
 import eci.pdsw.mybatis.mappers.EquipoMapper;
 import org.apache.ibatis.session.SqlSession;
 import eci.pdsw.persistence.DaoEquipo;
+import java.util.Set;
 
 /**
  *
@@ -53,6 +54,12 @@ public class MyBatisDaoEquipo implements DaoEquipo{
     @Override
     public void registrarEquipoBasicoNuevo(EquipoBasico eq) {
         emap.registrarEquipoBasicoNuevo(eq);
+    }
+
+    @Override
+    public Set<Modelo> loadModelos() {
+        Set<Modelo> ans=emap.loadModelos();
+        return ans;
     }
 
     

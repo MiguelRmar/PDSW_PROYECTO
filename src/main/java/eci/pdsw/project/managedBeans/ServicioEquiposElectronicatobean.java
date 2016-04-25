@@ -6,13 +6,21 @@
  */
 package eci.pdsw.project.managedBeans;
 
+import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
+import eci.pdsw.services.Services;
+import eci.pdsw.services.ServicesException;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -42,6 +50,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
             
     //pagina registrarUnEquipo
+    private Services services=Services.getInstance("h2-applicationconfig.properties");
     private String nombreDeModelo;
     private boolean elModeloYaExiste=false;
     private String textoSalidaModelo;
@@ -64,11 +73,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String subEstadoEquipo;
     private String proveedorEquipo;
             
-
-    
-    
-    
-
     
     public void limpiarPaginaRegistrarUnEquipo(){
         nombreDeModelo=null;
@@ -93,20 +97,31 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         proveedorEquipo=null;
     }
     public void mensajeCreacionEquipoExitoso(){
-        
-        //mira si se hizo el registro bien
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
+        try{
+          Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
+          //services.registroEquipoNuevo(equipoNuevo);
+          FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo con exito"));
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('crearEquipo').hide();");
+        }
+        catch(Exception e){
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el Equipo ,sucedio algo inesperado"));
+        }
+        
     }
     
     public void mensajeCreacionModeloExitoso(){
         
        //mira si se hizo bien el registro
+       try{
+        Modelo modeloNuevo=new Modelo(nombreDeModelo, claseModelo, vidaUtilEnHorasModelo, valorComercialModelo, estaAseguradoModelo, fotoModelo.getContents());
+        //services.registroModeloNuevo(modeloNuevo);
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el modelo con exito"));
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('crearModelo').hide();PF('crearEquipoLuegoDeModelo').show();");
-        
+       }catch(Exception e){
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
+       }
     }
     
     
@@ -116,17 +131,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void accionBotonBuscarModelo(){
         //CONSULTAR A VER SI EL MODELO YA EXISTE EL NOMBRE DEL MODELO ES LA VARIABLE modeloABuscar
-        if(false){//mira si el modelo existe
+        Modelo modelo=null;
+        //modelo=services.loadModeloByName(nombreDeModelo);
+        
+        if(modelo!=null){//mira si el modelo existe
             setElModeloYaExiste(true);
             setYaBusqueModelo(true);
             setElModeloNoExiste(false);
-            textoSalidaModelo="siii el modelo si existe, yei";
+            textoSalidaModelo="El modelo ya existe, cree el equipo de este modelo";
         }
         else{ // el modelo no existe
             setElModeloYaExiste(false);
             setYaBusqueModelo(true);
             setElModeloNoExiste(true);
-            textoSalidaModelo="el modelo no existe,:c";
+            textoSalidaModelo="El modelo no existe, Registre el modelo";
         }
         
 
@@ -191,8 +209,15 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the listaConsultas
      */
     public List<Modelo> getListaModelos() {
+        
+        
         listaModelos=new ArrayList<Modelo>();
-        listaModelos.add(new Modelo("modelo nuevo","alta",1,1,true,null));
+        /**
+        Set<Modelo> conjunto=services.loadModelos();
+        Modelo[] listaModelo=new Modelo[conjunto.size()];
+        conjunto.toArray(listaModelo);
+        listaModelos=Arrays.asList(listaModelo);
+        */
         return listaModelos;
     }
 

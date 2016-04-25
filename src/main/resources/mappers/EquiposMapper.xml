@@ -114,6 +114,11 @@
         SELECT pre.USUARIOS_id as usuario_id,pre.EQUIPOS_serial as equipo_serial,pre.fechaExpedicion,pre.fechaVencimiento,pre.tipoPrestamo FROM PRESTAMOS as pre;
     </select>
     
+     <select id='loadModelos' parameterType='map' resultMap='PrestamoUsuarioResult'>
+        SELECT * FROM MODELOS
+    </select>
+    
+    
     <select id='loadUsuarios' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
                pre.EQUIPOS_serial as pre_equipo_serial,pre.fechaExpedicion as pre_fechaExpedicion,pre.fechaVencimiento as pre_fechaVencimiento,pre.tipoPrestamo as pre_tipoPrestamo,
@@ -136,6 +141,7 @@
     <insert id='registrarEquipoBasicoNuevo'>
         INSERT into EQUIPOS_BASICOS(nombre,valor,foto,descripcion,cantidad) values (#{equipoBasico.nombre},#{equipoBasico.valor},#{equipoBasico.foto},#{equipoBasico.descripcion},#{equipoBasico.cantidadInventario})
     </insert>
+    
 </mapper>
     
     

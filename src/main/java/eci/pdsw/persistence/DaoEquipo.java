@@ -8,6 +8,7 @@ package eci.pdsw.persistence;
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.EquipoBasico;
 import eci.pdsw.entities.Modelo;
+import java.util.Set;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface DaoEquipo {
     public void registrarModeloNuevo(Modelo m);
     
     public void registrarEquipoBasicoNuevo(EquipoBasico eq);
+    
+    public Set<Modelo> loadModelos();
     
     
 }

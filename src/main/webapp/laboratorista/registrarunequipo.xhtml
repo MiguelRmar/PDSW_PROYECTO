@@ -122,7 +122,7 @@
                     <h:outputLabel value="Esta asegurado?: " for="estaAseguradoModelo" />
                     <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" id="estaAseguradoModelo"/>
                     <h:outputLabel value="Imagen: " />
-                    <p:fileUpload value="#{Equipos.fotoModelo}" mode="simple" />
+                    <p:fileUpload value="#{Equipos.fotoModelo}" mode="simple" required="true"/>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Crear Modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2" ajax="false"/>
