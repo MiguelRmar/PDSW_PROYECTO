@@ -204,8 +204,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void accionRealizarDevolucion(){
         PrestamoUsuario prestamoActual = null; 
         //falta probar que la siguiente linea retorne la hora actual
-        java.sql.Date horaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         Services se = Services.getInstance("h2-applicationconfig.properties");
+        java.sql.Date horaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());     
         /*Equipo equipoActual = se.loadEquipoBySerial(serialADevolver);
         Set<Usuario> usuarios = se.loadUsuarios();
         Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
