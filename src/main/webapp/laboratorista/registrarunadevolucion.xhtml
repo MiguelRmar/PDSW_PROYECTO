@@ -9,10 +9,8 @@
          <title>registrar una devolucion</title>
     </h:head>
 
-    <h:body>
-        
-        
-        <h:form>
+    <h:body> 
+        <h:form id="devo_form">
             <p:panel style="background-image: url(/imagenes/logoeci.jpg);height:850px" > 
                 <p:layout>
                     <p:layoutUnit position="north">
@@ -36,25 +34,25 @@
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Una Devolución" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
-
-                        <p:panel style="width:200px">
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
-                            <p:commandButton value="Registrar Una Devolucion" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="/laboratorista/registrarunadevolucion"/>
-
-
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
                         <p:panel  header = "Equipo" style="height: 150px">
                             <p:panelGrid columns="6">
-                                <p:outputLabel value="Serial:" />
-                                <p:inputText />
-                                <p:commandButton value ="OK" />
-                                <p:outputLabel value="Usuario:" />
-                                <h:outputText value ="#{Equipos.nombreUsuario}"  style= " height: 150px" />
-                                
-                                                                                             
+                                <h:outputLabel value="Serial:" />
+                                <h:inputText value="#{Equipos.serialADevolver}" required="true"/>
+                                <p:commandButton value ="Enviar" actionListener="#{Equipos.accionBuscarDevolucion()}" update="devo_form"/>                                                                                                                      
                             </p:panelGrid>  
+                            <br/>
+                            <br/>
+                            <h:form id="devo_form1" rendered="#{Equipos.yaBusqueEquipoADevolver}">
+                            <h:outputText id="value1" value="#{Equipos.textoSalidaEquipoADevolver}"/>
+                            <br/>
+                            <h:outputLabel value="Usuario:" rendered="#{Equipos.serialDevolucionEncontrado}"> </h:outputLabel>
+                            <h:outputText value ="#{Equipos.usuarioDevolucion.nombre}" rendered="#{Equipos.serialDevolucionEncontrado}" style= " height: 150px" />   
+                            <p:commandButton value="Confirmar devolución" rendered="#{Equipos.serialDevolucionEncontrado}" actionListener="#{Equipos.accionRealizarDevolucion()}"/>
+                            <h:outputText value ="#{Equipos.mensajeSerialDevolucionEncontrado}" rendered="#{Equipos.serialDevolucionNoEncontrado}"/>
+                            </h:form>
                         </p:panel> 
                         <br/>
                         <p:commandButton value="Devolver" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
@@ -62,12 +60,12 @@
                         <br/>
                         <p:panel header ="Equipos Basicos" style="height: 150px">
                             <p:panelGrid columns="6">
-                                <p:outputLabel value="Codigo Estudiante:" />
-                                <p:inputText />
-                                <p:outputLabel value="Tipo Equipo:" />
-                                <p:inputText />
-                                <p:outputLabel value="Número de items:" />
-                                <p:inputText />
+                                <h:outputLabel value="Codigo Estudiante:" />
+                                <h:inputText />
+                                <h:outputLabel value="Tipo Equipo:" />
+                                <h:inputText />
+                                <h:outputLabel value="Número de items:" />
+                                <h:inputText />
                                 
                                 
                             </p:panelGrid>

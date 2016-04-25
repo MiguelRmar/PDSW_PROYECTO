@@ -8,6 +8,9 @@ package eci.pdsw.project.managedBeans;
 
 import eci.pdsw.entities.Equipo;
 import eci.pdsw.entities.Modelo;
+import eci.pdsw.entities.PrestamoEquipo;
+import eci.pdsw.entities.PrestamoUsuario;
+import eci.pdsw.entities.Usuario;
 import eci.pdsw.services.Services;
 import eci.pdsw.services.ServicesException;
 import java.awt.Dimension;
@@ -19,6 +22,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
@@ -72,7 +76,61 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String estadoEquipo;
     private String subEstadoEquipo;
     private String proveedorEquipo;
-            
+    //datos para una devolucion de un equipo
+    private boolean yaBusqueEquipoADevolver=false;
+    private boolean serialDevolucionEncontrado=false;
+    private boolean serialDevolucionNoEncontrado=true;
+    private String textoSalidaEquipoADevolver;
+    private int serialADevolver;
+    private Usuario usuarioDevolucion;
+    
+    public boolean getYaBusqueEquipoADevolver() {
+        return yaBusqueEquipoADevolver;
+    }
+
+    public void setYaBusqueEquipoADevolver(boolean yaBusqueEquipoADevolver) {
+        this.yaBusqueEquipoADevolver = yaBusqueEquipoADevolver;
+    }
+
+    public boolean getSerialDevolucionEncontrado() {
+        return serialDevolucionEncontrado;
+    }
+
+    public void setSerialDevolucionEncontrado(boolean serialDevolucionEncontrado) {
+        this.serialDevolucionEncontrado = serialDevolucionEncontrado;
+    }
+
+    public boolean getSerialDevolucionNoEncontrado() {
+        return serialDevolucionNoEncontrado;
+    }
+
+    public void setSerialDevolucionNoEncontrado(boolean serialDevolucionNoEncontrado) {
+        this.serialDevolucionNoEncontrado = serialDevolucionNoEncontrado;
+    }
+    public Usuario getUsuarioDevolucion() {
+        return usuarioDevolucion;
+    }
+
+    public void setUsuarioDevolucion(Usuario usuarioDevolucion) {
+        this.usuarioDevolucion = usuarioDevolucion;
+    }
+
+    public String getTextoSalidaEquipoADevolver() {
+        return textoSalidaEquipoADevolver;
+    }
+
+    public void setTextoSalidaEquipoADevolver(String textoSalidaEquipoADevolver) {
+        this.textoSalidaEquipoADevolver = textoSalidaEquipoADevolver;
+    }
+
+    public int getSerialADevolver() {
+        return serialADevolver;
+    }
+
+    public void setSerialADevolver(int serialADevolver) {
+        this.serialADevolver = serialADevolver;
+    }
+    
     
     public void limpiarPaginaRegistrarUnEquipo(){
         nombreDeModelo=null;
@@ -123,7 +181,47 @@ public class ServicioEquiposElectronicatobean implements Serializable{
            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
        }
     }
-    
+    public void accionBuscarDevolucion(){
+        Services se = Services.getInstance("h2-applicationconfig.properties");
+        /*Set<Usuario> usuarios = se.loadUsuarios();
+        for(Usuario u:usuarios){
+            Set<PrestamoUsuario> prestamos = u.getPrestamos();
+            for (PrestamoUsuario p: prestamos){
+                if(p.getEquipo_serial()==serialADevolver && p.getFechaExpedicion()==null){
+                    setUsuarioDevolucion(u);      
+                    setSerialDevolucionEncontrado(true);
+                    setSerialDevolucionNoEncontrado(false);
+                    textoSalidaEquipoADevolver="El usuario con el prestamo del equipo fue encontrado exitosamente";
+                }
+            }
+        }
+        */
+        if (usuarioDevolucion==null){
+            textoSalidaEquipoADevolver="No fue encontrado un usuario con el presente equipo en prestamo";
+        }
+        setYaBusqueEquipoADevolver(true);
+    }
+    public void accionRealizarDevolucion(){
+        PrestamoUsuario prestamoActual = null; 
+        //falta probar que la siguiente linea retorne la hora actual
+        java.sql.Date horaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        Services se = Services.getInstance("h2-applicationconfig.properties");
+        /*Equipo equipoActual = se.loadEquipoBySerial(serialADevolver);
+        Set<Usuario> usuarios = se.loadUsuarios();
+        Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
+            for (PrestamoUsuario p: prestamos){
+                if(p.getEquipo_serial()==serialADevolver && p.getFechaExpedicion()==null){
+                    p.setFechaVencimiento(horaActual);
+            }
+        }  
+        Set<PrestamoEquipo> prestamose = equipoActual.getPrestamos();
+        for (PrestamoEquipo p:prestamose){
+            if(p.getUsuario_id() == usuarioDevolucion.getId()){
+                p.setFechaExpedicion(horaActual);
+            }
+        
+        }*/
+    }
     
     
     /**
@@ -495,6 +593,5 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setProveedorEquipo(String proveedorEquipo) {
         this.proveedorEquipo = proveedorEquipo;
-    }
-    
+    }   
 }
