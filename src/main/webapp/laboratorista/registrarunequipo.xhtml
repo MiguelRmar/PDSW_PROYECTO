@@ -111,7 +111,7 @@
         </p:dialog>
         </h:form>                    
         <p:dialog header="Crear Modelo" modal="true" widgetVar="crearModelo" height="350"  resizable="false" closable="true">
-            <h:form>              
+            <h:form enctype="multipart/form-data">              
                 <h:panelGrid columns="2" id="panelGrid2" cellpadding="5">
                     <h:outputLabel for="claseModelo"  value="Clase: " />
                     <h:inputText value="#{Equipos.claseModelo}" required="true" id="claseModelo"/>
@@ -122,9 +122,10 @@
                     <h:outputLabel value="Esta asegurado?: " for="estaAseguradoModelo" />
                     <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" id="estaAseguradoModelo"/>
                     <h:outputLabel value="Imagen: " />
+                    <p:fileUpload value="#{Equipos.fotoModelo}" mode="simple" />
                 </h:panelGrid>
                 <br/>
-                <p:commandButton value="Crear Modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2"/>
+                <p:commandButton value="Crear Modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2" ajax="false"/>
             </h:form>
         </p:dialog>
         

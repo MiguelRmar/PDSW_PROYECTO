@@ -9,6 +9,7 @@ package eci.pdsw.project.managedBeans;
 import eci.pdsw.entities.Modelo;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 
 
 /**
@@ -51,7 +53,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int vidaUtilEnHorasModelo;
     private int valorComercialModelo;
     private boolean estaAseguradoModelo;
-    private String fotoModelo;
+    private UploadedFile fotoModelo;
     //datos para equipo nuevo
     private int serialEquipo;
     private String nombreEquipo;
@@ -346,15 +348,16 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     /**
      * @return the fotoModelo
      */
-    public String getFotoModelo() {
+    public UploadedFile getFotoModelo() {
         return fotoModelo;
     }
 
     /**
      * @param fotoModelo the fotoModelo to set
      */
-    public void setFotoModelo(String fotoModelo) {
+    public void setFotoModelo(UploadedFile fotoModelo) {
         this.fotoModelo = fotoModelo;
+        
     }
 
     /**
