@@ -24,8 +24,8 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         emap=session.getMapper(EquipoMapper.class);
     }
     @Override
-    public void registrarEquipoNuevo(Equipo e) {
-        emap.registrarEquipoNuevo(e);
+    public void registrarEquipoNuevo(Equipo e,String m) {
+        emap.registrarEquipoNuevo(e,m);
     }
 
     @Override

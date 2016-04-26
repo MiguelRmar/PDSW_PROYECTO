@@ -51,30 +51,26 @@
                             <h:outputLabel value="Usuario:" rendered="#{Equipos.serialDevolucionEncontrado}"> </h:outputLabel>
                             <h:outputText value ="#{Equipos.usuarioDevolucion.nombre}" rendered="#{Equipos.serialDevolucionEncontrado}" style= " height: 150px" />   
                             <p:commandButton value="Confirmar devolución" rendered="#{Equipos.serialDevolucionEncontrado}" actionListener="#{Equipos.accionRealizarDevolucion()}"/>
-                            <h:outputText value ="#{Equipos.mensajeSerialDevolucionEncontrado}" rendered="#{Equipos.serialDevolucionNoEncontrado}"/>
                             </h:form>
                         </p:panel> 
                         <br/>
-                        <p:commandButton value="Devolver" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
                         <br/>
                         <br/>
                         <p:panel header ="Equipos Basicos" style="height: 150px">
                             <p:panelGrid columns="6">
                                 <h:outputLabel value="Codigo Estudiante:" />
-                                <h:inputText />
+                                <h:inputText value="#{Equipos.condigoEstudianteBasicos}"/>
                                 <h:outputLabel value="Tipo Equipo:" />
-                                <h:inputText />
+                                <h:inputText value="#{Equipos.nombreEquipoBásico}"/>
                                 <h:outputLabel value="Número de items:" />
-                                <h:inputText />
+                                <h:inputText value="#{Equipos.cantidadDevuelta}"/>
                                 
                                 
                             </p:panelGrid>
                         </p:panel>
                         
                         <br/>
-                        <p:commandButton value="Devolver" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
-                           
-
+                        <p:commandButton value="Devolver" action="#{Equipos.accionRealizarDevolucionBasica()}"/>
                     </p:layoutUnit>
                 </p:layout>
             </p:panel>

@@ -42,7 +42,7 @@ public interface EquipoMapper {
     
     public void registrarModeloNuevo(@Param("modelo")Modelo m);
     
-    public void registrarEquipoNuevo(@Param("equipo")Equipo e);
+    public void registrarEquipoNuevo(@Param("equipo")Equipo e,@Param("modelo") String modelo);
 
     public void registrarEquipoBasicoNuevo(@Param("equipoBasico")EquipoBasico eb);
     

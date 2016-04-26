@@ -96,10 +96,10 @@ public class Services {
         return ans;
     }
     
-    public void registroEquipoNuevo(Equipo equipo){
+    public void registroEquipoNuevo(Equipo equipo,String modelo){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
-        df.getDaoEquipo().registrarEquipoNuevo(equipo);
+        df.getDaoEquipo().registrarEquipoNuevo(equipo,modelo);
         df.commitTransaction();
         df.endSession();
     }

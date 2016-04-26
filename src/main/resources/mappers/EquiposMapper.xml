@@ -87,11 +87,11 @@
     </select>
     
     <select id='loadModeloByName' parameterType='map' resultMap='ModeloResult'> 
-        SELECT mod.nombre,mod.clase,mod.vidaUtil,mod.valor,mod.seguro,mod.foto,
+        SELECT mode.nombre,mode.clase,mode.vidaUtil,mode.valor,mode.seguro,mode.foto,
                eq.serial as eq_serial,eq.nombre as eq_nombre,eq.placa as eq_placa,eq.marca as eq_marca,eq.descripcion as eq_descripcion,eq.estado as eq_estado,eq.subestados as eq_subEstado,eq.proveedor as eq_proveedor
-        FROM MODELOS as mod
-                     left join EQUIPOS as eq on mod.nombre=eq.Modelos_nombre
-        WHERE mod.nombre=#{nombremodelo}
+        FROM MODELOS as mode
+                     left join EQUIPOS as eq on mode.nombre=eq.Modelos_nombre
+        WHERE mode.nombre=#{nombremodelo}
     </select>
     
     <select id='loadEquipoBySerial' parameterType='map' resultMap='EquipoResult'>
@@ -114,7 +114,7 @@
         SELECT pre.USUARIOS_id as usuario_id,pre.EQUIPOS_serial as equipo_serial,pre.fechaExpedicion,pre.fechaVencimiento,pre.tipoPrestamo FROM PRESTAMOS as pre;
     </select>
     
-     <select id='loadModelos' parameterType='map' resultMap='PrestamoUsuarioResult'>
+     <select id='loadModelos' parameterType='map' resultMap='ModeloResult'>
         SELECT * FROM MODELOS
     </select>
     
@@ -131,7 +131,7 @@
     </select>
     
     <insert id='registrarEquipoNuevo'>
-        INSERT into EQUIPOS(serial,nombre,placa,marca,descripcion,estado,subestados,proveedor) values (#{equipo.serial},#{equipo.nombre},#{equipo.placa},#{equipo.marca},#{equipo.descripcion},#{equipo.estado},#{equipo.subEstado},#{equipo.proveedor});
+        INSERT into EQUIPOS(serial,nombre,placa,marca,descripcion,estado,subestados,proveedor,Modelos_nombre) values (#{equipo.serial},#{equipo.nombre},#{equipo.placa},#{equipo.marca},#{equipo.descripcion},#{equipo.estado},#{equipo.subEstado},#{equipo.proveedor},#{modelo});
     </insert>
     
     <insert id='registrarModeloNuevo'>

@@ -22,7 +22,7 @@ public interface DaoEquipo {
     
     public EquipoBasico loadEquipoBasicoByName(String nombre);
     
-    public void registrarEquipoNuevo(Equipo e);
+    public void registrarEquipoNuevo(Equipo e,String modelo);
     
     public void registrarModeloNuevo(Modelo m);
     
