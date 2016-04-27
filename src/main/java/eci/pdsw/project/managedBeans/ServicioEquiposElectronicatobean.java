@@ -12,18 +12,13 @@ import eci.pdsw.entities.PrestamoEquipo;
 import eci.pdsw.entities.PrestamoUsuario;
 import eci.pdsw.entities.Usuario;
 import eci.pdsw.services.Services;
-import eci.pdsw.services.ServicesException;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.io.File;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -42,12 +37,29 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class ServicioEquiposElectronicatobean implements Serializable{
 
-    public ServicioEquiposElectronicatobean() {
-        listaModelos=new ArrayList<Modelo>();
+    public ServicioEquiposElectronicatobean() {        
+        listaModelos=new ArrayList<>();
         Set<Modelo> conjunto=services.loadModelos();
         Modelo[] listaModelo=new Modelo[conjunto.size()];
         conjunto.toArray(listaModelo);
         listaModelos=Arrays.asList(listaModelo);
+        //estado y subestado de equipo
+        estados  = new HashMap<>();
+        estados.put("Desactivo", "Desactivo");
+        estados.put("Activo", "Activo");
+        Map<String,String> map;
+        map = new HashMap<>();
+        map.put("Préstamo diario", "Préstamo diario");
+        map.put("Préstamo 24 horas", "Préstamo 24 horas");
+        map.put("Préstamo por semestre", "Préstamo por semestre");
+        map.put("Préstamo indefinido","Préstamo indefinido");
+        map.put("Mantenimiento","Mantenimiento");
+        map.put("En almacén","En almacén");
+        data.put("Activo", map);
+        map = new HashMap<>();
+        map.put("Dado de baja", "Dado de baja");
+        map.put("En reparación","En reparación");
+        data.put("Desactivo", map);   
     }
     
     @ManagedProperty(value = "#{loginBean}")    
@@ -59,14 +71,11 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String id;
     private String nombre;
     private String correo;
-    
-            
     //pagina registrarUnEquipo
     private Services services=Services.getInstance("applicationconfig.properties");
     private String nombreDeModelo;
     private boolean elModeloYaExiste=false;
     private String textoSalidaModelo;
-
     private boolean yaBusqueModelo=false;
     private boolean elModeloNoExiste=false;
     //datos para un modelo nuevo
@@ -84,6 +93,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String estadoEquipo;
     private String subEstadoEquipo;
     private String proveedorEquipo;
+    private Map<String,String> estados;
+    private Map<String,String> subestados;
+    private final Map<String,Map<String,String>> data = new HashMap<>();
     //datos para una devolucion de un equipo normal
     private boolean yaBusqueEquipoADevolver=false;
     private boolean serialDevolucionEncontrado=false;
@@ -118,6 +130,13 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         subEstadoEquipo=null;
         proveedorEquipo=null;
     }
+    public void onEstadoChange() {
+        if(estadoEquipo != null && !estadoEquipo.equals(""))
+            setSubestados(data.get(estadoEquipo));
+        else
+            setSubestados(new HashMap<String, String>());
+    }
+    
     public void mensajeCreacionEquipoExitoso(){
         try{
         Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
@@ -198,7 +217,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void accionBotonBuscarModelo(){
         //CONSULTAR A VER SI EL MODELO YA EXISTE EL NOMBRE DEL MODELO ES LA VARIABLE modeloABuscar
-        Modelo modelo=null;
+        Modelo modelo;
         modelo=services.loadModeloByName(nombreDeModelo);
         if(modelo!=null){//mira si el modelo existe
             setElModeloYaExiste(true);
@@ -275,7 +294,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the listaConsultas
      */
     public List<Modelo> getListaModelos() {
-        listaModelos=new ArrayList<Modelo>();
+        listaModelos=new ArrayList<>();
         Set<Modelo> conjunto=services.loadModelos();
         Modelo[] listaModelo=new Modelo[conjunto.size()];
         conjunto.toArray(listaModelo);
@@ -683,6 +702,34 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setCantidadDevuelta(int cantidadDevuelta) {
         this.cantidadDevuelta = cantidadDevuelta;
+    }
+
+    /**
+     * @return the estados
+     */
+    public Map<String,String> getEstados() {
+        return estados;
+    }
+
+    /**
+     * @param estados the estados to set
+     */
+    public void setEstados(Map<String,String> estados) {
+        this.estados = estados;
+    }
+
+    /**
+     * @return the subestados
+     */
+    public Map<String,String> getSubestados() {
+        return subestados;
+    }
+
+    /**
+     * @param subestados the subestados to set
+     */
+    public void setSubestados(Map<String,String> subestados) {
+        this.subestados = subestados;
     }
       
     

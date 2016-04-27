@@ -95,11 +95,18 @@
                     <h:outputLabel value="Marca: " />
                     <h:inputText value="#{Equipos.marcaEquipo}" required="true" id="marcaEquipo"/>
                     <h:outputLabel value="Descripcion: " />
-                    <h:inputTextarea value="#{Equipos.descripcionEquipo}" required="true" id="descripcionEquipo"/>
+                    <h:inputTextarea value="#{Equipos.descripcionEquipo}" required="true" id="descripcionEquipo" style="width:225px"/>
                     <h:outputLabel value="Estado: " />
-                    <h:inputText value="#{Equipos.estadoEquipo}" required="true" id="estadoEquipo"/>
+                    <p:selectOneMenu value="#{Equipos.estadoEquipo}" required="true" id="estadoEquipo" style="width:225px">
+                            <p:ajax listener="#{Equipos.onEstadoChange}" update="subEstadoEquipo" />
+                            <f:selectItem itemLabel="Seleccione estado" itemValue="" noSelection="true"/>
+                            <f:selectItems value="#{Equipos.estados}"/> 
+                    </p:selectOneMenu>
                     <h:outputLabel value="Sub estado: " />
-                    <h:inputText value="#{Equipos.subEstadoEquipo}" required="true" id="subEstadoEquipo"/>
+                    <p:selectOneMenu value="#{Equipos.subEstadoEquipo}" required="true" id="subEstadoEquipo" style="width:225px">
+                           <f:selectItem itemLabel="Seleccione Subestado" itemValue="" noSelectionOption="true" />
+                           <f:selectItems value="#{Equipos.subestados}" />
+                    </p:selectOneMenu>
                     <h:outputLabel value="Proveedor: " />
                     <h:inputText value="#{Equipos.proveedorEquipo}" required="true" id="proveedorEquipo"/>
                     <h:outputLabel value="Modelo: " />
