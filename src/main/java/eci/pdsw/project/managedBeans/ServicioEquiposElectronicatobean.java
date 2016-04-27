@@ -42,6 +42,16 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         Set<Modelo> conjunto=services.loadModelos();
         Modelo[] listaModelo=new Modelo[conjunto.size()];
         conjunto.toArray(listaModelo);
+        //Ordenado por nombre
+        for(int i=1;i<listaModelo.length;i++){
+            for (int j=0;j<listaModelo.length-i;j++){
+                if (listaModelo[j].getNombre().compareTo(listaModelo[j+1].getNombre())==1){
+                    Modelo aux=listaModelo[j];
+                    listaModelo[j]=listaModelo[j+1];
+                    listaModelo[j+1]=aux;
+                }
+            }
+        }
         listaModelos=Arrays.asList(listaModelo);
         //estado y subestado de equipo
         estados  = new HashMap<>();
@@ -83,7 +93,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int vidaUtilEnHorasModelo;
     private int valorComercialModelo;
     private boolean estaAseguradoModelo;
-    private UploadedFile fotoModelo;
+    private String fotoModelo;
+    private Modelo modeloSeleccionado;
     //datos para equipo nuevo
     private int serialEquipo;
     private String nombreEquipo;
@@ -137,6 +148,15 @@ public class ServicioEquiposElectronicatobean implements Serializable{
             setSubestados(new HashMap<String, String>());
     }
     
+    public String demeIcono(){
+        if(modeloSeleccionado.getSeguro()){
+            return "icon-ok-1";
+        }
+        else{
+            return  "icon-cancel-1";
+        }
+    }
+    
     public void mensajeCreacionEquipoExitoso(){
         try{
         Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
@@ -157,7 +177,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         
        //mira si se hizo bien el registro
        try{
-        Modelo modeloNuevo=new Modelo(nombreDeModelo, claseModelo, vidaUtilEnHorasModelo, valorComercialModelo, estaAseguradoModelo, fotoModelo.getContents());
+        Modelo modeloNuevo=new Modelo(nombreDeModelo, claseModelo, vidaUtilEnHorasModelo, valorComercialModelo, estaAseguradoModelo, fotoModelo);
         services.registroModeloNuevo(modeloNuevo);
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el modelo con exito"));
         RequestContext context = RequestContext.getCurrentInstance();
@@ -211,6 +231,10 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
     }
     
+    
+    public void accionBotoncrearEquipo(String modelo){
+        nombreDeModelo=modelo;
+    }
     
     /**
      * 
@@ -298,6 +322,16 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         Set<Modelo> conjunto=services.loadModelos();
         Modelo[] listaModelo=new Modelo[conjunto.size()];
         conjunto.toArray(listaModelo);
+        //Ordenado por nombre
+        for(int i=1;i<listaModelo.length;i++){
+            for (int j=0;j<listaModelo.length-i;j++){
+                if (listaModelo[j].getNombre().compareTo(listaModelo[j+1].getNombre())==1){
+                    Modelo aux=listaModelo[j];
+                    listaModelo[j]=listaModelo[j+1];
+                    listaModelo[j+1]=aux;
+                }
+            }
+        }
         listaModelos=Arrays.asList(listaModelo);
         return listaModelos;
     }
@@ -454,14 +488,14 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     /**
      * @return the fotoModelo
      */
-    public UploadedFile getFotoModelo() {
+    public String getFotoModelo() {
         return fotoModelo;
     }
 
     /**
      * @param fotoModelo the fotoModelo to set
      */
-    public void setFotoModelo(UploadedFile fotoModelo) {
+    public void setFotoModelo(String fotoModelo) {
         this.fotoModelo = fotoModelo;
         
     }
@@ -730,6 +764,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setSubestados(Map<String,String> subestados) {
         this.subestados = subestados;
+    }
+
+    /**
+     * @return the modeloSeleccionado
+     */
+    public Modelo getModeloSeleccionado() {
+        return modeloSeleccionado;
+    }
+
+    /**
+     * @param modeloSeleccionado the modeloSeleccionado to set
+     */
+    public void setModeloSeleccionado(Modelo modeloSeleccionado) {
+        this.modeloSeleccionado = modeloSeleccionado;
     }
       
     

@@ -28,7 +28,7 @@ CREATE TABLE MODELOS(
     vidaUtil int NOT NULL,
     valor int NOT NULL,
     seguro bool NOT NULL,
-    foto blob NULL,
+    foto varchar(500) NULL,
     PRIMARY KEY (nombre)
 )ENGINE=InnoDB;
 
@@ -54,7 +54,7 @@ CREATE TABLE EQUIPOS (
 CREATE TABLE EQUIPOS_BASICOS (
     nombre varchar(100) NOT NULL,
     valor int NULL,
-    foto blob NULL,
+    foto varchar(500) NULL,
     descripcion varchar(200) NULL,
     cantidad int NOT NULL,
     PRIMARY KEY (nombre)

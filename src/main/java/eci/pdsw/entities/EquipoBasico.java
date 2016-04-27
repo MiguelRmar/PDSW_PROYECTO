@@ -16,7 +16,7 @@ public class EquipoBasico{
 
     private String nombre;
     private int valor;
-    private byte[] foto;
+    private String foto;
     private String descripcion;
     private int cantidadInventario;
     private Set<PrestamoBasicoEquipo> prestamosBasicos;
@@ -25,7 +25,7 @@ public class EquipoBasico{
         this.prestamosBasicos = new LinkedHashSet<>();
     }
     
-    public EquipoBasico(String nombre, int valor, byte[] foto, String descripcion, int cantidadInventario) {
+    public EquipoBasico(String nombre, int valor,String foto, String descripcion, int cantidadInventario) {
         this.nombre = nombre;
         this.valor = valor;
         this.foto = foto;
@@ -67,14 +67,14 @@ public class EquipoBasico{
     /**
      * @return the foto
      */
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
     /**
      * @param foto the foto to set
      */
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

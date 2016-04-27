@@ -115,7 +115,7 @@
     </select>
     
      <select id='loadModelos' parameterType='map' resultMap='ModeloResult'>
-        SELECT * FROM MODELOS
+        SELECT * FROM MODELOS ORDER BY nombre
     </select>
     
     

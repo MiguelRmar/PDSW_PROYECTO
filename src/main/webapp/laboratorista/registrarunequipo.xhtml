@@ -40,34 +40,48 @@
                     <p:layoutUnit  position="center">
                         <p:panel style="border:0;" >
                             
-                            <p:dataTable id="consultaModelo" var="consultaModelo" value="#{Equipos.listaModelos}">
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{consultaModelo.nombre}"/>
-                                </p:column>
-                                <p:column headerText="Vida">
-                                    <h:outputText value="#{consultaModelo.vidaUtilHoras}"/>
-                                </p:column>
-                                <p:column headerText="Valor">
-                                    <h:outputText value="#{consultaModelo.valorComercial}"/>
-                                </p:column>
-                                <p:column headerText="Seguro">
-                                    <h:outputText value="#{consultaModelo.seguro}"/>
-                                </p:column>
-                                <p:column headerText="Foto">
-                                    <h:outputText value="#{consultaModelo.foto}"/>
-                                </p:column>
-                                <p:column headerText="Clase">
-                                    <h:outputText value="#{consultaModelo.clase}"/>
-                                </p:column>
-                            </p:dataTable>
+                            <p:dataGrid var="modelo" value="#{Equipos.listaModelos}" columns="3" rows="6" paginator="true" id="modelos" rowsPerPageTemplate="3,6,12" >  
+                                <f:facet name="header">
+                                    Modelos
+                                </f:facet>
+                                <p:panel header="#{modelo.nombre}" style="text-align:center;">
+                                    <h:panelGrid  style="width:100%;align-items: center">
+                                        <p:graphicImage value="#{modelo.foto}" width="25%" style="max-width:70px; max-height:70px;min-height:70px;min-width:70px"/> 
+                                        <p:commandButton value="Crear Equipo" actionListener="#{Equipos.accionBotoncrearEquipo(modelo.nombre)}" onclick="PF('crearEquipo').show();"  />
+                                        <p:commandLink update=":form0:modeloInfo" oncomplete="PF('modeloInfoDialog').show()" title="Ver detalles">
+                                            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;width:50px;height:50px" />
+                                            <f:setPropertyActionListener value="#{modelo}" target="#{Equipos.modeloSeleccionado}" />
+                                        </p:commandLink>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:dataGrid>
                             
-                            <p:panelGrid columns="3">
-                                
-                                <h:outputLabel value="Introduzca el nombre del modelo a buscar" />
-                                <h:inputText value="#{Equipos.nombreDeModelo}" required="true"/>
-                                <p:commandButton value="Buscar" actionListener="#{Equipos.accionBotonBuscarModelo()}" update="form0" />
-                                
-                            </p:panelGrid>
+                            <p:dialog header="Detalles del modelo" widgetVar="modeloInfoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="true">
+                                <p:outputPanel id="modeloInfo" style="text-align:center;">
+                                    <p:panelGrid  columns="2" rendered="#{not empty Equipos.modeloSeleccionado}" columnClasses="label,value" style="width:50%">
+                                        <f:facet name="header">
+                                            <p:graphicImage name="#{modelo.foto}" width="100%"/> 
+                                        </f:facet>
+
+                                        <h:outputText value="Nombre:" />
+                                        <h:outputText value="#{Equipos.modeloSeleccionado.nombre}" />
+
+                                        <h:outputText value="Clase:" />
+                                        <h:outputText value="#{Equipos.modeloSeleccionado.clase}" />
+
+                                        <h:outputText value="Vida util(horas):" />
+                                        <h:outputText value="#{Equipos.modeloSeleccionado.vidaUtilHoras}"/>
+
+                                        <h:outputText value="Precio(pesos colombianos):" />
+                                        <h:outputText value="$#{Equipos.modeloSeleccionado.valorComercial}" />
+                                        
+                                        <h:outputText value="Seguro:" />
+                                        <p:commandButton disabled="true" icon="#{Equipos.demeIcono()}"/>
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:dialog>
+                            
+           
                             <br/>
                             <br/>
                             <h:form id="form1" rendered="#{Equipos.yaBusqueModelo}">
@@ -99,7 +113,7 @@
                     <h:outputLabel value="Estado: " />
                     <p:selectOneMenu value="#{Equipos.estadoEquipo}" required="true" id="estadoEquipo" style="width:225px">
                             <p:ajax listener="#{Equipos.onEstadoChange}" update="subEstadoEquipo" />
-                            <f:selectItem itemLabel="Seleccione estado" itemValue="" noSelection="true"/>
+                            <f:selectItem itemLabel="Seleccione estado" itemValue="" noSelectionOption="true"/>
                             <f:selectItems value="#{Equipos.estados}"/> 
                     </p:selectOneMenu>
                     <h:outputLabel value="Sub estado: " />
@@ -128,8 +142,8 @@
                     <h:inputText value="#{Equipos.valorComercialModelo}" required="true" id="valorComercialModelo"/>
                     <h:outputLabel value="Esta asegurado?: " for="estaAseguradoModelo" />
                     <p:selectBooleanCheckbox value="#{Equipos.estaAseguradoModelo}" id="estaAseguradoModelo"/>
-                    <h:outputLabel value="Imagen: " />
-                    <p:fileUpload value="#{Equipos.fotoModelo}" mode="simple" required="true"/>
+                    <h:outputLabel value="URL Imagen: " />
+                    <h:inputText value="#{Equipos.fotoModelo}" required="true"/>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Crear Modelo" actionListener="#{Equipos.mensajeCreacionModeloExitoso}" process="@this,panelGrid2" update=":form2" ajax="false"/>
