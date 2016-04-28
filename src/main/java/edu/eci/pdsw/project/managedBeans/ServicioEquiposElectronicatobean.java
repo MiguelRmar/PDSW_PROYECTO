@@ -32,6 +32,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import edu.eci.pdsw.entities.EquipoBasico;
+import edu.eci.pdsw.entities.RolUsuario;
 
 
 
@@ -136,6 +137,13 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String descripcionEquipoBasico;
     private int cantidadEquipoBasico;
     private EquipoBasico equipoBasicoSeleccionado;
+    //datos para realizar un prestamo
+    private int codigoUsuarioPrestamo;
+    private String equipoAPrestar = null;
+    private String nombreUsuarioPrestamo = null;
+    private String correoUsuarioPrestamo = null; 
+    private Set<RolUsuario> rolUsuarioPrestamo = null;
+    
     
     public void limpiarPaginaRegistrarUnEquipo(){
         nombreDeModelo=null;
@@ -354,6 +362,67 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public String getNombreUsuario(){
         this.nombre = "            ";
         return nombre;
+    }
+    
+    /**
+     * @param codigo codigo de usuario a quien se le va a realizar un prestamo
+     */
+    public void setCodigoUsuarioPrestamo(int codigo){
+        this.codigoUsuarioPrestamo = codigo;
+    }
+    
+    /**
+     * @return codigo del usuario a quien se le realiza el prestamo
+     */
+    public int getCodigoUsuarioPrestamo(){
+        return codigoUsuarioPrestamo;
+    }
+    
+    /**
+     * @param Nombre equipo que se desea prestar
+     */
+    public void setEquipoAPrestar(String nombre){
+        this.equipoAPrestar=nombre;
+    }
+    
+    /**
+     * @return equipo en prestamo
+     */
+    public String getEquipoAPrestar(){
+        return equipoAPrestar;
+    }
+    /**
+     * @return Nombre del usuario a quien se le desea prestar los equipos
+     */
+    public String getNombreUsuarioPrestamo(){
+        return nombreUsuarioPrestamo;
+    }
+    
+    /**
+     * @return Correo del usuario a quien se le desea prestar los equipos
+     */
+    public String getCorreoUsuarioPrestamo(){
+        return correoUsuarioPrestamo;
+    }
+    
+    /**
+     * @return Rol del usuario al que se le desea prestar los equipos
+     */
+    public Set<RolUsuario> getRolUsuarioPrestamo(){
+        return rolUsuarioPrestamo;
+    }
+    
+    
+    /**
+     * 
+     */
+    public void AccionBotonUsuarioPrestamo(){
+        Usuario usuario= services.loadUsuarioById(codigoUsuarioPrestamo);
+        nombreUsuarioPrestamo = usuario.getNombre();
+        correoUsuarioPrestamo = usuario.getCorreo();
+        rolUsuarioPrestamo = usuario.getRoles();
+        
+        
     }
 
     /**

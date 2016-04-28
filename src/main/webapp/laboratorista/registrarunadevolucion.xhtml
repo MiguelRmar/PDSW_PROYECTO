@@ -14,7 +14,7 @@
             <p:panel style="height:850px" > 
                 <p:layout>
                     <p:layoutUnit position="north">
-                        <p:panel header="Datos de usuario" style="height:150px">
+                        <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
                            
                             <p:panelGrid columns="2">
                                 <h:outputLabel value="id:" />
@@ -30,13 +30,13 @@
                     <p:layoutUnit position="west">
 
                         <p:panel style="width:220px">
-                            <p:commandButton value="Registrar Equipo En Inventario" action="#{Equipos.accionBotonRegistrarUnEquipo()}"/>
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Una Devolución" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+                            <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Un Prestamo" action="#{Equipos.accionBotonRegistrarUnPrestamo()}"/>
+                            <p:commandButton value="Registrar Un Prestamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">

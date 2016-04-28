@@ -49,6 +49,7 @@ public void doLogin() {
         if (subject.hasRole("laboratorista")) {
             botonRegistrarEquipoEnInventario=true;
             botonRegistrarUnaDevolucion=true;
+            botonRegistrarUnPrestamo=true;
             FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
         }
         else if (subject.hasRole("administrador")) {
