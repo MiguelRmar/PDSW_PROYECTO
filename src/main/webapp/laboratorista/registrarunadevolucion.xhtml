@@ -11,7 +11,6 @@
 
     <h:body> 
         <h:form id="devo_form">
-            <p:panel style="height:850px" > 
                 <p:layout>
                     <p:layoutUnit position="north">
                         <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
@@ -24,7 +23,6 @@
                                 <h:outputLabel value="Correo:" />
                                 <h:outputText value="#{Equipos.correo}"/>
                             </p:panelGrid>
-                            
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
@@ -36,7 +34,9 @@
                             <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Un Prestamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+
+                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
@@ -59,26 +59,21 @@
                         <br/>
                         <br/>
                         <br/>
-                        <p:panel header ="Equipos Basicos" style="height: 150px">
+                        <p:panel header ="Equipos Básicos" style="height: 150px">
                             <p:panelGrid columns="6">
-                                <h:outputLabel value="Codigo Estudiante:" />
+                                <h:outputLabel value="Código Estudiante:" />
                                 <h:inputText value="#{Equipos.condigoEstudianteBasicos}"/>
                                 <h:outputLabel value="Tipo Equipo:" />
                                 <h:inputText value="#{Equipos.nombreEquipoBasico}"/>
                                 <h:outputLabel value="Número de items:" />
                                 <h:inputText value="#{Equipos.cantidadDevuelta}"/>
-                                
-                                
                             </p:panelGrid>
                         </p:panel>
-                        
                         <br/>
                         <p:commandButton value="Devolver" action="#{Equipos.accionRealizarDevolucionBasica()}"/>
                     </p:layoutUnit>
                 </p:layout>
-            </p:panel>
         </h:form>
-           
     </h:body>
 </html>
 

@@ -24,10 +24,23 @@ public class Equipo {
     private String proveedor;
     private Set<PrestamoEquipo> prestamos;
     
+    /**
+     * 
+     */
     public Equipo() {
         this.prestamos = new LinkedHashSet<>();
     }
     
+    /**
+     * @param serial
+     * @param nombre
+     * @param placa
+     * @param marca
+     * @param descripcion
+     * @param estado
+     * @param subEstado
+     * @param proveedor 
+     */
     public Equipo(int serial, String nombre, int placa, String marca, String descripcion, String estado, String subEstado, String proveedor) {
         this.serial = serial;
         this.nombre = nombre;

@@ -30,26 +30,81 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface EquipoMapper {
     
+    /**
+     * carga un usuario dado el id de este
+     * @param id, el identificador del usuario a cargar
+     * @return el usuario identificado con ese id
+     */
     public Usuario loadUsuarioById(@Param("idusuario") int id);
     
+    /**
+     * carga un modelo dado el nombre de este
+     * @param nombre, el nombre del modelo a cargar
+     * @return el modelo identificado con ese nombre
+     */
     public Modelo loadModeloByName(@Param("nombremodelo")String nombre);
     
+    /**
+     * carga un equipo dado el serial de este
+     * @param serial, el serial del equipo a cargar
+     * @return el equipo identificado con ese serial
+     */
     public Equipo loadEquipoBySerial(@Param("serialequipo")int serial);
     
+    /**
+     * carga un equipo basico dado el nombre de este
+     * @param nombre, el nombre del equipo basico a cargar
+     * @return el equipo basico identificado con ese nombre
+     */
     public EquipoBasico loadEquipoBasicoByName(@Param("nombreequipobasico")String nombre);
     
+    /**
+     * cargar todos los prestamos
+     * @return un contenedor con todos los prestamos que se han hecho
+     */
     public Set<PrestamoUsuario> loadPrestamos();
     
-    public void registrarModeloNuevo(@Param("modelo")Modelo m);
-    
-    public void registrarEquipoNuevo(@Param("equipo")Equipo e,@Param("modelo") String modelo);
-
-    public void registrarEquipoBasicoNuevo(@Param("equipoBasico")EquipoBasico eb);
-    
+     /**
+     * cargar todos los usuarios
+     * @return un contenedor con todos los usuarios que estan registrados
+     */
     public Set<Usuario> loadUsuarios();
     
+    /**
+     * cargar todos los modelos
+     * @return un contenedor con todos los modelos que se han registrado
+     */
     public Set<Modelo> loadModelos();
     
+    /**
+     * cargar todos los equipos basicos
+     * @return un contenedor con todos los equipos basicos que se han registrado
+     */
     public Set<EquipoBasico> loadEquiposBasicos();
     
+    /**
+     * actualiza la cantidad de un  equipo basico
+     * @param equipoBasico el equipo a actualizar
+     * @param cantidad la nueva cantidad del equipo basico 
+     */
+    public void updateEquipoBasico(@Param("equipoBasico")String equipoBasico,@Param("cantidad")int cantidad);
+
+    /**
+     * registrar un modelo nuevo dado el modelo como entidad (objeto)
+     * @param m, el modelo a registrar en la bd
+     */
+    public void registrarModeloNuevo(@Param("modelo")Modelo m);
+    
+    /**
+     * registrar un equipo nuevo dado el equipo como entidad (objeto)
+     * @param e, el equipo a registrar en la bd
+     * @param modelo, el modelo al que pertenece este equipo
+     */
+    public void registrarEquipoNuevo(@Param("equipo")Equipo e,@Param("modelo") String modelo);
+
+    /**
+     * registrar un equipo basico nuevo dado el equipo basico como entidad (objeto)
+     * @param eb, el equipo basico a registrar en la bd
+     */
+    public void registrarEquipoBasicoNuevo(@Param("equipoBasico")EquipoBasico eb);    
 }

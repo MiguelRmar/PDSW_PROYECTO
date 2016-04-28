@@ -63,7 +63,7 @@
         <result property='valor' column='valor'/>
         <result property='foto' column='foto'/>
         <result property='descripcion' column='descripcion'/>
-        <result property='cantidadInventario' column='cantidadInventario'/>
+        <result property='cantidadInventario' column='cantidad'/>
         <collection property='prestamosBasicos' ofType='PrestamoBasicoEquipo' resultMap="PrestamoBasicoEquipoResult" columnPrefix="preb_"></collection>        
     </resultMap>
     
@@ -108,7 +108,7 @@
     </select>
     
     <select id='loadEquipoBasicoByName' parameterType='map' resultMap='EquipoBasicoResult'>
-        SELECT eqb.nombre,eqb.valor,eqb.foto,eqb.descripcion,eqb.cantidad as cantidadInventario, 
+        SELECT eqb.nombre,eqb.valor,eqb.foto,eqb.descripcion,eqb.cantidad as cantidad, 
                preb.USUARIOS_id as preb_usuario_id,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo,preb.cantidadPrestada as preb_cantidadPrestada
         FROM EQUIPOS_BASICOS as eqb
                      left join PRESTAMOS_BASICOS as preb on eqb.nombre=preb.EQUIPOS_BASICOS_nombre
@@ -149,6 +149,10 @@
     <insert id='registrarEquipoBasicoNuevo'>
         INSERT into EQUIPOS_BASICOS(nombre,valor,foto,descripcion,cantidad) values (#{equipoBasico.nombre},#{equipoBasico.valor},#{equipoBasico.foto},#{equipoBasico.descripcion},#{equipoBasico.cantidadInventario})
     </insert>
+    
+    <update id='updateEquipoBasico'>
+        UPDATE EQUIPOS_BASICOS SET cantidad=#{cantidad} WHERE nombre=#{equipoBasico}
+    </update>
     
 </mapper>
     

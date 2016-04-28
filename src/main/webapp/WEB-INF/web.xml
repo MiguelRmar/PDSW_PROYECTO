@@ -30,7 +30,7 @@
     <!--theme-->
     <context-param>  
     <param-name>primefaces.THEME</param-name>  
-        <param-value>cruze</param-value>  
+        <param-value>sunny</param-value>  
     </context-param> 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

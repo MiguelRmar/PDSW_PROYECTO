@@ -13,7 +13,6 @@
         
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="form0">
-            <p:panel style="height:850px;border: 0" > 
                 <p:layout >
                     <p:layoutUnit position="north">
                         <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
@@ -33,12 +32,14 @@
                         <p:panel style="width:200px;border: 0">
                             <h:form>
                             <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
+
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Una Devolucion" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
+                            <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Un Prestamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+
                             </h:form>
                         </p:panel>
                     </p:layoutUnit>
@@ -82,7 +83,7 @@
                                         <h:outputText value="Clase:" />
                                         <h:outputText value="#{Equipos.modeloSeleccionado.clase}" />
 
-                                        <h:outputText value="Vida util(horas):" />
+                                        <h:outputText value="Vida útil(horas):" />
                                         <h:outputText value="#{Equipos.modeloSeleccionado.vidaUtilHoras}"/>
 
                                         <h:outputText value="Precio(pesos colombianos):" />
@@ -95,12 +96,9 @@
                             </p:dialog>
                             <br/>
                             <br/>
-                            
                             <p:separator/>
                             <br/>
                             <br/>
-                            
-                            
                             <p:panelGrid columns="2">
                             <h:outputText styleClass="ui-icon ui-icon-search" />
                             <p:inputText value="#{Equipos.nombreEquipoBasico}">
@@ -109,12 +107,14 @@
                             </p:panelGrid>
                             <p:dataGrid var="equipobasico" value="#{Equipos.filteredListaEquipoBasico}" columns="3" rows="3" paginator="true" id="equiposbasicos" rowsPerPageTemplate="3,6,12" >  
                                 <f:facet name="header">
-                                    Equipos basicos
+                                    Equipos básicos
                                 </f:facet>
                                 <p:panel header="#{equipobasico.nombre}" style="text-align:center">
                                     <h:panelGrid  style="width:100%;align-items: center">
                                         <p:graphicImage value="#{equipobasico.foto}" width="25%" style="max-width:70px; max-height:70px;min-height:70px;min-width:70px"/> 
-                                        <p:commandButton value="Actualizar cantidad" />
+                                        <p:commandButton value="Actualizar cantidad" oncomplete="PF('actualizarCantidadEquipoBasico').show()" update=":actualizarCantidadEquipoBasico">
+                                            <f:setPropertyActionListener value="#{equipobasico}" target="#{Equipos.equipoBasicoSeleccionado}"  />
+                                        </p:commandButton>
                                         <p:commandLink update=":form0:equipoBasicoInfo" oncomplete="PF('equipoBasicoInfoDialog').show()" title="Ver detalles">
                                             <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />                                            
                                             <f:setPropertyActionListener value="#{equipobasico}" target="#{Equipos.equipoBasicoSeleccionado}"  />
@@ -142,7 +142,7 @@
                                 </p:outputPanel>
                             </p:dialog>
                             <br/>
-                            <p:commandButton value="Crear equipo basico" onclick="PF('crearEquipoBasico').show();"/>
+                            <p:commandButton value="Crear equipo básico" onclick="PF('crearEquipoBasico').show();"/>
                             
                             
                             
@@ -150,7 +150,6 @@
                         </p:panel>       
                     </p:layoutUnit>
                 </p:layout>
-            </p:panel>
         </h:form>
         
         
@@ -167,7 +166,7 @@
                     <h:inputText value="#{Equipos.placaEquipo}" required="true" id="placaEquipo"/>
                     <h:outputLabel value="Marca: " />
                     <h:inputText value="#{Equipos.marcaEquipo}" required="true" id="marcaEquipo"/>
-                    <h:outputLabel value="Descripcion: " />
+                    <h:outputLabel value="Descripción: " />
                     <h:inputTextarea value="#{Equipos.descripcionEquipo}" required="true" id="descripcionEquipo" style="width:225px"/>
                     <h:outputLabel value="Estado: " />
                     <p:selectOneMenu value="#{Equipos.estadoEquipo}" required="true" id="estadoEquipo" style="width:225px">
@@ -197,7 +196,7 @@
                     <h:inputText value="#{Equipos.nombreDeModelo}" required="true" id="nombreModelo"/>
                     <h:outputLabel for="claseModelo"  value="Clase: " />
                     <h:inputText value="#{Equipos.claseModelo}" required="true" id="claseModelo"/>
-                    <h:outputLabel value="Vida util(horas): " for="vidaUtilEnHorasModelo"/>
+                    <h:outputLabel value="Vida útil(horas): " for="vidaUtilEnHorasModelo"/>
                     <h:inputText value="#{Equipos.vidaUtilEnHorasModelo}" required="true" id="vidaUtilEnHorasModelo"/>
                     <h:outputLabel value="Precio(pesos colombianos): " for="valorComercialModelo"/>
                     <h:inputText value="#{Equipos.valorComercialModelo}" required="true" id="valorComercialModelo"/>
@@ -211,7 +210,7 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Crear equipo basico" modal="true" widgetVar="crearEquipoBasico" height="350"  resizable="false" closable="true">
+        <p:dialog header="Crear equipo básico" modal="true" widgetVar="crearEquipoBasico" height="350"  resizable="false" closable="true">
             <h:form enctype="multipart/form-data">              
                 <h:panelGrid columns="2" id="panelGrid24" cellpadding="5">
                     <h:outputLabel for="nombreEquipoBasico"  value="Nombre: " />
@@ -226,11 +225,25 @@
                     <h:inputText value="#{Equipos.fotoEquipoBasico}" required="true"/>
                 </h:panelGrid>
                 <br/>
-                <p:commandButton value="Crear equipo basico" actionListener="#{Equipos.accionBotonCrearEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>
+                <p:commandButton value="Crear equipo básico" actionListener="#{Equipos.accionBotonCrearEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>
             </h:form>
         </p:dialog>
-        
-        
-        
+
+        <p:dialog header="Actualizar equipo basico" modal="true" widgetVar="actualizarCantidadEquipoBasico" height="350"  resizable="false" closable="true" id="actualizarCantidadEquipoBasico">
+            <h:form enctype="multipart/form-data">              
+                <h:panelGrid columns="2" id="panelGrid24" cellpadding="5">
+                    <h:outputLabel value="Nombre: "/>
+                    <h:outputLabel value="#{Equipos.equipoBasicoSeleccionado.nombre}"/>
+                    
+                    <h:outputLabel value="Nueva cantidad: ">
+                        <p:tooltip value="tenga en cuenta que si por ejemplo ingresa una cantidad de 20 y antes tenia una cantidad de 10 items, en el sistema quedará registrado como cantidad de 20"/>
+                    </h:outputLabel>
+                    <p:spinner id="step" value="#{Equipos.cantidadEquipoBasicoAactualizar}" stepFactor="1" required="true"/>
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Actualizar equipo basico" actionListener="#{Equipos.accionBotonActualizarEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>
+            </h:form>
+        </p:dialog>
+       
     </h:body>
 </html>
