@@ -52,4 +52,6 @@ public interface EquipoMapper {
     
     public Set<EquipoBasico> loadEquiposBasicos();
     
+    public void updateEquipoBasico(@Param("equipoBasico")String equipoBasico,@Param("cantidad")int cantidad);
+    
 }

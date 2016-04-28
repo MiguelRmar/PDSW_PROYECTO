@@ -32,4 +32,6 @@ public interface DaoEquipo {
     
     public Set<EquipoBasico> loadEquiposBasicos();
     
+    public void updateEquipoBasico(EquipoBasico equipoBasico,int cantidad);
+    
 }

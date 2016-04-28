@@ -136,6 +136,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String descripcionEquipoBasico;
     private int cantidadEquipoBasico;
     private EquipoBasico equipoBasicoSeleccionado;
+    private int cantidadEquipoBasicoAactualizar;
     
     public void limpiarPaginaRegistrarUnEquipo(){
         nombreDeModelo=null;
@@ -176,6 +177,28 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         }
     }
     
+    public void accionBotonActualizarEquipoBasico(){
+        try{
+            
+            if(cantidadEquipoBasicoAactualizar<0)throw new Exception("la cantidad no puede ser negativa");
+            
+            services.updateEquipoBasico(equipoBasicoSeleccionado, cantidadEquipoBasicoAactualizar);
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha actualizado el equipo basico con exito"));
+            RequestContext context = RequestContext.getCurrentInstance();
+            listaEquipoBasico=new ArrayList<>();
+           Set<EquipoBasico> conjunto=services.loadEquiposBasicos();
+           EquipoBasico[] listaEquipoBasico1=new EquipoBasico[conjunto.size()];
+           conjunto.toArray(listaEquipoBasico1);
+           listaEquipoBasico=Arrays.asList(listaEquipoBasico1);
+           setFilteredListaEquipoBasico(listaEquipoBasico);
+           filterListEquipoBasico();
+            context.update("equiposbasicos");
+            context.execute("PF('actualizarCantidadEquipoBasico').hide();");
+        }catch(Exception e){
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha actualizado el equipo basico ,sucedio algo inesperado"));
+       }
+    }
+    
     public void accionBotonCrearEquipoBasico(){
         try{
         EquipoBasico equipoNuevo=new EquipoBasico(nombreEquipoBasico, valorEquipoBasico, fotoEquipoBasico,descripcionEquipoBasico, cantidadEquipoBasico);
@@ -184,20 +207,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('crearEquipoBasico').hide();");
        }catch(Exception e){
-           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el equipo basico ,sucedio algo inesperado"));
        }
     }
     
     public void filterList(){
         ArrayList<String> ListaNombres = new ArrayList<String>();
         for (int i = 0; i<listaModelos.size() ; i++) {
-            ListaNombres.add(listaModelos.get(i).getNombre());
+            ListaNombres.add(listaModelos.get(i).getNombre().toLowerCase());
         } 
         List<String> filteredListNames;
-        filteredListNames = Lists.newArrayList(Collections2.filter(ListaNombres,Predicates.containsPattern(nombreDeModelo)));
+        filteredListNames = Lists.newArrayList(Collections2.filter(ListaNombres,Predicates.containsPattern(nombreDeModelo.toLowerCase())));
         List<Modelo> filteredList = new ArrayList<>();
         for (int i = 0; i < listaModelos.size(); i++) {
-            if (filteredListNames.contains(listaModelos.get(i).getNombre())){
+            if (filteredListNames.contains(listaModelos.get(i).getNombre().toLowerCase())){
                 filteredList.add(listaModelos.get(i));
             }
         }
@@ -207,13 +230,14 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void filterListEquipoBasico(){
         ArrayList<String> ListaNombres = new ArrayList<String>();
         for (int i = 0; i<listaEquipoBasico.size() ; i++) {
-            ListaNombres.add(listaEquipoBasico.get(i).getNombre());
+            ListaNombres.add(listaEquipoBasico.get(i).getNombre().toLowerCase());
         }
         List<String> filteredListNames;
-        filteredListNames = Lists.newArrayList(Collections2.filter(ListaNombres,Predicates.containsPattern(nombreEquipoBasico)));
+        filteredListNames = Lists.newArrayList(Collections2.filter(ListaNombres,Predicates.containsPattern(nombreEquipoBasico.toLowerCase())));
+        
         List<EquipoBasico> filteredList = new ArrayList<>();
         for (int i = 0; i < listaEquipoBasico.size(); i++) {
-            if (filteredListNames.contains(listaEquipoBasico.get(i).getNombre())){
+            if (filteredListNames.contains(listaEquipoBasico.get(i).getNombre().toLowerCase())){
                 filteredList.add(listaEquipoBasico.get(i));
             }
         }
@@ -985,6 +1009,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setEquipoBasicoSeleccionado(EquipoBasico equipoBasicoSeleccionado) {
         this.equipoBasicoSeleccionado = equipoBasicoSeleccionado;
+    }
+
+    /**
+     * @return the cantidadEquipoBasicoAactualizar
+     */
+    public int getCantidadEquipoBasicoAactualizar() {
+        return cantidadEquipoBasicoAactualizar;
+    }
+
+    /**
+     * @param cantidadEquipoBasicoAactualizar the cantidadEquipoBasicoAactualizar to set
+     */
+    public void setCantidadEquipoBasicoAactualizar(int cantidadEquipoBasicoAactualizar) {
+        this.cantidadEquipoBasicoAactualizar = cantidadEquipoBasicoAactualizar;
     }
       
     

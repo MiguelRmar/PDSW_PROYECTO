@@ -68,5 +68,11 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         return ans;
     }
 
+    @Override
+    public void updateEquipoBasico(EquipoBasico equipoBasico, int cantidad) {
+        
+        emap.updateEquipoBasico(equipoBasico.getNombre(),cantidad);
+    }
+
     
 }

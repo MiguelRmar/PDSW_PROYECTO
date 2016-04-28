@@ -145,4 +145,12 @@ public class Services {
         return equiposBasicos;
     }
     
+    public void updateEquipoBasico(EquipoBasico equipoBasico,int cantidad){
+        DaoFactory df= DaoFactory.getInstance(properties);
+        df.beginSession();
+        df.getDaoEquipo().updateEquipoBasico(equipoBasico,cantidad);
+        df.commitTransaction();
+        df.endSession();
+    }
+    
 }

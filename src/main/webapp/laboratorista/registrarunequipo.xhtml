@@ -110,7 +110,9 @@
                                 <p:panel header="#{equipobasico.nombre}" style="text-align:center">
                                     <h:panelGrid  style="width:100%;align-items: center">
                                         <p:graphicImage value="#{equipobasico.foto}" width="25%" style="max-width:70px; max-height:70px;min-height:70px;min-width:70px"/> 
-                                        <p:commandButton value="Actualizar cantidad" />
+                                        <p:commandButton value="Actualizar cantidad" oncomplete="PF('actualizarCantidadEquipoBasico').show()" update=":actualizarCantidadEquipoBasico">
+                                            <f:setPropertyActionListener value="#{equipobasico}" target="#{Equipos.equipoBasicoSeleccionado}"  />
+                                        </p:commandButton>
                                         <p:commandLink update=":form0:equipoBasicoInfo" oncomplete="PF('equipoBasicoInfoDialog').show()" title="Ver detalles">
                                             <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />                                            
                                             <f:setPropertyActionListener value="#{equipobasico}" target="#{Equipos.equipoBasicoSeleccionado}"  />
@@ -226,6 +228,22 @@
             </h:form>
         </p:dialog>
         
+        
+        <p:dialog header="Actualizar equipo basico" modal="true" widgetVar="actualizarCantidadEquipoBasico" height="350"  resizable="false" closable="true" id="actualizarCantidadEquipoBasico">
+            <h:form enctype="multipart/form-data">              
+                <h:panelGrid columns="2" id="panelGrid24" cellpadding="5">
+                    <h:outputLabel value="Nombre: "/>
+                    <h:outputLabel value="#{Equipos.equipoBasicoSeleccionado.nombre}"/>
+                    
+                    <h:outputLabel value="Nueva cantidad: ">
+                        <p:tooltip value="tenga en cuenta que si por ejemplo ingresa una cantidad de 20 y antes tenia una cantidad de 10 items, en el sistema quedará registrado como cantidad de 20"/>
+                    </h:outputLabel>
+                    <p:spinner id="step" value="#{Equipos.cantidadEquipoBasicoAactualizar}" stepFactor="1" required="true"/>
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Actualizar equipo basico" actionListener="#{Equipos.accionBotonActualizarEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>
+            </h:form>
+        </p:dialog>
         
         
     </h:body>
