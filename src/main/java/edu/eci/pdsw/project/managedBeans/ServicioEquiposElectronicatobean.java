@@ -241,7 +241,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
             }
         }
         if (getUsuarioDevolucion()==null){
-            setTextoSalidaEquipoADevolver("No fue encontrado un usuario con el presente equipo en prestamo");
+            setTextoSalidaEquipoADevolver("No fue encontrado un usuario con el presente equipo  "+serialADevolver +" en prestamo ");
         }
         setYaBusqueEquipoADevolver(true);
     }
@@ -736,6 +736,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setCondigoEstudianteBasicos(int condigoEstudianteBasicos) {
         this.condigoEstudianteBasicos = condigoEstudianteBasicos;
+    }
+    
+    /**
+     * @return nombreEquipoBasico 
+     */
+    public String getnombreEquipoBásico(){
+        return "  ";
+    }
+    
+    /**
+     * @param nombrembreEquipoBasico the nombreEquipoBásico to set
+     */
+    public void setnombreEquipoBásico(String nombre){
+        this.nombreEquipoBasico = nombre;
     }
 
 

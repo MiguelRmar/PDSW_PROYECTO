@@ -34,6 +34,9 @@
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Una Devolución" action="#{Equipos.accionBotonRegistrarUnaDevolucion()}"/>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Registrar Un Prestamo" action="#{Equipos.accionBotonRegistrarUnPrestamo()}"/>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
@@ -61,7 +64,7 @@
                                 <h:outputLabel value="Codigo Estudiante:" />
                                 <h:inputText value="#{Equipos.condigoEstudianteBasicos}"/>
                                 <h:outputLabel value="Tipo Equipo:" />
-                                <h:inputText value="#{Equipos.nombreEquipoBásico}"/>
+                                <h:inputText value="#{Equipos.nombreEquipoBasico}"/>
                                 <h:outputLabel value="Número de items:" />
                                 <h:inputText value="#{Equipos.cantidadDevuelta}"/>
                                 

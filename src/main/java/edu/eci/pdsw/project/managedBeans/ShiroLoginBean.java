@@ -31,6 +31,7 @@ private Boolean rememberMe;
 //laboratorista
 private boolean botonRegistrarEquipoEnInventario=false;
 private boolean botonRegistrarUnaDevolucion=false;
+private boolean botonRegistrarUnPrestamo =false;
 
 public ShiroLoginBean() {
 }
@@ -139,5 +140,18 @@ this.rememberMe = lembrar;
      */
     public void setBotonRegistrarUnaDevolucion(boolean botonRegistrarUnaDevolucion) {
         this.botonRegistrarUnaDevolucion = botonRegistrarUnaDevolucion;
+    }
+    /**
+     * @return the botonRegistrarUnPrestamo
+     */
+    public boolean isBotonRegistrarUnPrestamo() {
+        return botonRegistrarUnPrestamo;
+    }
+
+    /**
+     * @param botonRegistrarUnPrestamo the botonRegistrarUnPrestamo to set
+     */
+    public void setBotonRegistrarUnPrestamo(boolean botonRegistrarUnPrestamo) {
+        this.botonRegistrarUnPrestamo = botonRegistrarUnPrestamo;
     }
 }
