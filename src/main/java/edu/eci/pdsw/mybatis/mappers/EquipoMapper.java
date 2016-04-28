@@ -50,4 +50,6 @@ public interface EquipoMapper {
     
     public Set<Modelo> loadModelos();
     
+    public Set<EquipoBasico> loadEquiposBasicos();
+    
 }

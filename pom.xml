@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>ec.pdsw</groupId>
     <artifactId>prueba</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>PdswProject</name>
-
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
     <dependencies>
+        <!--theme-->
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>all-themes</artifactId>  
+            <version>1.0.10</version>
+        </dependency>  
+        
         <!--security-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -215,4 +222,12 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <url>http://repository.primefaces.org/</url>
+            <id>PrimeFaces-maven-lib</id>
+            <layout>default</layout>
+            <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
+    </repositories>
 </project>

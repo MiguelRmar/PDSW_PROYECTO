@@ -30,6 +30,7 @@ import org.primefaces.context.RequestContext;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import edu.eci.pdsw.entities.EquipoBasico;
 
 
@@ -52,6 +53,15 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         //filtrada lista
         filteredListaModelos=new ArrayList<>();
         filteredListaModelos=Arrays.asList(listaModelo);
+        
+        listaEquipoBasico=new ArrayList<>();
+        Set<EquipoBasico> conjunto1=services.loadEquiposBasicos();
+        EquipoBasico[] listaEquipoBasico2=new EquipoBasico[conjunto1.size()];
+        conjunto1.toArray(listaEquipoBasico2);
+        listaEquipoBasico=Arrays.asList(listaEquipoBasico2);
+        //filtrada lista
+        filteredListaEquipoBasico=new ArrayList<>();
+        filteredListaEquipoBasico=Arrays.asList(listaEquipoBasico2);
         //estado y subestado de equipo
         estados  = new HashMap<>();
         estados.put("Desactivo", "Desactivo");
@@ -118,8 +128,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
     private int cantidadDevuelta;
     //datos para equipo basico
-    private List<Modelo> listaEquipoBasico = new ArrayList<>();
-    private List<Modelo> filteredListaEquipoBasico = new ArrayList<>();
+    private List<EquipoBasico> listaEquipoBasico;
+    private List<EquipoBasico> filteredListaEquipoBasico = new ArrayList<>();
     private String nombreEquipoBasico;
     private int valorEquipoBasico;
     private String fotoEquipoBasico;
@@ -148,6 +158,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         estadoEquipo=null;
         subEstadoEquipo=null;
         proveedorEquipo=null;
+        nombreEquipoBasico=null;
     }
     public void onEstadoChange() {
         if(estadoEquipo != null && !estadoEquipo.equals(""))
@@ -165,6 +176,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         }
     }
     
+    public void accionBotonCrearEquipoBasico(){
+        try{
+        EquipoBasico equipoNuevo=new EquipoBasico(nombreEquipoBasico, valorEquipoBasico, fotoEquipoBasico,descripcionEquipoBasico, cantidadEquipoBasico);
+        services.registroEquipoBasicoNuevo(equipoNuevo);
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha registrado el equipo basico con exito"));
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('crearEquipoBasico').hide();");
+       }catch(Exception e){
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
+       }
+    }
+    
     public void filterList(){
         ArrayList<String> ListaNombres = new ArrayList<String>();
         for (int i = 0; i<listaModelos.size() ; i++) {
@@ -180,20 +203,21 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         }
     setFilteredListaModelos(filteredList);
     }
+    
     public void filterListEquipoBasico(){
         ArrayList<String> ListaNombres = new ArrayList<String>();
         for (int i = 0; i<listaEquipoBasico.size() ; i++) {
             ListaNombres.add(listaEquipoBasico.get(i).getNombre());
-        } 
+        }
         List<String> filteredListNames;
         filteredListNames = Lists.newArrayList(Collections2.filter(ListaNombres,Predicates.containsPattern(nombreEquipoBasico)));
-        List<Modelo> filteredList = new ArrayList<>();
+        List<EquipoBasico> filteredList = new ArrayList<>();
         for (int i = 0; i < listaEquipoBasico.size(); i++) {
             if (filteredListNames.contains(listaEquipoBasico.get(i).getNombre())){
                 filteredList.add(listaEquipoBasico.get(i));
             }
         }
-        setFilteredListaEquipoBasico(filteredList);
+     setFilteredListaEquipoBasico(filteredList);   
     }
     
     
@@ -292,8 +316,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
             setElModeloNoExiste(true);
             textoSalidaModelo="El modelo no existe, Registre el modelo";
         }
-        
-
     }   
 
     /**
@@ -363,7 +385,23 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         }
         return listaModelos;
     }
+    
+    /**
+     * @return the listaEquipoBasico
+     */
+    public List<EquipoBasico> getListaEquipoBasico() {
+        if(listaEquipoBasico.size()!=services.loadEquiposBasicos().size()){
+           listaEquipoBasico=new ArrayList<>();
+           Set<EquipoBasico> conjunto = services.loadEquiposBasicos();
+           EquipoBasico[] listaEquiposBasicos=new EquipoBasico[conjunto.size()];
+           conjunto.toArray(listaEquiposBasicos);
+           listaEquipoBasico=Arrays.asList();
+           setFilteredListaEquipoBasico(listaEquipoBasico);
+        } 
+        return listaEquipoBasico;
+    }
 
+    
     /**
      * @param listaConsultas the listaConsultas to set
      */
@@ -817,7 +855,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public List<Modelo> getFilteredListaModelos() {
        if(listaModelos!=null && listaModelos.size()!=services.loadModelos().size()){
-            listaModelos=new ArrayList<>();
+           listaModelos=new ArrayList<>();
            Set<Modelo> conjunto=services.loadModelos();
            Modelo[] listaModelo=new Modelo[conjunto.size()];
            conjunto.toArray(listaModelo);
@@ -825,17 +863,32 @@ public class ServicioEquiposElectronicatobean implements Serializable{
            setFilteredListaModelos(listaModelos);
            filterList();
         }
-        
         return filteredListaModelos;
     }
+    
+    /**
+     * @return the filteredListaEquipoBasico
+     */
+    public List<EquipoBasico> getFilteredListaEquipoBasico() {
+        if(listaEquipoBasico!=null && listaEquipoBasico.size()!=services.loadEquiposBasicos().size()){
+            listaEquipoBasico=new ArrayList<>();
+           Set<EquipoBasico> conjunto=services.loadEquiposBasicos();
+           EquipoBasico[] listaEquipoBasico1=new EquipoBasico[conjunto.size()];
+           conjunto.toArray(listaEquipoBasico1);
+           listaEquipoBasico=Arrays.asList(listaEquipoBasico1);
+           setFilteredListaEquipoBasico(listaEquipoBasico);
+           filterListEquipoBasico();
 
+        }
+        return filteredListaEquipoBasico;
+    }
+    
     /**
      * @param filteredListaModelos the filteredListaModelos to set
      */
     public void setFilteredListaModelos(List<Modelo> filteredListaModelos) {
         this.filteredListaModelos = filteredListaModelos;
     }
-
     /**
      * @return the nombreEquipoBasico
      */
@@ -905,44 +958,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void setCantidadEquipoBasico(int cantidadEquipoBasico) {
         this.cantidadEquipoBasico = cantidadEquipoBasico;
     }
-
-    /**
-     * @return the listaEquipoBasico
-     */
-    public List<Modelo> getListaEquipoBasico() {
-        return listaEquipoBasico;
-    }
-
+    
     /**
      * @param listaEquipoBasico the listaEquipoBasico to set
      */
-    public void setListaEquipoBasico(List<Modelo> listaEquipoBasico) {
+    public void setListaEquipoBasico(List<EquipoBasico> listaEquipoBasico) {
         this.listaEquipoBasico = listaEquipoBasico;
-    }
-
-    /**
-     * @return the filteredListaEquipoBasico
-     */
-    public List<Modelo> getFilteredListaEquipoBasico() {
-        filteredListaEquipoBasico= new ArrayList();
-        //falta metodo de services .loadEquiposBasicos
-        /**
-        if(listaEquipoBasico!=null && listaEquipoBasico.size()!=services.loadModelos().size()){
-            listaModelos=new ArrayList<>();
-           Set<Modelo> conjunto=services.loadModelos();
-           Modelo[] listaModelo=new Modelo[conjunto.size()];
-           conjunto.toArray(listaModelo);
-           listaModelos=Arrays.asList(listaModelo);
-           setFilteredListaModelos(listaModelos);
-           filterList();
-        }**/
-        return filteredListaEquipoBasico;
     }
 
     /**
      * @param filteredListaEquipoBasico the filteredListaEquipoBasico to set
      */
-    public void setFilteredListaEquipoBasico(List<Modelo> filteredListaEquipoBasico) {
+    public void setFilteredListaEquipoBasico(List<EquipoBasico> filteredListaEquipoBasico) {
         this.filteredListaEquipoBasico = filteredListaEquipoBasico;
     }
 

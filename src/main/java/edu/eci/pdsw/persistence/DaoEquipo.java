@@ -30,5 +30,6 @@ public interface DaoEquipo {
     
     public Set<Modelo> loadModelos();
     
+    public Set<EquipoBasico> loadEquiposBasicos();
     
 }

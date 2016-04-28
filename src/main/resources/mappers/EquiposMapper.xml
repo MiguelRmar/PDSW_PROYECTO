@@ -66,6 +66,8 @@
         <result property='cantidadInventario' column='cantidadInventario'/>
         <collection property='prestamosBasicos' ofType='PrestamoBasicoEquipo' resultMap="PrestamoBasicoEquipoResult" columnPrefix="preb_"></collection>        
     </resultMap>
+    
+    
      <resultMap type='PrestamoBasicoEquipo' id='PrestamoBasicoEquipoResult'>
         <result property='usuario_id' column='usuario_id'/>
         <result property='fechaExpedicion' column='fechaExpedicion'/>
@@ -73,6 +75,9 @@
         <result property='tipoPrestamo' column='tipoPrestamo'/>
         <result property='cantidadPrestada' column='cantidadPrestada'/>
     </resultMap>
+    
+    
+    
     <!--- Metodos -->
     <select id='loadUsuarioById' parameterType='map' resultMap='UsuarioResult'> 
         SELECT us.id,us.nombre,us.correo,us.contrasena,
@@ -115,9 +120,12 @@
     </select>
     
      <select id='loadModelos' parameterType='map' resultMap='ModeloResult'>
-        SELECT * FROM MODELOS ORDER BY nombre
+        SELECT * FROM MODELOS 
     </select>
     
+    <select id='loadEquiposBasicos' parameterType="map" resultMap='EquipoBasicoResult'>
+        SELECT * FROM EQUIPOS_BASICOS
+    </select>
     
     <select id='loadUsuarios' parameterType='map' resultMap='UsuarioResult'>
         SELECT us.id,us.nombre,us.correo,us.contrasena,
