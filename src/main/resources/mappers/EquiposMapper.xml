@@ -108,7 +108,7 @@
     </select>
     
     <select id='loadEquipoBasicoByName' parameterType='map' resultMap='EquipoBasicoResult'>
-        SELECT eqb.nombre,eqb.valor,eqb.foto,eqb.descripcion,eqb.cantidad as cantidadInventario, 
+        SELECT eqb.nombre,eqb.valor,eqb.foto,eqb.descripcion,eqb.cantidad as cantidad, 
                preb.USUARIOS_id as preb_usuario_id,preb.fechaExpedicion as preb_fechaExpedicion,preb.fechaVencimiento as preb_fechaVencimiento,preb.tipoPrestamo as preb_tipoPrestamo,preb.cantidadPrestada as preb_cantidadPrestada
         FROM EQUIPOS_BASICOS as eqb
                      left join PRESTAMOS_BASICOS as preb on eqb.nombre=preb.EQUIPOS_BASICOS_nombre
