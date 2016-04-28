@@ -13,9 +13,15 @@ public class RolRol {
     
     private int usuario_id;
     
+    /**
+     * 
+     */
     public RolRol() {
     }
 
+    /**
+     * @param usuario_id 
+     */
     public RolRol(int usuario_id) {
         this.usuario_id = usuario_id;
     }

@@ -13,9 +13,15 @@ public class RolUsuario {
     
     private String rol_r;
 
+    /**
+     * 
+     */
     public RolUsuario() {
     }
     
+    /**
+     * @param rol_r 
+     */
     public RolUsuario(String rol_r) {
         this.rol_r = rol_r;
     }

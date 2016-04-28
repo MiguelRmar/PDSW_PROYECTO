@@ -19,9 +19,19 @@ public class PrestamoBasicoEquipo {
     private String tipoPrestamo;
     private int cantidadPrestada;
     
+    /**
+     * 
+     */
     public PrestamoBasicoEquipo() {
     }
     
+    /**
+     * @param usuario_id
+     * @param fechaExpedicion
+     * @param fechaVencimiento
+     * @param tipoPrestamo
+     * @param cantidadPrestada 
+     */
     public PrestamoBasicoEquipo(int usuario_id, Date fechaExpedicion, Date fechaVencimiento, String tipoPrestamo, int cantidadPrestada) {
         this.usuario_id = usuario_id;
         this.fechaExpedicion = fechaExpedicion;

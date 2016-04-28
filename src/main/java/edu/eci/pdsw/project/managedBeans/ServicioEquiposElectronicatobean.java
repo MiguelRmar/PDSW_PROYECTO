@@ -43,6 +43,9 @@ import edu.eci.pdsw.entities.EquipoBasico;
 @SessionScoped
 public class ServicioEquiposElectronicatobean implements Serializable{
     
+    /**
+     * 
+     */
     public ServicioEquiposElectronicatobean() {        
         //inical lista
         listaModelos=new ArrayList<>();
@@ -125,7 +128,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private Usuario usuarioDevolucion;
     //datos para una devolucion de un equipo basico
     private int condigoEstudianteBasicos;
-    
     private int cantidadDevuelta;
     //datos para equipo basico
     private List<EquipoBasico> listaEquipoBasico;
@@ -138,6 +140,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private EquipoBasico equipoBasicoSeleccionado;
     private int cantidadEquipoBasicoAactualizar;
     
+    /**
+     * deja todos los elementos que se usan en la vista en su estado original
+     */
     public void limpiarPaginaRegistrarUnEquipo(){
         nombreDeModelo=null;
         elModeloYaExiste=false;
@@ -161,6 +166,10 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         proveedorEquipo=null;
         nombreEquipoBasico=null;
     }
+    
+    /**
+     * dependiendo el estado (activo-desactivo) se actualizan los diferentes sub estados relacionados a cada uno. Se hace para evitar cosas como que el usuario meta estao desactivo y un subestado en almacen (que no puede pasar)
+     */
     public void onEstadoChange() {
         if(estadoEquipo != null && !estadoEquipo.equals(""))
             setSubestados(data.get(estadoEquipo));
@@ -168,6 +177,10 @@ public class ServicioEquiposElectronicatobean implements Serializable{
             setSubestados(new HashMap<String, String>());
     }
     
+    /**
+     * devulve una string para hacer la busqueda de una imagen que tenemos guardad en el proyecto
+     * @return check, si el modelo esta asegurado, de lo contrario fail
+     */
     public String demeIcono(){
         if(modeloSeleccionado.getSeguro()){
             return "check";
@@ -177,6 +190,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         }
     }
     
+    /**
+     * actualiza un equipo basico con una nueva cantidad
+     */
     public void accionBotonActualizarEquipoBasico(){
         try{
             
@@ -199,6 +215,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
        }
     }
     
+    /**
+     * crea y guarda el equipo basico en la bd con los datos suministrados en los campos de la vista
+     */
     public void accionBotonCrearEquipoBasico(){
         try{
         EquipoBasico equipoNuevo=new EquipoBasico(nombreEquipoBasico, valorEquipoBasico, fotoEquipoBasico,descripcionEquipoBasico, cantidadEquipoBasico);
@@ -211,6 +230,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
        }
     }
     
+    /**
+     * filtra o busca los modelos segun un campo que el usuario va ingresando (facilita busqueda)
+     */
     public void filterList(){
         ArrayList<String> ListaNombres = new ArrayList<String>();
         for (int i = 0; i<listaModelos.size() ; i++) {
@@ -227,6 +249,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     setFilteredListaModelos(filteredList);
     }
     
+    /**
+     * filtra o busca los equipos basicos segun un campo que el usuario va ingresando (facilita busqueda)
+     */
     public void filterListEquipoBasico(){
         ArrayList<String> ListaNombres = new ArrayList<String>();
         for (int i = 0; i<listaEquipoBasico.size() ; i++) {
@@ -244,7 +269,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      setFilteredListaEquipoBasico(filteredList);   
     }
     
-    
+    /**
+     * crea y guarda el equipo en la bd con los datos suministrados en los campos de la vista
+     */
     public void mensajeCreacionEquipoExitoso(){
         try{
         Equipo equipoNuevo=new Equipo(serialEquipo, nombreEquipo, placaEquipo,marcaEquipo, descripcionEquipo, estadoEquipo, subEstadoEquipo,proveedorEquipo);
@@ -254,16 +281,16 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         context.execute("PF('crearEquipo').hide();");
         }
         catch(Exception e){
-            System.out.println(e.getCause());
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el Equipo ,sucedio algo inesperado"));
     
         }
         
     }
     
+    /**
+     * crea y guarda el modelo en la bd con los datos suministrados en los campos de la vista
+     */
     public void mensajeCreacionModeloExitoso(){
-        
-       //mira si se hizo bien el registro
        try{
         Modelo modeloNuevo=new Modelo(nombreDeModelo, claseModelo, vidaUtilEnHorasModelo, valorComercialModelo, estaAseguradoModelo, fotoModelo);
         services.registroModeloNuevo(modeloNuevo);
@@ -274,6 +301,10 @@ public class ServicioEquiposElectronicatobean implements Serializable{
            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
        }
     }
+    
+    /**
+     * 
+     */
     public void accionBuscarDevolucion(){
         Services se = Services.getInstance("applicationconfig.properties");
         Set<Usuario> usuarios = se.loadUsuarios();
@@ -293,6 +324,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         }
         setYaBusqueEquipoADevolver(true);
     }
+    
     public void accionRealizarDevolucion(){
         PrestamoUsuario prestamoActual = null; 
         //falta probar que la siguiente linea retorne la hora actual
@@ -323,25 +355,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void accionBotoncrearEquipo(String modelo){
         nombreDeModelo=modelo;
     }
-    
-    public void accionBotonBuscarModelo(){
-        //CONSULTAR A VER SI EL MODELO YA EXISTE EL NOMBRE DEL MODELO ES LA VARIABLE modeloABuscar
-        Modelo modelo;
-        modelo=services.loadModeloByName(nombreDeModelo);
-        if(modelo!=null){//mira si el modelo existe
-            setElModeloYaExiste(true);
-            setYaBusqueModelo(true);
-            setElModeloNoExiste(false);
-            textoSalidaModelo="El modelo ya existe, cree el equipo de este modelo";
-        }
-        else{ // el modelo no existe
-            setElModeloYaExiste(false);
-            setYaBusqueModelo(true);
-            setElModeloNoExiste(true);
-            textoSalidaModelo="El modelo no existe, Registre el modelo";
-        }
-    }   
-
+   
     /**
      * @return the id
      */

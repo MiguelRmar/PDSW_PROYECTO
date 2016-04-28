@@ -21,10 +21,20 @@ public class EquipoBasico{
     private int cantidadInventario;
     private Set<PrestamoBasicoEquipo> prestamosBasicos;
     
+    /**
+     * 
+     */
     public EquipoBasico() {
         this.prestamosBasicos = new LinkedHashSet<>();
     }
     
+    /**
+     * @param nombre
+     * @param valor
+     * @param foto
+     * @param descripcion
+     * @param cantidadInventario 
+     */
     public EquipoBasico(String nombre, int valor,String foto, String descripcion, int cantidadInventario) {
         this.nombre = nombre;
         this.valor = valor;
@@ -34,8 +44,6 @@ public class EquipoBasico{
         this.prestamosBasicos = new LinkedHashSet<>();
     }
     
-    
-
     /**
      * @return the nombre
      */

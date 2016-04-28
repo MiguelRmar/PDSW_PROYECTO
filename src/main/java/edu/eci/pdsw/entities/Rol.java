@@ -17,10 +17,17 @@ public class Rol {
     private String rol;
     private Set<RolRol> rolesdeusuarios;
     
+    /**
+     * 
+     */
     public Rol() {
         this.rolesdeusuarios = new LinkedHashSet<>();
     }
     
+    /**
+     * @param rol
+     * @param rolesdeusuarios 
+     */
     public Rol(String rol, Set<RolRol> rolesdeusuarios) {
         this.rol = rol;
         this.rolesdeusuarios = new LinkedHashSet<>();

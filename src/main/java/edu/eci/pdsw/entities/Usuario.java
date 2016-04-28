@@ -22,12 +22,21 @@ public class Usuario {
     private Set<PrestamoBasicoUsuario> prestamosBasicos;
     private Set<RolUsuario> roles;
     
+    /**
+     * 
+     */
     public Usuario(){
         prestamos=new LinkedHashSet<>();
         prestamosBasicos=new LinkedHashSet<>();
         roles=new LinkedHashSet<>();
     }
     
+    /**
+     * @param id
+     * @param nombre
+     * @param correo
+     * @param contrasena 
+     */
     public Usuario(int id, String nombre, String correo, String contrasena) {
         this.id = id;
         this.nombre = nombre;

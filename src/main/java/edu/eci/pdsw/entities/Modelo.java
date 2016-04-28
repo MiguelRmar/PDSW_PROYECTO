@@ -22,10 +22,21 @@ public class Modelo {
     private String foto;
     private Set<Equipo> equipos;
     
+    /**
+     * 
+     */
     public Modelo() {
         this.equipos = new LinkedHashSet<>();
     }
     
+    /**
+     * @param nombre
+     * @param clase
+     * @param vidaUtilHoras
+     * @param valorComercial
+     * @param seguro
+     * @param foto 
+     */
     public Modelo(String nombre, String clase, int vidaUtilHoras, int valorComercial, Boolean seguro,String foto) {
         this.nombre = nombre;
         this.clase = clase;

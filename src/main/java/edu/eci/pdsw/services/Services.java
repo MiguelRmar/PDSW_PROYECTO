@@ -47,12 +47,11 @@ public class Services {
     }
     
     /*METODOS*/
+    
     /**
-     *
-     * @param id
-     * @return
-     * @throws edu.eci.pdsw.services.ServicesException
-     * @throws ServicesException
+     * carga un usuario dado el id de este
+     * @param id, el identificador del usuario a cargar
+     * @return el usuario identificado con ese id
      */
     public Usuario loadUsuarioById(int id){
         DaoFactory df=DaoFactory.getInstance(properties);
@@ -63,6 +62,11 @@ public class Services {
         return ans;
     }
     
+    /**
+     * carga un modelo dado el nombre de este
+     * @param nombre, el nombre del modelo a cargar
+     * @return el modelo identificado con ese nombre
+     */    
     public Modelo loadModeloByName(String nombre){
         DaoFactory df=  DaoFactory.getInstance(properties);
         df.beginSession();
@@ -71,6 +75,11 @@ public class Services {
         return ans;
     }
     
+    /**
+     * carga un equipo dado el serial de este
+     * @param serial, el serial del equipo a cargar
+     * @return el equipo identificado con ese serial
+     */    
     public Equipo loadEquipoBySerial(int serial){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
@@ -79,6 +88,11 @@ public class Services {
         return ans;
     }
     
+    /**
+     * carga un equipo basico dado el nombre de este
+     * @param nombre, el nombre del equipo basico a cargar
+     * @return el equipo basico identificado con ese nombre
+    */
     public EquipoBasico loadEquipoBasicoByName(String name){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
@@ -87,6 +101,10 @@ public class Services {
         return ans; 
     }
     
+    /**
+     * cargar todos los prestamos
+     * @return un contenedor con todos los prestamos que se han hecho
+     */    
     public Set<PrestamoUsuario> loadPrestamos(){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
@@ -96,6 +114,11 @@ public class Services {
         return ans;
     }
     
+    /**
+     * registrar un equipo nuevo dado el equipo como entidad (objeto)
+     * @param e, el equipo a registrar en la bd
+     * @param modelo, el modelo al que pertenece este equipo
+     */    
     public void registroEquipoNuevo(Equipo equipo,String modelo){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
@@ -103,13 +126,24 @@ public class Services {
         df.commitTransaction();
         df.endSession();
     }
+    
+    /**
+     * registrar un modelo nuevo dado el modelo como entidad (objeto)
+     * @param m, el modelo a registrar en la bd
+     */    
     public void registroModeloNuevo(Modelo modelo){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
         df.getDaoEquipo().registrarModeloNuevo(modelo);
         df.commitTransaction();
         df.endSession();
-    }  
+    }
+    
+    /**
+     * registrar un equipo nuevo dado el equipo como entidad (objeto)
+     * @param e, el equipo a registrar en la bd
+     * @param modelo, el modelo al que pertenece este equipo
+     */    
     public void registroEquipoBasicoNuevo(EquipoBasico equipobasico){
         DaoFactory df=DaoFactory.getInstance(properties);
         df.beginSession();
@@ -118,6 +152,10 @@ public class Services {
         df.endSession();
     }
     
+     /**
+     * cargar todos los usuarios
+     * @return un contenedor con todos los usuarios que estan registrados
+     */    
     public Set<Usuario> loadUsuarios(){
         DaoFactory df= DaoFactory.getInstance(properties);
         df.beginSession();
@@ -127,6 +165,10 @@ public class Services {
         return usuarios;
     }
     
+    /**
+     * cargar todos los modelos
+     * @return un contenedor con todos los modelos que se han registrado
+     */    
     public Set<Modelo> loadModelos(){
         DaoFactory df= DaoFactory.getInstance(properties);
         df.beginSession();
@@ -136,6 +178,10 @@ public class Services {
         return modelos;
     }
     
+    /**
+     * cargar todos los equipos basicos
+     * @return un contenedor con todos los equipos basicos que se han registrado
+     */    
     public Set<EquipoBasico> loadEquiposBasicos(){
         DaoFactory df= DaoFactory.getInstance(properties);
         df.beginSession();
