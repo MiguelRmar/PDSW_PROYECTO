@@ -1,11 +1,11 @@
 
-import eci.pdsw.entities.Equipo;
-import eci.pdsw.entities.EquipoBasico;
-import eci.pdsw.entities.Modelo;
-import eci.pdsw.entities.PrestamoBasicoEquipo;
-import eci.pdsw.entities.PrestamoEquipo;
-import eci.pdsw.services.Services;
-import eci.pdsw.services.ServicesException;
+import edu.eci.pdsw.entities.Equipo;
+import edu.eci.pdsw.entities.EquipoBasico;
+import edu.eci.pdsw.entities.Modelo;
+import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
+import edu.eci.pdsw.entities.PrestamoEquipo;
+import edu.eci.pdsw.services.Services;
+import edu.eci.pdsw.services.ServicesException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

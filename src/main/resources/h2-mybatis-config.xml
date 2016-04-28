@@ -7,17 +7,17 @@
         <setting name="logImpl" value="LOG4J"/>        
     </settings>
      <typeAliases>
-      <typeAlias type='eci.pdsw.entities.Equipo' alias='Equipo'/>
-      <typeAlias type='eci.pdsw.entities.EquipoBasico' alias='EquipoBasico'/>
-      <typeAlias type='eci.pdsw.entities.PrestamoBasicoEquipo' alias='PrestamoBasicoEquipo'/>
-      <typeAlias type='eci.pdsw.entities.PrestamoBasicoUsuario' alias='PrestamoBasicoUsuario'/>
-      <typeAlias type='eci.pdsw.entities.PrestamoEquipo' alias='PrestamoEquipo'/>
-      <typeAlias type='eci.pdsw.entities.PrestamoUsuario' alias='PrestamoUsuario'/>
-      <typeAlias type='eci.pdsw.entities.Modelo' alias='Modelo'/>
-      <typeAlias type='eci.pdsw.entities.Rol' alias='Rol'/>
-      <typeAlias type='eci.pdsw.entities.RolRol' alias='RolRol'/>
-      <typeAlias type='eci.pdsw.entities.RolUsuario' alias='RolUsuario'/>
-      <typeAlias type='eci.pdsw.entities.Usuario' alias='Usuario'/>
+      <typeAlias type='edu.eci.pdsw.entities.Equipo' alias='Equipo'/>
+      <typeAlias type='edu.eci.pdsw.entities.EquipoBasico' alias='EquipoBasico'/>
+      <typeAlias type='edu.eci.pdsw.entities.PrestamoBasicoEquipo' alias='PrestamoBasicoEquipo'/>
+      <typeAlias type='edu.eci.pdsw.entities.PrestamoBasicoUsuario' alias='PrestamoBasicoUsuario'/>
+      <typeAlias type='edu.eci.pdsw.entities.PrestamoEquipo' alias='PrestamoEquipo'/>
+      <typeAlias type='edu.eci.pdsw.entities.PrestamoUsuario' alias='PrestamoUsuario'/>
+      <typeAlias type='edu.eci.pdsw.entities.Modelo' alias='Modelo'/>
+      <typeAlias type='edu.eci.pdsw.entities.Rol' alias='Rol'/>
+      <typeAlias type='edu.eci.pdsw.entities.RolRol' alias='RolRol'/>
+      <typeAlias type='edu.eci.pdsw.entities.RolUsuario' alias='RolUsuario'/>
+      <typeAlias type='edu.eci.pdsw.entities.Usuario' alias='Usuario'/>
     </typeAliases>
     <environments default="development">
         <environment id="development">

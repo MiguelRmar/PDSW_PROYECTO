@@ -1,6 +1,6 @@
 
-import eci.pdsw.entities.PrestamoUsuario;
-import eci.pdsw.services.Services;
+import edu.eci.pdsw.entities.PrestamoUsuario;
+import edu.eci.pdsw.services.Services;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

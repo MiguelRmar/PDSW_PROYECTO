@@ -1,16 +1,16 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
 
-import eci.pdsw.services.Services;
-import eci.pdsw.services.ServicesException;
-import eci.pdsw.entities.PrestamoBasicoUsuario;
-import eci.pdsw.entities.PrestamoUsuario;
-import eci.pdsw.entities.RolUsuario;
-import eci.pdsw.entities.Usuario;
+import edu.eci.pdsw.services.Services;
+import edu.eci.pdsw.services.ServicesException;
+import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
+import edu.eci.pdsw.entities.PrestamoUsuario;
+import edu.eci.pdsw.entities.RolUsuario;
+import edu.eci.pdsw.entities.Usuario;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.DriverManager;
