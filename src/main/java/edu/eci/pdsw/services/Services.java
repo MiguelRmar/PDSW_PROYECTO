@@ -136,4 +136,13 @@ public class Services {
         return modelos;
     }
     
+    public Set<EquipoBasico> loadEquiposBasicos(){
+        DaoFactory df= DaoFactory.getInstance(properties);
+        df.beginSession();
+        Set<EquipoBasico> equiposBasicos= df.getDaoEquipo().loadEquiposBasicos();
+        df.commitTransaction();
+        df.endSession();
+        return equiposBasicos;
+    }
+    
 }

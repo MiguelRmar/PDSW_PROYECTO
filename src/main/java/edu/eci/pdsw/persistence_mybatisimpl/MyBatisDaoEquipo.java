@@ -61,6 +61,12 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         Set<Modelo> ans=emap.loadModelos();
         return ans;
     }
+    
+    @Override
+    public Set<EquipoBasico> loadEquiposBasicos(){
+        Set<EquipoBasico> ans=emap.loadEquiposBasicos();
+        return ans;
+    }
 
     
 }
