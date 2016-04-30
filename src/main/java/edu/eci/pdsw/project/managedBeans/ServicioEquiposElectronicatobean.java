@@ -455,7 +455,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     
     
     /**
-     * 
+     * Actualiza los datos del usuario a quien se le realiza el prestamo
      */
     public void AccionBotonUsuarioPrestamo(){
         Usuario usuario= services.loadUsuarioById(codigoUsuarioPrestamo);
@@ -463,6 +463,13 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         correoUsuarioPrestamo = usuario.getCorreo();
         rolUsuarioPrestamo = usuario.getRoles();
         
+        
+    }
+    
+    /**
+     * obtiene los datos de los equipos que se van a prestar
+     */
+    public void getDatosEquiposPrestamos(){
         
     }
 
