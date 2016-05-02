@@ -11,7 +11,7 @@ import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.Usuario;
-import edu.eci.pdsw.services.Services;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +33,10 @@ import com.google.common.collect.Lists;
 import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.RolUsuario;
+import edu.eci.pdsw.services.Services;
+import edu.eci.pdsw.services.ServicesException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -47,10 +51,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     /**
      * 
      */
-    public ServicioEquiposElectronicatobean() {        
+    public ServicioEquiposElectronicatobean() {
+        
+        this.services = Services.getInstance("applicationconfig.properties");
+        
         //inical lista
         listaModelos=new ArrayList<>();
-        Set<Modelo> conjunto=services.loadModelos();
+        Set<Modelo> conjunto=null;
+        try {
+            conjunto = services.loadModelos();
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","Sucedio algo inesperado en la carga de modelos"));
+        }
         Modelo[] listaModelo=new Modelo[conjunto.size()];
         conjunto.toArray(listaModelo);
         listaModelos=Arrays.asList(listaModelo);
@@ -59,7 +71,12 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         filteredListaModelos=Arrays.asList(listaModelo);
         
         listaEquipoBasico=new ArrayList<>();
-        Set<EquipoBasico> conjunto1=services.loadEquiposBasicos();
+        Set<EquipoBasico> conjunto1=null;
+        try {
+            conjunto1 = services.loadEquiposBasicos();
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","Sucedio algo inesperado en la carga de equipos basicos"));
+        }
         EquipoBasico[] listaEquipoBasico2=new EquipoBasico[conjunto1.size()];
         conjunto1.toArray(listaEquipoBasico2);
         listaEquipoBasico=Arrays.asList(listaEquipoBasico2);
@@ -82,7 +99,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         map = new HashMap<>();
         map.put("Dado de baja", "Dado de baja");
         map.put("En reparación","En reparación");
-        data.put("Desactivo", map);   
+        data.put("Desactivo", map);  
+        
     }
     
     @ManagedProperty(value = "#{loginBean}")    
@@ -94,8 +112,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String id;
     private String nombre;
     private String correo;
-    //pagina registrarUnEquipo
-    private Services services=Services.getInstance("applicationconfig.properties");
+    private Services services;
     private String nombreDeModelo;
     private boolean elModeloYaExiste=false;
     private String textoSalidaModelo;
@@ -318,7 +335,12 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void accionBuscarDevolucion(){
         Services se = Services.getInstance("applicationconfig.properties");
-        Set<Usuario> usuarios = se.loadUsuarios();
+        Set<Usuario> usuarios=null;
+        try {
+            usuarios = se.loadUsuarios();
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
         for(Usuario u:usuarios){
             Set<PrestamoUsuario> prestamos = u.getPrestamos();
             for (PrestamoUsuario p: prestamos){
@@ -341,8 +363,17 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         //falta probar que la siguiente linea retorne la hora actual
         Services se = Services.getInstance("applicationconfig.properties");
         java.sql.Date horaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());     
-        Equipo equipoActual = se.loadEquipoBySerial(serialADevolver);
-        Set<Usuario> usuarios = se.loadUsuarios();
+        Equipo equipoActual=null;
+        try {
+            equipoActual = se.loadEquipoBySerial(serialADevolver);
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
+        try {
+            Set<Usuario> usuarios = se.loadUsuarios();
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
         Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
             for (PrestamoUsuario p: prestamos){
                 if(p.getEquipo_serial()==serialADevolver && p.getFechaExpedicion()==null){
@@ -458,7 +489,12 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * Actualiza los datos del usuario a quien se le realiza el prestamo
      */
     public void AccionBotonUsuarioPrestamo(){
-        Usuario usuario= services.loadUsuarioById(codigoUsuarioPrestamo);
+        Usuario usuario=null;
+        try {
+            usuario = services.loadUsuarioById(codigoUsuarioPrestamo);
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
         nombreUsuarioPrestamo = usuario.getNombre();
         correoUsuarioPrestamo = usuario.getCorreo();
         rolUsuarioPrestamo = usuario.getRoles();
@@ -492,13 +528,17 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the listaConsultas
      */
     public List<Modelo> getListaModelos() {
-        if(listaModelos.size()!=services.loadModelos().size()){
-            listaModelos=new ArrayList<>();
-           Set<Modelo> conjunto=services.loadModelos();
-           Modelo[] listaModelo=new Modelo[conjunto.size()];
-           conjunto.toArray(listaModelo);
-           listaModelos=Arrays.asList(listaModelo);
-           setFilteredListaModelos(listaModelos);
+        try {
+            if(listaModelos.size()!=services.loadModelos().size()){
+                listaModelos=new ArrayList<>();
+                Set<Modelo> conjunto=services.loadModelos();
+                Modelo[] listaModelo=new Modelo[conjunto.size()];
+                conjunto.toArray(listaModelo);
+                listaModelos=Arrays.asList(listaModelo);
+                setFilteredListaModelos(listaModelos);
+            }
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
         return listaModelos;
     }
@@ -507,14 +547,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the listaEquipoBasico
      */
     public List<EquipoBasico> getListaEquipoBasico() {
-        if(listaEquipoBasico.size()!=services.loadEquiposBasicos().size()){
-           listaEquipoBasico=new ArrayList<>();
-           Set<EquipoBasico> conjunto = services.loadEquiposBasicos();
-           EquipoBasico[] listaEquiposBasicos=new EquipoBasico[conjunto.size()];
-           conjunto.toArray(listaEquiposBasicos);
-           listaEquipoBasico=Arrays.asList();
-           setFilteredListaEquipoBasico(listaEquipoBasico);
-        } 
+        try {
+            if(listaEquipoBasico.size()!=services.loadEquiposBasicos().size()){
+                listaEquipoBasico=new ArrayList<>();
+                Set<EquipoBasico> conjunto = services.loadEquiposBasicos();
+                EquipoBasico[] listaEquiposBasicos=new EquipoBasico[conjunto.size()];
+                conjunto.toArray(listaEquiposBasicos);
+                listaEquipoBasico=Arrays.asList();
+                setFilteredListaEquipoBasico(listaEquipoBasico); 
+            }
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
         return listaEquipoBasico;
     }
 
@@ -971,14 +1015,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the filteredListaModelos
      */
     public List<Modelo> getFilteredListaModelos() {
-       if(listaModelos!=null && listaModelos.size()!=services.loadModelos().size()){
-           listaModelos=new ArrayList<>();
-           Set<Modelo> conjunto=services.loadModelos();
-           Modelo[] listaModelo=new Modelo[conjunto.size()];
-           conjunto.toArray(listaModelo);
-           listaModelos=Arrays.asList(listaModelo);
-           setFilteredListaModelos(listaModelos);
-           filterList();
+        try {
+            if(listaModelos!=null && listaModelos.size()!=services.loadModelos().size()){
+                listaModelos=new ArrayList<>();
+                Set<Modelo> conjunto=services.loadModelos();
+                Modelo[] listaModelo=new Modelo[conjunto.size()];
+                conjunto.toArray(listaModelo);
+                listaModelos=Arrays.asList(listaModelo);
+                setFilteredListaModelos(listaModelos);
+                filterList();
+            }
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
         return filteredListaModelos;
     }
@@ -987,15 +1035,19 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the filteredListaEquipoBasico
      */
     public List<EquipoBasico> getFilteredListaEquipoBasico() {
-        if(listaEquipoBasico!=null && listaEquipoBasico.size()!=services.loadEquiposBasicos().size()){
-            listaEquipoBasico=new ArrayList<>();
-           Set<EquipoBasico> conjunto=services.loadEquiposBasicos();
-           EquipoBasico[] listaEquipoBasico1=new EquipoBasico[conjunto.size()];
-           conjunto.toArray(listaEquipoBasico1);
-           listaEquipoBasico=Arrays.asList(listaEquipoBasico1);
-           setFilteredListaEquipoBasico(listaEquipoBasico);
-           filterListEquipoBasico();
-
+        try {
+            if(listaEquipoBasico!=null && listaEquipoBasico.size()!=services.loadEquiposBasicos().size()){
+                listaEquipoBasico=new ArrayList<>();
+                Set<EquipoBasico> conjunto=services.loadEquiposBasicos();
+                EquipoBasico[] listaEquipoBasico1=new EquipoBasico[conjunto.size()];
+                conjunto.toArray(listaEquipoBasico1);
+                listaEquipoBasico=Arrays.asList(listaEquipoBasico1);
+                setFilteredListaEquipoBasico(listaEquipoBasico);
+                filterListEquipoBasico();
+                
+            }
+        } catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
         return filteredListaEquipoBasico;
     }

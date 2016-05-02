@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Set;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -36,6 +37,7 @@ public class Services {
     }
     
     public static Services getInstance(String propertiesFileName) throws RuntimeException{
+        
         if (instance==null){
             try {
                 instance=new Services(propertiesFileName);
@@ -43,6 +45,7 @@ public class Services {
                 throw new RuntimeException("Error on application configuration:",ex);
             }
         }        
+        
         return instance;
     }
     
@@ -52,13 +55,22 @@ public class Services {
      * carga un usuario dado el id de este
      * @param id, el identificador del usuario a cargar
      * @return el usuario identificado con ese id
+     * @throws edu.eci.pdsw.services.ServicesException
      */
-    public Usuario loadUsuarioById(int id){
+    public Usuario loadUsuarioById(int id) throws ServicesException{
+        Usuario ans=null;
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        Usuario ans =df.getDaoUsuario().loadUsuarioById(id);
-        df.commitTransaction();
-        df.endSession();
+        try{
+            df.beginSession();
+            ans =df.getDaoUsuario().loadUsuarioById(id);
+            df.commitTransaction();
+            
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }
+        finally{
+            df.endSession();
+        }
         return ans;
     }
     
@@ -66,12 +78,21 @@ public class Services {
      * carga un modelo dado el nombre de este
      * @param nombre, el nombre del modelo a cargar
      * @return el modelo identificado con ese nombre
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public Modelo loadModeloByName(String nombre){
+    public Modelo loadModeloByName(String nombre)throws ServicesException{
+        Modelo ans=null;
         DaoFactory df=  DaoFactory.getInstance(properties);
-        df.beginSession();
-        Modelo ans = df.getDaoEquipo().loadModeloByName(nombre);
-        df.endSession();
+        try{
+           df.beginSession();
+           ans = df.getDaoEquipo().loadModeloByName(nombre);
+           
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+        
         return ans;
     }
     
@@ -79,12 +100,19 @@ public class Services {
      * carga un equipo dado el serial de este
      * @param serial, el serial del equipo a cargar
      * @return el equipo identificado con ese serial
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public Equipo loadEquipoBySerial(int serial){
+    public Equipo loadEquipoBySerial(int serial) throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        Equipo ans =df.getDaoEquipo().loadEquipoBySerial(serial);
-        df.endSession();
+        Equipo ans=null;
+        try{
+            df.beginSession();
+            ans =df.getDaoEquipo().loadEquipoBySerial(serial);    
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
         return ans;
     }
     
@@ -92,12 +120,19 @@ public class Services {
      * carga un equipo basico dado el nombre de este
      * @param nombre, el nombre del equipo basico a cargar
      * @return el equipo basico identificado con ese nombre
+     * @throws edu.eci.pdsw.services.ServicesException
     */
-    public EquipoBasico loadEquipoBasicoByName(String name){
+    public EquipoBasico loadEquipoBasicoByName(String name) throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        EquipoBasico ans =df.getDaoEquipo().loadEquipoBasicoByName(name);
-        df.endSession();
+        EquipoBasico ans=null;
+        try{
+            df.beginSession();
+            ans =df.getDaoEquipo().loadEquipoBasicoByName(name);
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
         return ans; 
     }
     
@@ -105,12 +140,18 @@ public class Services {
      * cargar todos los prestamos
      * @return un contenedor con todos los prestamos que se han hecho
      */    
-    public Set<PrestamoUsuario> loadPrestamos(){
+    public Set<PrestamoUsuario> loadPrestamos() throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        Set<PrestamoUsuario> ans =df.getDaoUsuario().loadPrestamos();
-        df.commitTransaction();
-        df.endSession();
+        Set<PrestamoUsuario> ans=null;
+        try{
+            df.beginSession();
+            ans =df.getDaoUsuario().loadPrestamos();
+            df.commitTransaction();    
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
         return ans;
     }
     
@@ -118,85 +159,135 @@ public class Services {
      * registrar un equipo nuevo dado el equipo como entidad (objeto)
      * @param e, el equipo a registrar en la bd
      * @param modelo, el modelo al que pertenece este equipo
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public void registroEquipoNuevo(Equipo equipo,String modelo){
+    public void registroEquipoNuevo(Equipo equipo,String modelo)throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        df.getDaoEquipo().registrarEquipoNuevo(equipo,modelo);
-        df.commitTransaction();
-        df.endSession();
+        try{
+            df.beginSession();
+            df.getDaoEquipo().registrarEquipoNuevo(equipo,modelo);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
     }
     
     /**
      * registrar un modelo nuevo dado el modelo como entidad (objeto)
      * @param m, el modelo a registrar en la bd
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public void registroModeloNuevo(Modelo modelo){
+    public void registroModeloNuevo(Modelo modelo) throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        df.getDaoEquipo().registrarModeloNuevo(modelo);
-        df.commitTransaction();
-        df.endSession();
+        try{
+            df.beginSession();
+            df.getDaoEquipo().registrarModeloNuevo(modelo);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
     }
     
     /**
      * registrar un equipo nuevo dado el equipo como entidad (objeto)
      * @param e, el equipo a registrar en la bd
      * @param modelo, el modelo al que pertenece este equipo
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public void registroEquipoBasicoNuevo(EquipoBasico equipobasico){
+    public void registroEquipoBasicoNuevo(EquipoBasico equipobasico) throws ServicesException{
         DaoFactory df=DaoFactory.getInstance(properties);
-        df.beginSession();
-        df.getDaoEquipo().registrarEquipoBasicoNuevo(equipobasico);
-        df.commitTransaction();
-        df.endSession();
+        try{
+            df.beginSession();
+            df.getDaoEquipo().registrarEquipoBasicoNuevo(equipobasico);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
     }
     
      /**
      * cargar todos los usuarios
      * @return un contenedor con todos los usuarios que estan registrados
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public Set<Usuario> loadUsuarios(){
+    public Set<Usuario> loadUsuarios() throws ServicesException{
         DaoFactory df= DaoFactory.getInstance(properties);
-        df.beginSession();
-        Set<Usuario> usuarios = df.getDaoUsuario().loadUsuarios();
-        df.commitTransaction();
-        df.endSession();
+        Set<Usuario> usuarios=null;
+        try{
+            df.beginSession();
+            usuarios = df.getDaoUsuario().loadUsuarios();
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
         return usuarios;
     }
     
     /**
      * cargar todos los modelos
      * @return un contenedor con todos los modelos que se han registrado
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public Set<Modelo> loadModelos(){
+    public Set<Modelo> loadModelos() throws ServicesException{
         DaoFactory df= DaoFactory.getInstance(properties);
-        df.beginSession();
-        Set<Modelo> modelos = df.getDaoEquipo().loadModelos();
-        df.commitTransaction();
-        df.endSession();
+        Set<Modelo> modelos=null;
+        try{
+            df.beginSession();
+            modelos = df.getDaoEquipo().loadModelos();
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
         return modelos;
     }
     
     /**
      * cargar todos los equipos basicos
      * @return un contenedor con todos los equipos basicos que se han registrado
+     * @throws edu.eci.pdsw.services.ServicesException
      */    
-    public Set<EquipoBasico> loadEquiposBasicos(){
+    public Set<EquipoBasico> loadEquiposBasicos() throws ServicesException{
         DaoFactory df= DaoFactory.getInstance(properties);
-        df.beginSession();
-        Set<EquipoBasico> equiposBasicos= df.getDaoEquipo().loadEquiposBasicos();
-        df.commitTransaction();
-        df.endSession();
+        Set<EquipoBasico> equiposBasicos=null;
+        try{
+            df.beginSession();
+            equiposBasicos= df.getDaoEquipo().loadEquiposBasicos();
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
         return equiposBasicos;
     }
     
-    public void updateEquipoBasico(EquipoBasico equipoBasico,int cantidad){
+    /**
+     *
+     * @param equipoBasico
+     * @param cantidad
+     * @throws ServicesException
+     */
+    public void updateEquipoBasico(EquipoBasico equipoBasico,int cantidad) throws ServicesException{
         DaoFactory df= DaoFactory.getInstance(properties);
-        df.beginSession();
-        df.getDaoEquipo().updateEquipoBasico(equipoBasico,cantidad);
-        df.commitTransaction();
-        df.endSession();
+        try{
+            df.beginSession();
+            df.getDaoEquipo().updateEquipoBasico(equipoBasico,cantidad);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
     }
     
 }

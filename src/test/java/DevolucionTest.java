@@ -1,6 +1,7 @@
 
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.services.Services;
+import edu.eci.pdsw.services.ServicesException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -54,7 +55,7 @@ public class DevolucionTest {
     
     //Prueba 1:Un usuario con un solo prestamo realiza una devolucion
     //@Test
-    public void firstTest() throws SQLException{
+    public void firstTest() throws SQLException, ServicesException{
         Connection conn=getConnection();
         Statement stmt=conn.createStatement();
         Services servicios = Services.getInstance("h2-applicationconfig.properties");

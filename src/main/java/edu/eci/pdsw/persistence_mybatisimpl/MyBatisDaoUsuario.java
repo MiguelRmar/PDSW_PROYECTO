@@ -21,7 +21,7 @@ public class MyBatisDaoUsuario implements DaoUsuario{
     
     private EquipoMapper emap=null;
 
-    public MyBatisDaoUsuario(SqlSession session) {        
+    public MyBatisDaoUsuario(SqlSession session) throws PersistenceException{        
         emap=session.getMapper(EquipoMapper.class);
     }
 
@@ -35,7 +35,7 @@ public class MyBatisDaoUsuario implements DaoUsuario{
         return emap.loadPrestamos();
     }
     @Override
-    public Set<Usuario> loadUsuarios() {
+    public Set<Usuario> loadUsuarios() throws PersistenceException{
         return emap.loadUsuarios();
     }
     

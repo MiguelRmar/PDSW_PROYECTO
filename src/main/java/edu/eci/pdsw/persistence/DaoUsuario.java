@@ -33,5 +33,5 @@ public interface DaoUsuario {
      * cargar todos los usuarios
      * @return un contenedor con todos los usuarios que estan registrados
      */
-    public Set<Usuario> loadUsuarios();
+    public Set<Usuario> loadUsuarios() throws PersistenceException;
 }

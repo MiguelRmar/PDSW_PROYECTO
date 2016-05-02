@@ -36,5 +36,8 @@ public class ServicesException extends Exception {
     public ServicesException(Throwable cause) {
         super(cause);
     }
+    public ServicesException(Throwable e, String localizedMessage) {
+        super(localizedMessage,e);
+    }
     
 }
