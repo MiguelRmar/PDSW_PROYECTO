@@ -106,5 +106,23 @@ public interface EquipoMapper {
      * registrar un equipo basico nuevo dado el equipo basico como entidad (objeto)
      * @param eb, el equipo basico a registrar en la bd
      */
-    public void registrarEquipoBasicoNuevo(@Param("equipoBasico")EquipoBasico eb);    
+    public void registrarEquipoBasicoNuevo(@Param("equipoBasico")EquipoBasico eb); 
+    
+    /**
+     * 
+     * 
+     */
+    public void updatePrestamo(@Param("serial_equipo") int s,@Param("id_usuario") int u,@Param("fechaVencimiento")java.sql.Date h);
+    
+    /**
+     * 
+     * 
+     */
+    public void updatePrestamosBasicos(@Param("nombre_equipo")String n,@Param("id_usuario") int u, @Param("fechaVencimiento")java.sql.Date h,@Param("cantidad")int c);
+    
+    /**
+     * 
+     * 
+     */
+    public void updateEquiposBasicosDevo(@Param("nombre_equipo")String n,@Param("cantidad") int c);
 }

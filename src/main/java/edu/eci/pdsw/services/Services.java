@@ -8,6 +8,7 @@ package edu.eci.pdsw.services;
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.Modelo;
+import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.persistence.DaoFactory;
 import edu.eci.pdsw.entities.Usuario;
@@ -289,5 +290,20 @@ public class Services {
            df.endSession();  
         }
     }
+    public void updatePrestamos(PrestamoUsuario p, int usuario) {
+         DaoFactory df= DaoFactory.getInstance(properties);
+        df.beginSession();
+        df.getDaoDevolucion().updatePrestamos(p.getEquipo_serial(), usuario,p.getFechaVencimiento());
+        df.commitTransaction();
+        df.endSession();
+    } 
+    public void updatePrestamosBasicos(PrestamoBasicoUsuario p, int usuario) {
+         DaoFactory df= DaoFactory.getInstance(properties);
+        df.beginSession();
+        df.getDaoDevolucion().updatePrestamosBasicos(p.getEquipoBasico_nombre(), usuario,p.getFechaVencimiento(),p.getCantidadPrestada());
+        df.getDaoDevolucion().updateEquiposBasicosDevo(p.getEquipoBasico_nombre(), p.getCantidadPrestada());
+        df.commitTransaction();
+        df.endSession();
+    } 
     
 }

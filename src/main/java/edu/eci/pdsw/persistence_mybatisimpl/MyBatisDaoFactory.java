@@ -6,6 +6,7 @@
 package edu.eci.pdsw.persistence_mybatisimpl;
 
 
+import edu.eci.pdsw.persistence.DaoDevolucion;
 import edu.eci.pdsw.persistence.DaoFactory;
 import edu.eci.pdsw.persistence.DaoUsuario;
 import java.io.IOException;
@@ -92,4 +93,8 @@ public class MyBatisDaoFactory extends DaoFactory{
         return new MyBatisDaoEquipo(currentSession);
      }
     
+    @Override
+    public DaoDevolucion getDaoDevolucion() {
+        return new MyBatisDaoDevolucion(currentSession);
+     }
 }

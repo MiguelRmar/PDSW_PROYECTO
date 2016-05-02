@@ -71,4 +71,5 @@ public interface DaoEquipo {
     
     public void updateEquipoBasico(EquipoBasico equipoBasico,int cantidad);
     
+    
 }

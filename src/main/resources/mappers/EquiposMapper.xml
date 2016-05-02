@@ -154,6 +154,24 @@
         UPDATE EQUIPOS_BASICOS SET cantidad=#{cantidad} WHERE nombre=#{equipoBasico}
     </update>
     
+    <update id="updatePrestamo">
+        UPDATE PRESTAMOS SET 
+            fechaVencimiento = #{fechaVencimiento}
+        WHERE USUARIOS_id = #{id_usuario} and EQUIPOS_serial = #{serial_equipo}
+    </update>
+    
+    <update id="updatePrestamosBasicos">
+        UPDATE PRESTAMOS_BASICOS SET 
+            fechaVencimiento = #{fechaVencimiento}
+        WHERE USUARIOS_id = #{id_usuario} and  EQUIPOS_BASICOS_nombre = #{nombre_equipo}
+    </update>
+    
+    <update id="updateEquiposBasicosDevo">
+        UPDATE EQUIPOS_BASICOS SET 
+            cantidad = cantidad + #{cantidad}
+        WHERE nombre = #{nombre_equipo}
+    </update>
+    
 </mapper>
     
     

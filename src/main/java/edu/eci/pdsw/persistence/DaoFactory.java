@@ -62,6 +62,11 @@ public abstract class DaoFactory {
     public abstract DaoEquipo getDaoEquipo();
     
     /**
+     * obtener un objeto del dao devolucion para usar sus metodos
+     * @return un objeto de tipo dao devolucion
+     */
+    public abstract DaoDevolucion getDaoDevolucion();
+    /**
      * realizar los cambios en el dao
      * @throws PersistenceException 
      */

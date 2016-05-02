@@ -43,17 +43,15 @@
                         <p:panel  header = "Equipo" style="height: 150px">
                             <p:panelGrid columns="6">
                                 <h:outputLabel value="Serial:" />
-                                <h:inputText value="#{Equipos.serialADevolver}" required="true"/>
-                                <p:commandButton value ="Enviar" actionListener="#{Equipos.accionBuscarDevolucion()}" update="devo_form"/>                                                                                                                      
-                            </p:panelGrid>  
+                                <h:inputText value="#{Devolucion.serialADevolver}" required="true"/>
+                                <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update="devo_form"/>                                                                                                                      
+                            </p:panelGrid> 
+                            <h:form id="devo_form1" rendered="#{Devolucion.yaBusqueEquipoADevolver}">
+                            <h:outputText id="value1" value="#{Devolucion.textoSalidaEquipoADevolver}"/>
                             <br/>
-                            <br/>
-                            <h:form id="devo_form1" rendered="#{Equipos.yaBusqueEquipoADevolver}">
-                            <h:outputText id="value1" value="#{Equipos.textoSalidaEquipoADevolver}"/>
-                            <br/>
-                            <h:outputLabel value="Usuario:" rendered="#{Equipos.serialDevolucionEncontrado}"> </h:outputLabel>
-                            <h:outputText value ="#{Equipos.usuarioDevolucion.nombre}" rendered="#{Equipos.serialDevolucionEncontrado}" style= " height: 150px" />   
-                            <p:commandButton value="Confirmar devolución" rendered="#{Equipos.serialDevolucionEncontrado}" actionListener="#{Equipos.accionRealizarDevolucion()}"/>
+                            <h:outputLabel value="Usuario:" rendered="#{Devolucion.serialDevolucionEncontrado}"> </h:outputLabel>
+                            <h:outputText value ="#{Devolucion.usuarioDevolucion.nombre}" rendered="#{Devolucion.serialDevolucionEncontrado}" style= " height: 150px" />   
+                            <p:commandButton value="Confirmar devolución" rendered="#{Devolucion.serialDevolucionEncontrado}" actionListener="#{Devolucion.accionRealizarDevolucion()}"/>
                             </h:form>
                         </p:panel> 
                         <br/>
@@ -62,15 +60,15 @@
                         <p:panel header ="Equipos Básicos" style="height: 150px">
                             <p:panelGrid columns="6">
                                 <h:outputLabel value="Código Estudiante:" />
-                                <h:inputText value="#{Equipos.condigoEstudianteBasicos}"/>
+                                <h:inputText value="#{Devolucion.condigoEstudianteBasicos}"/>
                                 <h:outputLabel value="Tipo Equipo:" />
-                                <h:inputText value="#{Equipos.nombreEquipoBasico}"/>
+                                <h:inputText value="#{Devolucion.nombreEquipoBasicoDevolver}"/>
                                 <h:outputLabel value="Número de items:" />
-                                <h:inputText value="#{Equipos.cantidadDevuelta}"/>
+                                <h:inputText value="#{Devolucion.cantidadBasicaDevuelta}"/>
                             </p:panelGrid>
                         </p:panel>
                         <br/>
-                        <p:commandButton value="Devolver" action="#{Equipos.accionRealizarDevolucionBasica()}"/>
+                        <p:commandButton value="Confirmar devolución" action="#{Devolucion.accionRealizarDevolucionBasica()}"/>
                     </p:layoutUnit>
                 </p:layout>
         </h:form>

@@ -137,16 +137,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private Map<String,String> estados;
     private Map<String,String> subestados;
     private final Map<String,Map<String,String>> data = new HashMap<>();
-    //datos para una devolucion de un equipo normal
-    private boolean yaBusqueEquipoADevolver=false;
-    private boolean serialDevolucionEncontrado=false;
-    private boolean serialDevolucionNoEncontrado=true;
-    private String textoSalidaEquipoADevolver;
-    private int serialADevolver;
-    private Usuario usuarioDevolucion;
-    //datos para una devolucion de un equipo basico
-    private int condigoEstudianteBasicos;
-    private int cantidadDevuelta;
     //datos para equipo basico
     private List<EquipoBasico> listaEquipoBasico;
     private List<EquipoBasico> filteredListaEquipoBasico = new ArrayList<>();
@@ -329,70 +319,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","No se ha registrado el modelo ,sucedio algo inesperado"));
        }
     }
-    
-    /**
-     * 
-     */
-    public void accionBuscarDevolucion(){
-        Services se = Services.getInstance("applicationconfig.properties");
-        Set<Usuario> usuarios=null;
-        try {
-            usuarios = se.loadUsuarios();
-        } catch (ServicesException ex) {
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
-        }
-        for(Usuario u:usuarios){
-            Set<PrestamoUsuario> prestamos = u.getPrestamos();
-            for (PrestamoUsuario p: prestamos){
-                if(p.getEquipo_serial()==serialADevolver && p.getFechaVencimiento()==null){
-                    setUsuarioDevolucion(u);      
-                    setSerialDevolucionEncontrado(true);
-                    setSerialDevolucionNoEncontrado(false);
-                    textoSalidaEquipoADevolver="El usuario con el prestamo del equipo fue encontrado exitosamente";
-                }
-            }
-        }
-        if (getUsuarioDevolucion()==null){
-            setTextoSalidaEquipoADevolver("No fue encontrado un usuario con el presente equipo  "+serialADevolver +" en prestamo ");
-        }
-        setYaBusqueEquipoADevolver(true);
-    }
-    
-    public void accionRealizarDevolucion(){
-        PrestamoUsuario prestamoActual = null; 
-        //falta probar que la siguiente linea retorne la hora actual
-        Services se = Services.getInstance("applicationconfig.properties");
-        java.sql.Date horaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());     
-        Equipo equipoActual=null;
-        try {
-            equipoActual = se.loadEquipoBySerial(serialADevolver);
-        } catch (ServicesException ex) {
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
-        }
-        try {
-            Set<Usuario> usuarios = se.loadUsuarios();
-        } catch (ServicesException ex) {
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
-        }
-        Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
-            for (PrestamoUsuario p: prestamos){
-                if(p.getEquipo_serial()==serialADevolver && p.getFechaExpedicion()==null){
-                    p.setFechaVencimiento(horaActual);
-            }
-        }  
-        Set<PrestamoEquipo> prestamose = equipoActual.getPrestamos();
-        for (PrestamoEquipo p:prestamose){
-            if(p.getUsuario_id() == usuarioDevolucion.getId()){
-                p.setFechaExpedicion(horaActual);
-            }
-        
-        }
-        
-    }
-    public void accionRealizarDevolucionBasica(){
-    
-    }
-    
     
     public void accionBotoncrearEquipo(String modelo){
         nombreDeModelo=modelo;
@@ -838,104 +764,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     public void setProveedorEquipo(String proveedorEquipo) {
         this.proveedorEquipo = proveedorEquipo;
     }  
-
-    /**
-     * @return the yaBusqueEquipoADevolver
-     */
-    public boolean isYaBusqueEquipoADevolver() {
-        return yaBusqueEquipoADevolver;
-    }
-
-    /**
-     * @param yaBusqueEquipoADevolver the yaBusqueEquipoADevolver to set
-     */
-    public void setYaBusqueEquipoADevolver(boolean yaBusqueEquipoADevolver) {
-        this.yaBusqueEquipoADevolver = yaBusqueEquipoADevolver;
-    }
-
-    /**
-     * @return the serialDevolucionEncontrado
-     */
-    public boolean isSerialDevolucionEncontrado() {
-        return serialDevolucionEncontrado;
-    }
-
-    /**
-     * @param serialDevolucionEncontrado the serialDevolucionEncontrado to set
-     */
-    public void setSerialDevolucionEncontrado(boolean serialDevolucionEncontrado) {
-        this.serialDevolucionEncontrado = serialDevolucionEncontrado;
-    }
-
-    /**
-     * @return the serialDevolucionNoEncontrado
-     */
-    public boolean isSerialDevolucionNoEncontrado() {
-        return serialDevolucionNoEncontrado;
-    }
-
-    /**
-     * @param serialDevolucionNoEncontrado the serialDevolucionNoEncontrado to set
-     */
-    public void setSerialDevolucionNoEncontrado(boolean serialDevolucionNoEncontrado) {
-        this.serialDevolucionNoEncontrado = serialDevolucionNoEncontrado;
-    }
-
-    /**
-     * @return the textoSalidaEquipoADevolver
-     */
-    public String getTextoSalidaEquipoADevolver() {
-        return textoSalidaEquipoADevolver;
-    }
-
-    /**
-     * @param textoSalidaEquipoADevolver the textoSalidaEquipoADevolver to set
-     */
-    public void setTextoSalidaEquipoADevolver(String textoSalidaEquipoADevolver) {
-        this.textoSalidaEquipoADevolver = textoSalidaEquipoADevolver;
-    }
-
-    /**
-     * @return the serialADevolver
-     */
-    public int getSerialADevolver() {
-        return serialADevolver;
-    }
-
-    /**
-     * @param serialADevolver the serialADevolver to set
-     */
-    public void setSerialADevolver(int serialADevolver) {
-        this.serialADevolver = serialADevolver;
-    }
-
-    /**
-     * @return the usuarioDevolucion
-     */
-    public Usuario getUsuarioDevolucion() {
-        return usuarioDevolucion;
-    }
-
-    /**
-     * @param usuarioDevolucion the usuarioDevolucion to set
-     */
-    public void setUsuarioDevolucion(Usuario usuarioDevolucion) {
-        this.usuarioDevolucion = usuarioDevolucion;
-    }
-
-    /**
-     * @return the condigoEstudianteBasicos
-     */
-    public int getCondigoEstudianteBasicos() {
-        return condigoEstudianteBasicos;
-    }
-
-    /**
-     * @param condigoEstudianteBasicos the condigoEstudianteBasicos to set
-     */
-    public void setCondigoEstudianteBasicos(int condigoEstudianteBasicos) {
-        this.condigoEstudianteBasicos = condigoEstudianteBasicos;
-    }
     
     /**
      * @return nombreEquipoBasico 
@@ -949,22 +777,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setnombreEquipoBásico(String nombre){
         this.nombreEquipoBasico = nombre;
-    }
-
-
-
-    /**
-     * @return the cantidadDevuelta
-     */
-    public int getCantidadDevuelta() {
-        return cantidadDevuelta;
-    }
-
-    /**
-     * @param cantidadDevuelta the cantidadDevuelta to set
-     */
-    public void setCantidadDevuelta(int cantidadDevuelta) {
-        this.cantidadDevuelta = cantidadDevuelta;
     }
 
     /**
