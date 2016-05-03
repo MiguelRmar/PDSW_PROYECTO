@@ -76,7 +76,7 @@ public class RegistroEquipoTest {
         ////respuesta obtenida
         Modelo Jhordy = servicios.loadModeloByName("modelo1");
         //prueba
-        assertEquals(ans.toString(),Jhordy.toString());       
+        assertEquals("No se obtuvo el resultado correcto al intentar cargar un modelo que aun no posee equipos asociados",ans.toString(),Jhordy.toString());       
     }
     
     //Prueba 2: cargar un modelo por nombre que contiene equipos asociados
@@ -101,7 +101,7 @@ public class RegistroEquipoTest {
         ////respuesta obtenida
         Modelo Jhordy = servicios.loadModeloByName("modelo1");
         //prueba
-        assertEquals(ans.toString(),Jhordy.toString());       
+        assertEquals("No se obtuvo el resultado correcto al intentar cargar un modelo que posee equipos asociados",ans.toString(),Jhordy.toString());       
     }
     
     //Prueba 3: cargar un equipo sin prestamos asociados
@@ -121,7 +121,7 @@ public class RegistroEquipoTest {
         ////respuesta obtenida
         Equipo Jhordy = servicios.loadEquipoBySerial(456);
         //prueba
-        assertEquals(ans.toString(),Jhordy.toString());       
+        assertEquals("No se obtuvo el resultado correcto al intentar cargar un equipo sin prestamos asociados",ans.toString(),Jhordy.toString());       
     }
     
     //Prueba 4: cargar un equipo con prestamos asociados
@@ -149,7 +149,7 @@ public class RegistroEquipoTest {
         ////respuesta obtenida
         Equipo Jhordy = servicios.loadEquipoBySerial(456);
         //prueba
-        assertEquals(ans.toString(),Jhordy.toString());       
+        assertEquals("No se obtuvo el resultado correcto al intentar cargar un equipo con prestamos asociados",ans.toString(),Jhordy.toString());       
     }
     
     //Prueba 5: cargar un equipo basico sin prestamos asociados
@@ -168,7 +168,7 @@ public class RegistroEquipoTest {
         ////respuesta obtenida
         EquipoBasico Jhordy = servicios.loadEquipoBasicoByName("cables");
         //prueba
-        assertEquals(ans.toString(),Jhordy.toString());       
+        assertEquals("No se obtuvo el resultado correcto al intentar cargar un equipo basico sin prestamos asociados",ans.toString(),Jhordy.toString());       
     }
     
     //Prueba 6: cargar un equipo basico con prestamos asociados
@@ -196,6 +196,6 @@ public class RegistroEquipoTest {
         ////respuesta obtenida
         EquipoBasico Jhordy = servicios.loadEquipoBasicoByName("cables");
         //prueba
-        assertEquals(ans.toString(),Jhordy.toString());       
+        assertEquals("No se obtuvo el resultado correcto al intentar cargar un equipo basico con prestamos asociados",ans.toString(),Jhordy.toString());       
     }
 }
