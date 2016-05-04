@@ -5,6 +5,7 @@
  */
 package edu.eci.pdsw.project.managedBeans;
 import edu.eci.pdsw.entities.Equipo;
+import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
@@ -12,7 +13,10 @@ import edu.eci.pdsw.entities.Usuario;
 import edu.eci.pdsw.services.Services;
 import edu.eci.pdsw.services.ServicesException;
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +36,16 @@ import org.primefaces.context.RequestContext;
 public class ServiciosDevolucionesBean implements Serializable{
 
     public ServiciosDevolucionesBean() {
+        try {
+            se = Services.getInstance("applicationconfig.properties");
+            nombresEquiposBasicos = new HashMap<>();
+            Set<EquipoBasico> eb = se.loadEquiposBasicos();
+            for(EquipoBasico b:eb){
+                nombresEquiposBasicos.put(b.getNombre(),b.getNombre());
+            }
+        } catch (ServicesException ex) {
+            Logger.getLogger(ServiciosDevolucionesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -51,6 +65,8 @@ public class ServiciosDevolucionesBean implements Serializable{
     private int cantidadBasicaDevuelta;
     private Usuario usuarioDevolucionBasico;
     
+    private HashMap<String, String> nombresEquiposBasicos;
+    Services se;
     public void limpiarDevolucion(){
         yaBusqueEquipoADevolver = false;
         serialDevolucionEncontrado = false;
@@ -74,7 +90,6 @@ public class ServiciosDevolucionesBean implements Serializable{
     
     public void accionBuscarDevolucion() {
         try {
-            Services se = Services.getInstance("applicationconfig.properties");
             Set<Usuario> usuarios = se.loadUsuarios();
             for (Usuario u : usuarios) {
                 Set<PrestamoUsuario> prestamos = u.getPrestamos();
@@ -102,7 +117,6 @@ public class ServiciosDevolucionesBean implements Serializable{
         try {
             PrestamoUsuario prestamoActual = null;
             //la fecha actual entrega año,mes y dia pero no minutos ni segundos.
-            Services se = Services.getInstance("applicationconfig.properties");
             Equipo equipoActual = se.loadEquipoBySerial(getSerialADevolver());
             Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
             for (PrestamoUsuario p : prestamos) {
@@ -132,7 +146,6 @@ public class ServiciosDevolucionesBean implements Serializable{
 
     public void accionRealizarDevolucionBasica() {
         try {
-            Services se = Services.getInstance("applicationconfig.properties");
             Set<Usuario> usuarios = se.loadUsuarios();
             for (Usuario u : usuarios) {
                 Set<PrestamoBasicoUsuario> prestamos = u.getPrestamosBasicos();
@@ -310,6 +323,20 @@ public class ServiciosDevolucionesBean implements Serializable{
      */
     public void setLoginBean(ShiroLoginBean loginBean) {
         this.loginBean = loginBean;
+    }
+
+    /**
+     * @return the nombresEquiposBasicos
+     */
+    public HashMap<String, String> getNombresEquiposBasicos() {
+        return nombresEquiposBasicos;
+    }
+
+    /**
+     * @param nombresEquiposBasicos the nombresEquiposBasicos to set
+     */
+    public void setNombresEquiposBasicos(HashMap<String, String> nombresEquiposBasicos) {
+        this.nombresEquiposBasicos = nombresEquiposBasicos;
     }
 
     

@@ -10,6 +10,7 @@
     </h:head>
 
     <h:body> 
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="devo_form">
                 <p:layout>
                     <p:layoutUnit position="north">
@@ -45,10 +46,12 @@
                                 <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update="devo_form"/>                                                                                                                      
                             </p:panelGrid> 
                             <h:form id="devo_form1" rendered="#{Devolucion.yaBusqueEquipoADevolver}">
+                            <br/>
                             <h:outputText id="value1" value="#{Devolucion.textoSalidaEquipoADevolver}"/>
                             <br/>
                             <h:outputLabel value="Usuario:" rendered="#{Devolucion.serialDevolucionEncontrado}"> </h:outputLabel>
                             <h:outputText value ="#{Devolucion.usuarioDevolucion.nombre}" rendered="#{Devolucion.serialDevolucionEncontrado}" style= " height: 150px" />   
+                            <br/>
                             <p:commandButton value="Confirmar devolución" rendered="#{Devolucion.serialDevolucionEncontrado}" actionListener="#{Devolucion.accionRealizarDevolucion()}"/>
                             </h:form>
                         </p:panel> 
@@ -60,7 +63,10 @@
                                 <h:outputLabel value="Código Estudiante:" />
                                 <h:inputText value="#{Devolucion.condigoEstudianteBasicos}"/>
                                 <h:outputLabel value="Tipo Equipo:" />
-                                <h:inputText value="#{Devolucion.nombreEquipoBasicoDevolver}"/>
+                                <p:selectOneMenu id="nombres" value="#{Devolucion.nombreEquipoBasicoDevolver}" style="width:125px">
+                                    <f:selectItem itemLabel="Elija..." itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
+                                </p:selectOneMenu>
                                 <h:outputLabel value="Número de items:" />
                                 <h:inputText value="#{Devolucion.cantidadBasicaDevuelta}"/>
                             </p:panelGrid>
