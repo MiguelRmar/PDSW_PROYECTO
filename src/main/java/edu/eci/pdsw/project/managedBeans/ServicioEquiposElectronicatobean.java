@@ -8,14 +8,10 @@ package edu.eci.pdsw.project.managedBeans;
 
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.Modelo;
-import edu.eci.pdsw.entities.PrestamoEquipo;
-import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.Usuario;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +26,10 @@ import org.primefaces.context.RequestContext;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.RolUsuario;
 import edu.eci.pdsw.services.Services;
 import edu.eci.pdsw.services.ServicesException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 
 /**
  *
@@ -47,14 +38,11 @@ import java.util.logging.Logger;
 @ManagedBean(name="Equipos")
 @SessionScoped
 public class ServicioEquiposElectronicatobean implements Serializable{
-    
     /**
      * 
      */
     public ServicioEquiposElectronicatobean() {
-        
         this.services = Services.getInstance("applicationconfig.properties");
-        
         //inical lista
         listaModelos=new ArrayList<>();
         Set<Modelo> conjunto=null;
@@ -69,7 +57,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         //filtrada lista
         filteredListaModelos=new ArrayList<>();
         filteredListaModelos=Arrays.asList(listaModelo);
-        
         listaEquipoBasico=new ArrayList<>();
         Set<EquipoBasico> conjunto1=null;
         try {
@@ -100,7 +87,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         map.put("Dado de baja", "Dado de baja");
         map.put("En reparación","En reparación");
         data.put("Desactivo", map);  
-        
     }
     
     @ManagedProperty(value = "#{loginBean}")    
@@ -108,7 +94,6 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     //pagina usuario
     private List<Modelo> listaModelos;
     private List<Modelo> filteredListaModelos = new ArrayList<>();
-    //
     private String id;
     private String nombre;
     private String correo;
@@ -146,18 +131,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String descripcionEquipoBasico;
     private int cantidadEquipoBasico;
     private EquipoBasico equipoBasicoSeleccionado;
-
-    //datos para realizar un prestamo
-    private int codigoUsuarioPrestamo;
-    private String equipoAPrestar = null;
-    private String nombreUsuarioPrestamo = null;
-    private String correoUsuarioPrestamo = null; 
-    private Set<RolUsuario> rolUsuarioPrestamo = null;
-    
-
     private int cantidadEquipoBasicoAactualizar;
-
-    
+   
     /**
      * deja todos los elementos que se usan en la vista en su estado original
      */
@@ -212,20 +187,18 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * actualiza un equipo basico con una nueva cantidad
      */
     public void accionBotonActualizarEquipoBasico(){
-        try{
-            
+        try{ 
             if(cantidadEquipoBasicoAactualizar<0)throw new Exception("la cantidad no puede ser negativa");
-            
             services.updateEquipoBasico(equipoBasicoSeleccionado, cantidadEquipoBasicoAactualizar);
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Successful","Se ha actualizado el equipo basico con exito"));
             RequestContext context = RequestContext.getCurrentInstance();
             listaEquipoBasico=new ArrayList<>();
-           Set<EquipoBasico> conjunto=services.loadEquiposBasicos();
-           EquipoBasico[] listaEquipoBasico1=new EquipoBasico[conjunto.size()];
-           conjunto.toArray(listaEquipoBasico1);
-           listaEquipoBasico=Arrays.asList(listaEquipoBasico1);
-           setFilteredListaEquipoBasico(listaEquipoBasico);
-           filterListEquipoBasico();
+            Set<EquipoBasico> conjunto=services.loadEquiposBasicos();
+            EquipoBasico[] listaEquipoBasico1=new EquipoBasico[conjunto.size()];
+            conjunto.toArray(listaEquipoBasico1);
+            listaEquipoBasico=Arrays.asList(listaEquipoBasico1);
+            setFilteredListaEquipoBasico(listaEquipoBasico);
+            filterListEquipoBasico();
             context.update("equiposbasicos");
             context.execute("PF('actualizarCantidadEquipoBasico').hide();");
         }catch(Exception e){
@@ -361,73 +334,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         this.nombre = "            ";
         return nombre;
     }
-    
-    /**
-     * @param codigo codigo de usuario a quien se le va a realizar un prestamo
-     */
-    public void setCodigoUsuarioPrestamo(int codigo){
-        this.codigoUsuarioPrestamo = codigo;
-    }
-    
-    /**
-     * @return codigo del usuario a quien se le realiza el prestamo
-     */
-    public int getCodigoUsuarioPrestamo(){
-        return codigoUsuarioPrestamo;
-    }
-    
-    /**
-     * @param Nombre equipo que se desea prestar
-     */
-    public void setEquipoAPrestar(String nombre){
-        this.equipoAPrestar=nombre;
-    }
-    
-    /**
-     * @return equipo en prestamo
-     */
-    public String getEquipoAPrestar(){
-        return equipoAPrestar;
-    }
-    /**
-     * @return Nombre del usuario a quien se le desea prestar los equipos
-     */
-    public String getNombreUsuarioPrestamo(){
-        return nombreUsuarioPrestamo;
-    }
-    
-    /**
-     * @return Correo del usuario a quien se le desea prestar los equipos
-     */
-    public String getCorreoUsuarioPrestamo(){
-        return correoUsuarioPrestamo;
-    }
-    
-    /**
-     * @return Rol del usuario al que se le desea prestar los equipos
-     */
-    public Set<RolUsuario> getRolUsuarioPrestamo(){
-        return rolUsuarioPrestamo;
-    }
-    
-    
-    /**
-     * Actualiza los datos del usuario a quien se le realiza el prestamo
-     */
-    public void AccionBotonUsuarioPrestamo(){
-        Usuario usuario=null;
-        try {
-            usuario = services.loadUsuarioById(codigoUsuarioPrestamo);
-        } catch (ServicesException ex) {
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
-        }
-        nombreUsuarioPrestamo = usuario.getNombre();
-        correoUsuarioPrestamo = usuario.getCorreo();
-        rolUsuarioPrestamo = usuario.getRoles();
-        
-        
-    }
-    
+   
     /**
      * obtiene los datos de los equipos que se van a prestar
      */

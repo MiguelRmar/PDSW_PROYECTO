@@ -6,91 +6,82 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
-         <title>Registrar un préstamo</title>         
-         
+         <title>registrar un prestamo</title>         
     </h:head>
     
     <h:body> 
-        
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="form0">
-            <p:panel style="height:850px;border: 0" > 
-                <p:layout>
-                    <p:layoutUnit position="north">
-                        <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
-                           
-                            <p:panelGrid columns="2">
-                                <h:outputLabel value="id:" />
-                                <h:outputText value="#{Equipos.id}"/>
-                                <h:outputLabel value="Nombre:" />
-                                <h:outputText value="#{Equipos.nombre}"/>
-                                <h:outputLabel value="Correo:" />
-                                <h:outputText value="#{Equipos.correo}"/>
-                            </p:panelGrid>
-                            
-                        </p:panel>
-                    </p:layoutUnit>
-                    <p:layoutUnit position="west">
-                        <p:panel style="width:200px; border: 0">
-                            <h:form>
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
-                            <br/>
-                            <br/>
-                            <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
-                            <br/>
-                            <br/>
-                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
-                            </h:form>
-                        </p:panel>
-                    </p:layoutUnit>
-                    
-                    <p:layoutUnit position="center">
+            <p:layout>
+                <p:layoutUnit position="north">
+                    <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
                         <p:panelGrid columns="2">
-                            <p:panel style="border:0;" >
-                                <h:outputText value="Código Usuario"/>
-                                <h:outputText styleClass="ui-icon ui-icon-search" />
-                                <p:inputText value="#{Equipos.codigoUsuarioPrestamo}"/>
-                            </p:panel>
-                            <p:commandButton value ="OK" actionListener ="#{Equipos.accionBotonUsuarioPrestamo()}" ajax="false" immediate="true" update="form1"/>
-                        </p:panelGrid>
+                            <h:outputLabel value="id:" />
+                            <h:outputText value="#{Equipos.id}"/>
+                            <h:outputLabel value="Nombre:" />
+                            <h:outputText value="#{Equipos.nombre}"/>
+                            <h:outputLabel value="Correo:" />
+                            <h:outputText value="#{Equipos.correo}"/>
+                        </p:panelGrid>  
+                    </p:panel>
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="west">
+                    <p:panel style="width:200px; border: 0">
+                        <h:form>
+                        <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" actionListener="#{Prestamo.limpiarPaginaRegistrarUnPrestamo()}" ajax="false" immediate="true" update="form0"/>
+                        </h:form>
+                    </p:panel>
+                </p:layoutUnit>
+                    
+                <p:layoutUnit position="center">
+                    <p:panelGrid columns="2">
+                        <p:panel style="border:0;" >
+                            <h:outputText value="Código Usuario"/>
+                            <h:outputText styleClass="ui-icon ui-icon-search" />
+                            <p:inputText value="#{Prestamo.codigoUsuarioPrestamo}"/>
+                        </p:panel>
+                        <p:commandButton value ="OK" actionListener ="#{Prestamo.accionBotonUsuarioPrestamo()}" ajax="false" immediate="true" update="form1"/>
+                    </p:panelGrid>
                    
-                    
-                    
-                        
-                        <p:panelGrid columns="2">
-                            <p:panel id="form1" style="border:0;">
-                                <h:outputLabel value="Nombre Usuario   "/>
-                                <h:inputText value ="#{Equipos.nombreUsuarioPrestamo}"/>
-                                <br/>
-                                <br/>
-                                <h:outputLabel value="Correo   "/>
-                                <h:inputText value ="#{Equipos.correoUsuarioPrestamo}"/>
-                                <br/>
-                                <br/>
-                                <h:outputLabel value="Tipo Usuario   "/>
-                                <h:inputText value ="#{Equipos.rolUsuarioPrestamo}"/>
-                                
-                            
-                            </p:panel>
-                        </p:panelGrid>
-                    </p:layoutUnit>
+                       
+                    <p:panelGrid columns="2">
+                        <p:panel id="form1" style="border:0;">
+                            <h:outputLabel value="Nombre Usuario   "/>
+                            <h:inputText value ="#{Prestamo.nombreUsuarioPrestamo}"/>
+                            <br/>
+                            <br/>
+                            <h:outputLabel value="Correo   "/>
+                            <h:inputText value ="#{Prestamo.correoUsuarioPrestamo}"/>
+                            <br/>
+                            <br/>
+                            <h:outputLabel value="Tipo Usuario   "/>
+                            <h:inputText value ="#{Prestamo.rolUsuarioPrestamo}"/>
+                         </p:panel>
+                    </p:panelGrid>
+                </p:layoutUnit>
                     
                     <p:layoutUnit position ="east">
                         <p:panelGrid columns="4">
                             <p:panel style="border:0;">
                                 <h:outputText value ="Nombre Equipo   "/>
                                 <h:outputText styleClass="ui-icon ui-icon-search"/>
-                                <p:inputText value="#{Equipos.equipoAPrestar}"/>
+                                <p:inputText value="#{Prestamo.equipoAPrestar}"/>
                             </p:panel>
                         </p:panelGrid>
                         <h:form id ="Datos_Equipos">
-                            <p:dataScroller value ="#{Equipos}" var="prestamos" chunkSize="10">
+                            <p:dataScroller value ="#{Prestamo}" var="prestamos" chunkSize="10">
                                 <f:facet name="header">
                                     Equipos a prestar
                                 </f:facet>
                                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                    <p:graphicImage name="#{Equipos.filteredListaModelos.foto}" /> 
- 
+                                    
                                     <p:outputPanel>
                                         <h:panelGrid columns="2" cellpadding="5">
                                             <h:outputText value="Serial:" />
@@ -104,14 +95,12 @@
                                         </h:panelGrid>
                                     </p:outputPanel>
                                 </h:panelGrid>
-
-                            
                             </p:dataScroller>
                         </h:form>
+                        
                     </p:layoutUnit>
                     
                 </p:layout>
-            </p:panel>
         </h:form>
     </h:body>
 </html>

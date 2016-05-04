@@ -31,12 +31,10 @@
                             <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
+                            <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Devolucion.limpiarPaginaRegistrarUnaDevolucion()}" ajax="false" immediate="true" update="form0"/>
                             <br/>
                             <br/>
-
                             <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
-
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">

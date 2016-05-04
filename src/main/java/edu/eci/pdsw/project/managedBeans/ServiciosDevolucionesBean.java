@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package edu.eci.pdsw.project.managedBeans;
-
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
@@ -35,6 +34,7 @@ public class ServiciosDevolucionesBean implements Serializable{
     public ServiciosDevolucionesBean() {
         
     }
+    
     @ManagedProperty(value = "#{loginBean}")    
     private ShiroLoginBean loginBean;
     //datos para una devolucion de un equipo normal
@@ -67,7 +67,12 @@ public class ServiciosDevolucionesBean implements Serializable{
         usuarioDevolucionBasico = null;
     }
     
-   public void accionBuscarDevolucion() {
+    public void limpiarPaginaRegistrarUnaDevolucion(){
+        limpiarDevolucion();
+        limpiarDevolucionBasica();
+    }
+    
+    public void accionBuscarDevolucion() {
         try {
             Services se = Services.getInstance("applicationconfig.properties");
             Set<Usuario> usuarios = se.loadUsuarios();

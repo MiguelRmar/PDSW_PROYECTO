@@ -5,7 +5,6 @@
  */
 package edu.eci.pdsw.project.managedBeans;
 
-import java.io.File;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
