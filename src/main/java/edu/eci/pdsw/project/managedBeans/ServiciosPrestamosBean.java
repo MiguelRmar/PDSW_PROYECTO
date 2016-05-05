@@ -31,20 +31,26 @@ public class ServiciosPrestamosBean implements Serializable{
     @ManagedProperty(value = "#{loginBean}")    
     private ShiroLoginBean loginBean;
     private String codigoUsuarioPrestamo;
-    private String equipoAPrestar ;
-    private String nombreUsuarioPrestamo ;
-    private String correoUsuarioPrestamo ; 
     private boolean estudianteExiste=false;
-    private Set<RolUsuario> rolUsuarioPrestamo ;
+    private Usuario usuarioSeleccionado=null;
+    private String rolesUsuarioSeleccionado="";
+    private String nombreEquipoBasicoPrestar="";
+    private String codigoEquipo="";
+    private String tipoEquipo="";
+    private boolean codificado=false;
+    private boolean noCodificado=false;
     
     
     public void limpiarPaginaRegistrarUnPrestamo(){
         setEstudianteExiste(false);
+        usuarioSeleccionado=null;
         codigoUsuarioPrestamo=null;
-        equipoAPrestar = null;
-        nombreUsuarioPrestamo = null;
-        correoUsuarioPrestamo = null; 
-        rolUsuarioPrestamo = null;
+        rolesUsuarioSeleccionado="";
+        setCodigoEquipo("");
+        setNombreEquipoBasicoPrestar("");
+        setTipoEquipo("");
+        setCodificado(false);
+        setNoCodificado(false);
     }
     
     /**
@@ -61,60 +67,35 @@ public class ServiciosPrestamosBean implements Serializable{
         return codigoUsuarioPrestamo;
     }
     
-    /**
-     * @param nombre equipo que se desea prestar
-     */
-    public void setEquipoAPrestar(String nombre){
-        this.equipoAPrestar=nombre;
-    }
     
-    /**
-     * @return equipo en prestamo
-     */
-    public String getEquipoAPrestar(){
-        return equipoAPrestar;
+    public void accionCambiarTipo(){
+        if (tipoEquipo.equals("Codificado")){
+            codificado=true;
+            noCodificado=false;
+        }
+        else{
+            codificado=false;
+            noCodificado=true;
+        }
     }
-    /**
-     * @return Nombre del usuario a quien se le desea prestar los equipos
-     */
-    public String getNombreUsuarioPrestamo(){
-        return nombreUsuarioPrestamo;
-    }
-    
-    /**
-     * @return Correo del usuario a quien se le desea prestar los equipos
-     */
-    public String getCorreoUsuarioPrestamo(){
-        return correoUsuarioPrestamo;
-    }
-    
-    /**
-     * @return Rol del usuario al que se le desea prestar los equipos
-     */
-    public Set<RolUsuario> getRolUsuarioPrestamo(){
-        return rolUsuarioPrestamo;
-    }
-    
-    
     /**
      * Actualiza los datos del usuario a quien se le realiza el prestamo
      */
     public void accionBotonUsuarioPrestamo(){
-        Usuario usuario=null;
+        usuarioSeleccionado=null;
         try {
-            
-            usuario = services.loadUsuarioById(Integer.parseInt(codigoUsuarioPrestamo));
+            usuarioSeleccionado = services.loadUsuarioById(Integer.parseInt(codigoUsuarioPrestamo));
+            String roles="";
+            for (RolUsuario r: usuarioSeleccionado.getRoles()) {
+                roles+=r.getRol_r()+", ";
+            }
+            rolesUsuarioSeleccionado=roles.substring(0,roles.length()-2);
             estudianteExiste=true;
-            nombreUsuarioPrestamo = usuario.getNombre();
-            correoUsuarioPrestamo = usuario.getCorreo();
-            rolUsuarioPrestamo = usuario.getRoles();
-            
         } 
         catch (ServicesException ex) {
             estudianteExiste=false;
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
-        
     }
     
     /**
@@ -143,5 +124,103 @@ public class ServiciosPrestamosBean implements Serializable{
      */
     public void setEstudianteExiste(boolean estudianteExiste) {
         this.estudianteExiste = estudianteExiste;
+    }
+
+    /**
+     * @return the usuarioSeleccionado
+     */
+    public Usuario getUsuarioSeleccionado() {
+        return usuarioSeleccionado;
+    }
+
+    /**
+     * @param usuarioSeleccionado the usuarioSeleccionado to set
+     */
+    public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
+        this.usuarioSeleccionado = usuarioSeleccionado;
+    }
+
+    /**
+     * @return the rolesUsuarioSeleccionado
+     */
+    public String getRolesUsuarioSeleccionado() {
+        return rolesUsuarioSeleccionado;
+    }
+
+    /**
+     * @param rolesUsuarioSeleccionado the rolesUsuarioSeleccionado to set
+     */
+    public void setRolesUsuarioSeleccionado(String rolesUsuarioSeleccionado) {
+        this.rolesUsuarioSeleccionado = rolesUsuarioSeleccionado;
+    }
+
+    /**
+     * @return the nombreEquipoBasicoPrestar
+     */
+    public String getNombreEquipoBasicoPrestar() {
+        return nombreEquipoBasicoPrestar;
+    }
+
+    /**
+     * @param nombreEquipoBasicoPrestar the nombreEquipoBasicoPrestar to set
+     */
+    public void setNombreEquipoBasicoPrestar(String nombreEquipoBasicoPrestar) {
+        this.nombreEquipoBasicoPrestar = nombreEquipoBasicoPrestar;
+    }
+
+    /**
+     * @return the codigoEquipo
+     */
+    public String getCodigoEquipo() {
+        return codigoEquipo;
+    }
+
+    /**
+     * @param codigoEquipo the codigoEquipo to set
+     */
+    public void setCodigoEquipo(String codigoEquipo) {
+        this.codigoEquipo = codigoEquipo;
+    }
+
+    /**
+     * @return the tipoEquipo
+     */
+    public String getTipoEquipo() {
+        return tipoEquipo;
+    }
+
+    /**
+     * @param tipoEquipo the tipoEquipo to set
+     */
+    public void setTipoEquipo(String tipoEquipo) {
+        this.tipoEquipo = tipoEquipo;
+    }
+
+    /**
+     * @return the codificado
+     */
+    public boolean isCodificado() {
+        return codificado;
+    }
+
+    /**
+     * @param codificado the codificado to set
+     */
+    public void setCodificado(boolean codificado) {
+        this.codificado = codificado;
+    }
+
+    /**
+     * @return the noCodificado
+     */
+    public boolean isNoCodificado() {
+        return noCodificado;
+    }
+
+    /**
+     * @param noCodificado the noCodificado to set
+     */
+    public void setNoCodificado(boolean noCodificado) {
+        this.noCodificado = noCodificado;
     }
 }

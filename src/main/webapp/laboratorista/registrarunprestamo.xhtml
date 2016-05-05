@@ -48,16 +48,47 @@
                             <h:outputText value="Ingrese codigo de usuario: "/>
                             <h:inputText value="#{Prestamo.codigoUsuarioPrestamo}"/>
                         </h:panelGrid>
-                        <p:commandButton value="OK" actionListener="#{Prestamo.accionBotonUsuarioPrestamo()}" update="datosUsuarioPidePrestamo" id="botonOK"/>
+                        <p:commandButton value="OK" actionListener="#{Prestamo.accionBotonUsuarioPrestamo()}" update="datosUsuarioPidePrestamo" id="botonOK" ajax="false"/>
                     </p:panel>
+                    
                     <p:panel header="Datos usuario que pide el préstamo" rendered="#{Prestamo.estudianteExiste}" id="datosUsuarioPidePrestamo">
                         <h:panelGrid columns="2" cellpadding="5" id="panelGrid2">
-                            
-                            
+                            <h:outputText value="Nombre:"/>
+                            <h:outputText value="#{Prestamo.usuarioSeleccionado.nombre}"/>
+                            <h:outputText value="Correo:"/>
+                            <h:outputText value="#{Prestamo.usuarioSeleccionado.correo}"/>
+                            <h:outputText value="Roles:"/>
+                            <h:outputText value="#{Prestamo.rolesUsuarioSeleccionado}"/>                                          
                         </h:panelGrid>
                     </p:panel>
-                </p:layoutUnit>   
-                
+                    
+                    
+                    <p:panel header="Agregar equipos a préstamo" rendered="#{Prestamo.estudianteExiste}" id="equipos">
+                        <h:panelGrid columns="2" cellpadding="5" id="panelGrid3">
+                            <p:selectOneMenu value="#{Prestamo.tipoEquipo}" id="tipos" style="width:225px">
+                                <p:ajax listener="#{Prestamo.accionCambiarTipo()}" update="codynocod"/>
+                                <f:selectItem itemLabel="Seleccione tipo de equipo" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Codificado" itemValue="Codificado" />
+                                <f:selectItem itemLabel="NO Codificado" itemValue="No Codificado" />
+                            </p:selectOneMenu>
+                            <h:form id="codynocod">
+                                <p:panel id="cod" visible="#{Prestamo.codificado}">
+                                    <h:outputText value="Equipo codificado:"/>
+                                    <h:inputText value="#{Prestamo.codigoEquipo}"/>                                 
+                                </p:panel>
+                                <p:panel id="nocod" visible="#{Prestamo.noCodificado}">
+                                    <h:panelGrid columns="2" cellpadding="5" id="panelGrid4">
+                                    <h:outputText value="Equipo no codificado:"/>
+                                    <p:selectOneMenu value="#{Prestamo.nombreEquipoBasicoPrestar}" id="nombres" style="width:225px">
+                                            <f:selectItem itemLabel="Seleccione nombre" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
+                                    </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </h:form>
+                        </h:panelGrid>
+                    </p:panel>  
+                </p:layoutUnit>      
             </p:layout>
         </h:form>
     </h:body>
