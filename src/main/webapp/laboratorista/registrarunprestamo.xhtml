@@ -12,6 +12,8 @@
     <h:body> 
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="form0">
+            <p:defaultCommand target="botonOK" />
+            <p:focus context="panelCodigoUsuario"/>
             <p:layout>
                 <p:layoutUnit position="north">
                     <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
@@ -41,66 +43,22 @@
                 </p:layoutUnit>
                     
                 <p:layoutUnit position="center">
-                    <p:panelGrid columns="2">
-                        <p:panel style="border:0;" >
-                            <h:outputText value="Código Usuario"/>
-                            <h:outputText styleClass="ui-icon ui-icon-search" />
-                            <p:inputText value="#{Prestamo.codigoUsuarioPrestamo}"/>
-                        </p:panel>
-                        <p:commandButton value ="OK" actionListener ="#{Prestamo.accionBotonUsuarioPrestamo()}" ajax="false" immediate="true" update="form1"/>
-                    </p:panelGrid>
-                   
-                       
-                    <p:panelGrid columns="2">
-                        <p:panel id="form1" style="border:0;">
-                            <h:outputLabel value="Nombre Usuario   "/>
-                            <h:inputText value ="#{Prestamo.nombreUsuarioPrestamo}"/>
-                            <br/>
-                            <br/>
-                            <h:outputLabel value="Correo   "/>
-                            <h:inputText value ="#{Prestamo.correoUsuarioPrestamo}"/>
-                            <br/>
-                            <br/>
-                            <h:outputLabel value="Tipo Usuario   "/>
-                            <h:inputText value ="#{Prestamo.rolUsuarioPrestamo}"/>
-                         </p:panel>
-                    </p:panelGrid>
-                </p:layoutUnit>
-                    
-                    <p:layoutUnit position ="east">
-                        <p:panelGrid columns="4">
-                            <p:panel style="border:0;">
-                                <h:outputText value ="Nombre Equipo   "/>
-                                <h:outputText styleClass="ui-icon ui-icon-search"/>
-                                <p:inputText value="#{Prestamo.equipoAPrestar}"/>
-                            </p:panel>
-                        </p:panelGrid>
-                        <h:form id ="Datos_Equipos">
-                            <p:dataScroller value ="#{Prestamo}" var="prestamos" chunkSize="10">
-                                <f:facet name="header">
-                                    Equipos a prestar
-                                </f:facet>
-                                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                    
-                                    <p:outputPanel>
-                                        <h:panelGrid columns="2" cellpadding="5">
-                                            <h:outputText value="Serial:" />
-                                            <h:outputText value="#{prestamos}" style="font-weight: bold"/>
- 
-                                            <h:outputText value="Nombre:" />
-                                            <h:outputText value="#{prestamos}" style="font-weight: bold"/>
- 
-                                            <h:outputText value="Descripción:" />
-                                            <h:outputText value="#{prestamos}" style="font-weight: bold"/>
-                                        </h:panelGrid>
-                                    </p:outputPanel>
-                                </h:panelGrid>
-                            </p:dataScroller>
-                        </h:form>
-                        
-                    </p:layoutUnit>
-                    
-                </p:layout>
+                    <p:panel header="Usuario" id="panelCodigoUsuario">
+                        <h:panelGrid columns="2" cellpadding="5" id="panelGrid1">
+                            <h:outputText value="Ingrese codigo de usuario: "/>
+                            <h:inputText value="#{Prestamo.codigoUsuarioPrestamo}"/>
+                        </h:panelGrid>
+                        <p:commandButton value="OK" actionListener="#{Prestamo.accionBotonUsuarioPrestamo()}" update="datosUsuarioPidePrestamo" id="botonOK"/>
+                    </p:panel>
+                    <p:panel header="Datos usuario que pide el préstamo" rendered="#{Prestamo.estudianteExiste}" id="datosUsuarioPidePrestamo">
+                        <h:panelGrid columns="2" cellpadding="5" id="panelGrid2">
+                            
+                            
+                        </h:panelGrid>
+                    </p:panel>
+                </p:layoutUnit>   
+                
+            </p:layout>
         </h:form>
     </h:body>
 </html>

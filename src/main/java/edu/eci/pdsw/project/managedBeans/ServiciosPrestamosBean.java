@@ -30,14 +30,17 @@ public class ServiciosPrestamosBean implements Serializable{
     Services services = Services.getInstance("applicationconfig.properties");
     @ManagedProperty(value = "#{loginBean}")    
     private ShiroLoginBean loginBean;
-    private int codigoUsuarioPrestamo=0;
-    private String equipoAPrestar = null;
-    private String nombreUsuarioPrestamo = null;
-    private String correoUsuarioPrestamo = null; 
-    private Set<RolUsuario> rolUsuarioPrestamo = null;
+    private String codigoUsuarioPrestamo;
+    private String equipoAPrestar ;
+    private String nombreUsuarioPrestamo ;
+    private String correoUsuarioPrestamo ; 
+    private boolean estudianteExiste=false;
+    private Set<RolUsuario> rolUsuarioPrestamo ;
+    
     
     public void limpiarPaginaRegistrarUnPrestamo(){
-        codigoUsuarioPrestamo=0;
+        setEstudianteExiste(false);
+        codigoUsuarioPrestamo=null;
         equipoAPrestar = null;
         nombreUsuarioPrestamo = null;
         correoUsuarioPrestamo = null; 
@@ -47,14 +50,14 @@ public class ServiciosPrestamosBean implements Serializable{
     /**
      * @param codigo codigo de usuario a quien se le va a realizar un prestamo
      */
-    public void setCodigoUsuarioPrestamo(int codigo){
+    public void setCodigoUsuarioPrestamo(String codigo){
         this.codigoUsuarioPrestamo = codigo;
     }
     
     /**
      * @return codigo del usuario a quien se le realiza el prestamo
      */
-    public int getCodigoUsuarioPrestamo(){
+    public String getCodigoUsuarioPrestamo(){
         return codigoUsuarioPrestamo;
     }
     
@@ -99,14 +102,19 @@ public class ServiciosPrestamosBean implements Serializable{
     public void accionBotonUsuarioPrestamo(){
         Usuario usuario=null;
         try {
-            usuario = services.loadUsuarioById(codigoUsuarioPrestamo);
+            
+            usuario = services.loadUsuarioById(Integer.parseInt(codigoUsuarioPrestamo));
+            estudianteExiste=true;
+            nombreUsuarioPrestamo = usuario.getNombre();
+            correoUsuarioPrestamo = usuario.getCorreo();
+            rolUsuarioPrestamo = usuario.getRoles();
+            
         } 
         catch (ServicesException ex) {
+            estudianteExiste=false;
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
-        nombreUsuarioPrestamo = usuario.getNombre();
-        correoUsuarioPrestamo = usuario.getCorreo();
-        rolUsuarioPrestamo = usuario.getRoles();
+        
     }
     
     /**
@@ -121,5 +129,19 @@ public class ServiciosPrestamosBean implements Serializable{
      */
     public void setLoginBean(ShiroLoginBean loginBean) {
         this.loginBean = loginBean;
+    }
+
+    /**
+     * @return the estudianteExiste
+     */
+    public boolean isEstudianteExiste() {
+        return estudianteExiste;
+    }
+
+    /**
+     * @param estudianteExiste the estudianteExiste to set
+     */
+    public void setEstudianteExiste(boolean estudianteExiste) {
+        this.estudianteExiste = estudianteExiste;
     }
 }

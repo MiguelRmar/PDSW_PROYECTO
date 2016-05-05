@@ -42,13 +42,20 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * 
      */
     public ServicioEquiposElectronicatobean() {
+        
         this.services = Services.getInstance("applicationconfig.properties");
+        
         //inical lista
         listaModelos=new ArrayList<>();
         Set<Modelo> conjunto=null;
         try {
+            
             conjunto = services.loadModelos();
+            
         } catch (ServicesException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("luego");
+            System.out.println(ex.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","Sucedio algo inesperado en la carga de modelos"));
         }
         Modelo[] listaModelo=new Modelo[conjunto.size()];
@@ -58,6 +65,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         filteredListaModelos=new ArrayList<>();
         filteredListaModelos=Arrays.asList(listaModelo);
         listaEquipoBasico=new ArrayList<>();
+        
         Set<EquipoBasico> conjunto1=null;
         try {
             conjunto1 = services.loadEquiposBasicos();
@@ -84,6 +92,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         map.put("En almacén","En almacén");
         data.put("Activo", map);
         map = new HashMap<>();
+        
         map.put("Dado de baja", "Dado de baja");
         map.put("En reparación","En reparación");
         data.put("Desactivo", map);  

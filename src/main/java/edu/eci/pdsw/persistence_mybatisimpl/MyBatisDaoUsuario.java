@@ -27,6 +27,9 @@ public class MyBatisDaoUsuario implements DaoUsuario{
 
     @Override
     public Usuario loadUsuarioById(int id) throws PersistenceException {
+        if(emap.loadUsuarioById(id)==null){
+            throw new PersistenceException("El usuario con id "+id+" no se encuentra registrado en la base de datos");
+        }
         return emap.loadUsuarioById(id);
     }
 

@@ -56,11 +56,11 @@ public class ServiciosDevolucionesBean implements Serializable{
     private boolean serialDevolucionEncontrado = false;
     private boolean serialDevolucionNoEncontrado = true;
     private String textoSalidaEquipoADevolver;
-    private int serialADevolver;
+    private String serialADevolver;
     private Usuario usuarioDevolucion;
     java.sql.Date horaActual = new java.sql.Date(Calendar.getInstance().getTime().getTime());
     //datos para una devolucion de un equipo basico
-    private int condigoEstudianteBasicos;
+    private String condigoEstudianteBasicos;
     private String nombreEquipoBasicoDevolver;
     private int cantidadBasicaDevuelta;
     private Usuario usuarioDevolucionBasico;
@@ -72,12 +72,12 @@ public class ServiciosDevolucionesBean implements Serializable{
         serialDevolucionEncontrado = false;
         serialDevolucionNoEncontrado = true;
         textoSalidaEquipoADevolver = null;
-        setSerialADevolver(0);
+        setSerialADevolver(null);
         usuarioDevolucion = null;
     
     }
     public void limpiarDevolucionBasica(){
-        condigoEstudianteBasicos = 0;
+        condigoEstudianteBasicos = null;
         nombreEquipoBasicoDevolver = null;
         cantidadBasicaDevuelta = 0;
         usuarioDevolucionBasico = null;
@@ -94,7 +94,7 @@ public class ServiciosDevolucionesBean implements Serializable{
             for (Usuario u : usuarios) {
                 Set<PrestamoUsuario> prestamos = u.getPrestamos();
                 for (PrestamoUsuario p : prestamos) {
-                    if (p.getEquipo_serial() == getSerialADevolver() && p.getFechaVencimiento() == null) {
+                    if (p.getEquipo_serial() == Integer.parseInt(getSerialADevolver()) && p.getFechaVencimiento() == null) {
                         setUsuarioDevolucion(u);
                         setSerialDevolucionEncontrado(true);
                         setSerialDevolucionNoEncontrado(false);
@@ -117,10 +117,10 @@ public class ServiciosDevolucionesBean implements Serializable{
         try {
             PrestamoUsuario prestamoActual = null;
             //la fecha actual entrega año,mes y dia pero no minutos ni segundos.
-            Equipo equipoActual = se.loadEquipoBySerial(getSerialADevolver());
+            Equipo equipoActual = se.loadEquipoBySerial(Integer.parseInt(getSerialADevolver()));
             Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
             for (PrestamoUsuario p : prestamos) {
-                if (p.getEquipo_serial() == getSerialADevolver() && p.getFechaVencimiento() == null) {
+                if (p.getEquipo_serial() == Integer.parseInt(getSerialADevolver()) && p.getFechaVencimiento() == null) {
                     p.setFechaVencimiento(horaActual);
                     se.updatePrestamos(p,usuarioDevolucion.getId());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successful", "Se ha realizado la devolución exitosamente"));
@@ -230,14 +230,14 @@ public class ServiciosDevolucionesBean implements Serializable{
     /**
      * @return the serialADevolver
      */
-    public int getSerialADevolver() {
+    public String getSerialADevolver() {
         return serialADevolver;
     }
 
     /**
      * @param serialADevolver the serialADevolver to set
      */
-    public void setSerialADevolver(int serialADevolver) {
+    public void setSerialADevolver(String serialADevolver) {
         this.serialADevolver = serialADevolver;
     }
 
@@ -258,14 +258,14 @@ public class ServiciosDevolucionesBean implements Serializable{
     /**
      * @return the condigoEstudianteBasicos
      */
-    public int getCondigoEstudianteBasicos() {
+    public String getCondigoEstudianteBasicos() {
         return condigoEstudianteBasicos;
     }
 
     /**
      * @param condigoEstudianteBasicos the condigoEstudianteBasicos to set
      */
-    public void setCondigoEstudianteBasicos(int condigoEstudianteBasicos) {
+    public void setCondigoEstudianteBasicos(String condigoEstudianteBasicos) {
         this.condigoEstudianteBasicos = condigoEstudianteBasicos;
     }
 
