@@ -67,6 +67,10 @@ public class ServiciosDevolucionesBean implements Serializable{
     
     private HashMap<String, String> nombresEquiposBasicos;
     Services se;
+    
+    /**
+     * deja a todos los elementos involucrados en una devolución de equipo normal en su estado original
+     */
     public void limpiarDevolucion(){
         yaBusqueEquipoADevolver = false;
         serialDevolucionEncontrado = false;
@@ -76,20 +80,30 @@ public class ServiciosDevolucionesBean implements Serializable{
         usuarioDevolucion = null;
     
     }
+    
+    /**
+     * deja a todos los elementos involucrados en una devolución de equipo basico en su estado original
+     */
     public void limpiarDevolucionBasica(){
         condigoEstudianteBasicos = null;
         nombreEquipoBasicoDevolver = null;
         cantidadBasicaDevuelta = 0;
         usuarioDevolucionBasico = null;
     }
-    
+    /**
+     * deja a todos los elementos involucrados en una devolución en su estado original
+     */
     public void limpiarPaginaRegistrarUnaDevolucion(){
         limpiarDevolucion();
         limpiarDevolucionBasica();
     }
     
+    /**
+     * Busca si existe algun usuario que tenga actualmente en prestamo el equipo del serial ingresado
+     */
     public void accionBuscarDevolucion() {
         try {
+            setUsuarioDevolucion(null);
             Set<Usuario> usuarios = se.loadUsuarios();
             for (Usuario u : usuarios) {
                 Set<PrestamoUsuario> prestamos = u.getPrestamos();
@@ -98,76 +112,73 @@ public class ServiciosDevolucionesBean implements Serializable{
                         setUsuarioDevolucion(u);
                         setSerialDevolucionEncontrado(true);
                         setSerialDevolucionNoEncontrado(false);
-                        textoSalidaEquipoADevolver = "El usuario con el prestamo del equipo fue encontrado exitosamente";
+                        setTextoSalidaEquipoADevolver("El usuario con el prestamo del equipo fue encontrado exitosamente");
                     }
                 }
             }
             if (getUsuarioDevolucion() == null) {
+                setSerialDevolucionEncontrado(false);
+                setSerialDevolucionNoEncontrado(true);
                 setTextoSalidaEquipoADevolver("No fue encontrado un usuario con el presente equipo  " + getSerialADevolver() + " en prestamo ");
             }
             setYaBusqueEquipoADevolver(true);
         } catch (ServicesException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Wrong", "Ocurrio un error inesperado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "Ocurrio un error inesperado"));
             RequestContext context = RequestContext.getCurrentInstance();
             Logger.getLogger(ServiciosDevolucionesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /**
+     * realiza la devolución del equipo actual actualizando la fechaVencimiento del prestamo y actualizando el estado del equipo
+     * a "Activo" y el subestado a "En almacén"
+     */
     public void accionRealizarDevolucion() {
-        try {
-            PrestamoUsuario prestamoActual = null;
-            //la fecha actual entrega año,mes y dia pero no minutos ni segundos.
-            Equipo equipoActual = se.loadEquipoBySerial(Integer.parseInt(getSerialADevolver()));
+        //la fecha actual entrega año,mes y dia pero no minutos ni segundos.
+        try{
             Set<PrestamoUsuario> prestamos = usuarioDevolucion.getPrestamos();
             for (PrestamoUsuario p : prestamos) {
                 if (p.getEquipo_serial() == Integer.parseInt(getSerialADevolver()) && p.getFechaVencimiento() == null) {
-                    p.setFechaVencimiento(horaActual);
                     se.updatePrestamos(p,usuarioDevolucion.getId());
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successful", "Se ha realizado la devolución exitosamente"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Completado", "Se ha realizado la devolución exitosamente"));
                     RequestContext context = RequestContext.getCurrentInstance();
                     break;
                 }
             }
-            Set<PrestamoEquipo> prestamose = equipoActual.getPrestamos();
-            for (PrestamoEquipo p : prestamose) {
-                if (p.getUsuario_id() == usuarioDevolucion.getId()) {
-                    p.setFechaExpedicion(horaActual);
-                    break;
-                }
-                
-            }
             limpiarDevolucion();
-        } catch (ServicesException ex) {
-            Logger.getLogger(ServiciosDevolucionesBean.class.getName()).log(Level.SEVERE, null, ex);
-            
         }
-
+        catch(ServicesException e){
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",e.getLocalizedMessage()));
+        }
     }
-
+    
+    /**
+     * Realiza la devolución del equipo básico actual actualizando la fechaVencimiento del prestamo y actualizando la cantidad en almacen
+     * del equipo
+     */
     public void accionRealizarDevolucionBasica() {
         try {
             Set<Usuario> usuarios = se.loadUsuarios();
             for (Usuario u : usuarios) {
                 Set<PrestamoBasicoUsuario> prestamos = u.getPrestamosBasicos();
                 for (PrestamoBasicoUsuario p : prestamos) {
-                    if (p.getCantidadPrestada() == cantidadBasicaDevuelta && p.getFechaVencimiento() == null && p.getEquipoBasico_nombre().equals(nombreEquipoBasicoDevolver)) {
+                    if (p.getCantidadPrestada() == cantidadBasicaDevuelta && p.getFechaVencimiento() == null && p.getEquipoBasico_nombre().equals(nombreEquipoBasicoDevolver) && Integer.parseInt(condigoEstudianteBasicos)==u.getId()) {
                         setUsuarioDevolucionBasico(u);
-                        p.setFechaVencimiento(horaActual);
                         se.updatePrestamosBasicos(p, u.getId());
                     }
                 }
             }
             if(usuarioDevolucionBasico != null){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successful", "Se ha realizado la devolución exitosamente"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Completado", "Se ha realizado la devolución exitosamente"));
                 RequestContext context = RequestContext.getCurrentInstance();
             }
             else{
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Wrong", "No se encontro usuario con los objetos prestados"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "No se encontro usuario con los objetos seleccionados prestados"));
                 RequestContext context = RequestContext.getCurrentInstance();
             }
             limpiarDevolucionBasica();
         } catch (ServicesException ex) {
-            Logger.getLogger(ServiciosDevolucionesBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","vaya a saber"));
         }
     }
 

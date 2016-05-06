@@ -9,7 +9,7 @@
          <title>registrar una devolucion</title>
     </h:head>
 
-    <h:body>
+    <h:body> 
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="devo_form">
                 <p:layout>
@@ -41,12 +41,9 @@
                     <p:layoutUnit position="center">
                         <p:panel  header = "Equipo" style="height: 150px">
                             <p:panelGrid columns="6">
-                                <h:form>
-                                <p:defaultCommand target="botonEnviar"/>
                                 <h:outputLabel value="Serial:" />
-                                <h:inputText value="#{Devolucion.serialADevolver}" required="true"/>
-                                <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update=":devo_form" id="botonEnviar"/>
-                                </h:form>
+                                <h:inputText value="#{Devolucion.serialADevolver}" />
+                                <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update="devo_form"/>                                                                                                                      
                             </p:panelGrid> 
                             <h:form id="devo_form1" rendered="#{Devolucion.yaBusqueEquipoADevolver}">
                             <br/>
@@ -55,32 +52,27 @@
                             <h:outputLabel value="Usuario:" rendered="#{Devolucion.serialDevolucionEncontrado}"> </h:outputLabel>
                             <h:outputText value ="#{Devolucion.usuarioDevolucion.nombre}" rendered="#{Devolucion.serialDevolucionEncontrado}" style= " height: 150px" />   
                             <br/>
-                            <p:commandButton value="Confirmar devolución" rendered="#{Devolucion.serialDevolucionEncontrado}" actionListener="#{Devolucion.accionRealizarDevolucion()}"/>
                             </h:form>
+                        <p:commandButton value="Confirmar devolución" rendered="#{Devolucion.serialDevolucionEncontrado}" actionListener="#{Devolucion.accionRealizarDevolucion()}" update="devo_form"/>
                         </p:panel> 
                         <br/>
                         <br/>
                         <br/>
-                        <h:form>
-                            <p:defaultCommand target="confirmarDevolucion"/>
-                            <p:panel header ="Equipos Básicos" style="height: 150px">
-                                <p:panelGrid columns="6">
-                                    <h:outputLabel value="Código Estudiante:" />
-                                    <h:inputText value="#{Devolucion.condigoEstudianteBasicos}"/>
-                                    <h:outputLabel value="Tipo Equipo:" />
-                                    <p:selectOneMenu value="#{Devolucion.nombreEquipoBasicoDevolver}" required="true" id="nombres" style="width:225px">
-                                        <f:selectItem itemLabel="Seleccione nombre" itemValue="" noSelectionOption="true"/>
-                                        <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
-                                    </p:selectOneMenu>
-                                    <h:outputLabel value="Número de items:" />
-                                    <h:inputText value="#{Devolucion.cantidadBasicaDevuelta}"/>
-                                </p:panelGrid>
-                            </p:panel>
-                        
+                        <p:panel header ="Equipos Básicos" style="height: 150px">
+                            <p:panelGrid columns="6">
+                                <h:outputLabel value="Código Estudiante:" />
+                                <h:inputText value="#{Devolucion.condigoEstudianteBasicos}"/>
+                                <h:outputLabel value="Tipo Equipo:" />
+                                <p:selectOneMenu id="nombres" value="#{Devolucion.nombreEquipoBasicoDevolver}" style="width:225px">
+                                    <f:selectItem itemLabel="Seleccione nombre" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Número de items:" />
+                                <h:inputText value="#{Devolucion.cantidadBasicaDevuelta}"/>
+                                <p:commandButton value="Confirmar devolución" action="#{Devolucion.accionRealizarDevolucionBasica()}" update="devo_form"/>
+                            </p:panelGrid>
+                        </p:panel>
                         <br/>
-                        
-                        <p:commandButton value="Confirmar devolución" action="#{Devolucion.accionRealizarDevolucionBasica()}" id="confirmarDevolucion" />
-                        </h:form>
                         
                     </p:layoutUnit>
                 </p:layout>

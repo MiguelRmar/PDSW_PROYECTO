@@ -154,15 +154,15 @@
         UPDATE EQUIPOS_BASICOS SET cantidad=#{cantidad} WHERE nombre=#{equipoBasico}
     </update>
     
-    <update id="updatePrestamo">
+     <update id="updatePrestamo">
         UPDATE PRESTAMOS SET 
-            fechaVencimiento = #{fechaVencimiento}
+            fechaVencimiento = SYSDATE() + INTERVAL 15 MINUTE
         WHERE USUARIOS_id = #{id_usuario} and EQUIPOS_serial = #{serial_equipo}
     </update>
     
     <update id="updatePrestamosBasicos">
         UPDATE PRESTAMOS_BASICOS SET 
-            fechaVencimiento = #{fechaVencimiento}
+            fechaVencimiento = SYSDATE() + INTERVAL 15 MINUTE
         WHERE USUARIOS_id = #{id_usuario} and  EQUIPOS_BASICOS_nombre = #{nombre_equipo}
     </update>
     
@@ -171,6 +171,14 @@
             cantidad = cantidad + #{cantidad}
         WHERE nombre = #{nombre_equipo}
     </update>
+    
+    <update id="updateEquipoDevo">
+        UPDATE EQUIPOS SET 
+            estado = "Activo",
+            subestados = "En almacén"
+        WHERE serial = #{equipo_serial}
+    </update>
+    
     <insert id="registrarNuevoPrestamo">
         INSERT INTO PRESTAMOS(USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) values (#{pe.usuario_id},#{pu.equipo_serial},#{pu.fechaExpedicion},#{pu.fechaVencimiento},#{pu.tipoPrestamo})
     </insert>

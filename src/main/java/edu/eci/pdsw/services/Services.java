@@ -291,22 +291,47 @@ public class Services {
            df.endSession();  
         }
     }
-    public void updatePrestamos(PrestamoUsuario p, int usuario)  {
-         DaoFactory df= DaoFactory.getInstance(properties);
-        df.beginSession();
-        df.getDaoDevolucion().updatePrestamos(p.getEquipo_serial(), usuario,p.getFechaVencimiento());
-        df.commitTransaction();
-        df.endSession();
-    } 
-    public void updatePrestamosBasicos(PrestamoBasicoUsuario p, int usuario) {
-         DaoFactory df= DaoFactory.getInstance(properties);
-        df.beginSession();
-        df.getDaoDevolucion().updatePrestamosBasicos(p.getEquipoBasico_nombre(), usuario,p.getFechaVencimiento(),p.getCantidadPrestada());
-        df.getDaoDevolucion().updateEquiposBasicosDevo(p.getEquipoBasico_nombre(), p.getCantidadPrestada());
-        df.commitTransaction();
-        df.endSession();
+    /**
+     *Actualiza la fechaVencimiento del prestamo a la fecha actual y actualiza el estado del equipo
+     * a "Activo" y el subestado a "En almacén"
+     *@param p,PrestamoUsuario del cual se saca la información para realizar la actualización
+     *@param usuario, identificador del usuario que realiza la devolución
+     */
+    public void updatePrestamos(PrestamoUsuario p, int usuario) throws ServicesException {
+        DaoFactory df= DaoFactory.getInstance(properties);
+        try{
+            df.beginSession();
+            df.getDaoDevolucion().updatePrestamos(p.getEquipo_serial(), usuario);
+            df.getDaoDevolucion().updateEquiposDevo(p.getEquipo_serial());
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            df.rollbackTransaction();
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
     } 
     
+    /**
+     *Actualiza la fechaVencimiento del prestamo basico a la fecha actual y actualiza la cantidad
+     *del equipo basico en almacen sumando a la que esta en almacen la devuelta
+     *@param p,PrestamoBasicoUsuario del cual se saca la información para realizar la actualización
+     *@param usuario, identificador del usuario que realiza la devolución
+     */
+    public void updatePrestamosBasicos(PrestamoBasicoUsuario p, int usuario) throws ServicesException {
+        DaoFactory df= DaoFactory.getInstance(properties);
+         try{
+            df.beginSession();
+            df.getDaoDevolucion().updatePrestamosBasicos(p.getEquipoBasico_nombre(), usuario);
+            df.getDaoDevolucion().updateEquiposBasicosDevo(p.getEquipoBasico_nombre(), p.getCantidadPrestada());
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            df.rollbackTransaction();
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+    } 
     public void registrarNuevoPrestamo(PrestamoEquipo pe,PrestamoUsuario pu) throws ServicesException{
         DaoFactory df= DaoFactory.getInstance(properties);
         try{

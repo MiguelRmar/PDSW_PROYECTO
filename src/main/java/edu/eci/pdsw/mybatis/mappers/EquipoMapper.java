@@ -110,23 +110,32 @@ public interface EquipoMapper {
      */
     public void registrarEquipoBasicoNuevo(@Param("equipoBasico")EquipoBasico eb); 
     
-    /**
-     * 
-     * 
+   /**
+     * Actualizar la fecha de vencimiento de un prestamo normal
+     * @param s, serial del equipo a devolver
+     * @param u, identificador del usuario que esta devolviendo el equipo
      */
-    public void updatePrestamo(@Param("serial_equipo") int s,@Param("id_usuario") int u,@Param("fechaVencimiento")java.sql.Date h);
+    public void updatePrestamo(@Param("serial_equipo") int s,@Param("id_usuario") int u);
     
     /**
-     * 
-     * 
+     * Actualizar la fecha de vencimiento para un préstamo de equipo básico
+     * @param n, nombre del equipo basico a devolver
+     * @param u, id del usuario que realiza la devolución
      */
-    public void updatePrestamosBasicos(@Param("nombre_equipo")String n,@Param("id_usuario") int u, @Param("fechaVencimiento")java.sql.Date h,@Param("cantidad")int c);
+    public void updatePrestamosBasicos(@Param("nombre_equipo")String n,@Param("id_usuario") int u);
     
     /**
-     * 
-     * 
+     * Actualizar la cantidad en almacen de un equipo básico despues de una devolución
+     * @param n, nombre del equipo basico a devolver
+     * @param c, cantidad devuelta
      */
     public void updateEquiposBasicosDevo(@Param("nombre_equipo")String n,@Param("cantidad") int c);
+    
+    /**
+     * Actualizar el estado y el subestado de un equipo despues de una devolución
+     * @param equipo_serial, serial del equipo devuelto
+     */
+    public void updateEquipoDevo(@Param("equipo_serial")int equipo_serial);
     /**
      * 
      * @param pe
