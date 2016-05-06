@@ -73,8 +73,18 @@
                             </p:selectOneMenu>
                             <h:form id="codynocod">
                                 <p:panel id="cod" visible="#{Prestamo.codificado}">
-                                    <h:outputText value="Equipo codificado:"/>
-                                    <h:inputText value="#{Prestamo.codigoEquipo}"/>                                 
+                                    <h:panelGrid columns="2" cellpadding="5" id="panelGrid5">
+                                        <h:outputText value="Equipo codificado:"/>
+                                        <h:inputText value="#{Prestamo.codigoEquipo}"/>
+                                        <h:outputText value="Seleccione tipo préstamo"/>
+                                        <p:selectOneMenu value="#{Prestamo.tipoPrestamoSeleccionado}" id="tipoprestamos" style="width:225px" immediate="true">
+                                            <f:selectItem itemLabel="Seleccione tipo préstamo" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{Prestamo.nombresTipoPrestamo}" />
+                                        </p:selectOneMenu>
+                                        <p:commandButton id="commandButton1" value="Registrar préstamo" actionListener="#{Prestamo.accionRegistrarPrestamoEquipo()}">
+                                            
+                                        </p:commandButton>
+                                    </h:panelGrid>
                                 </p:panel>
                                 <p:panel id="nocod" visible="#{Prestamo.noCodificado}">
                                     <h:panelGrid columns="2" cellpadding="5" id="panelGrid4">

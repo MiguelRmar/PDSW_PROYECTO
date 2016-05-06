@@ -19,9 +19,11 @@ package edu.eci.pdsw.mybatis.mappers;
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.Modelo;
+import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.Usuario;
 import java.util.Set;
+import javax.persistence.PersistenceException;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -125,4 +127,10 @@ public interface EquipoMapper {
      * 
      */
     public void updateEquiposBasicosDevo(@Param("nombre_equipo")String n,@Param("cantidad") int c);
+    /**
+     * 
+     * @param pe
+     * @param pu 
+     */
+    public void registrarNuevoPrestamo(@Param("pe")PrestamoEquipo pe,@Param("pu")PrestamoUsuario pu);
 }

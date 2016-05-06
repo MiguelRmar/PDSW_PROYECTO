@@ -171,7 +171,9 @@
             cantidad = cantidad + #{cantidad}
         WHERE nombre = #{nombre_equipo}
     </update>
-    
+    <insert id="registrarNuevoPrestamo">
+        INSERT INTO PRESTAMOS(USUARIOS_id,EQUIPOS_serial,fechaExpedicion,fechaVencimiento,tipoPrestamo) values (#{pe.usuario_id},#{pu.equipo_serial},#{pu.fechaExpedicion},#{pu.fechaVencimiento},#{pu.tipoPrestamo})
+    </insert>
 </mapper>
     
     

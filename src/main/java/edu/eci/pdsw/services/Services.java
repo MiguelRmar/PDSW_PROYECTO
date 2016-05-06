@@ -9,6 +9,7 @@ import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.Modelo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
+import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.persistence.DaoFactory;
 import edu.eci.pdsw.entities.Usuario;
@@ -290,7 +291,7 @@ public class Services {
            df.endSession();  
         }
     }
-    public void updatePrestamos(PrestamoUsuario p, int usuario) {
+    public void updatePrestamos(PrestamoUsuario p, int usuario)  {
          DaoFactory df= DaoFactory.getInstance(properties);
         df.beginSession();
         df.getDaoDevolucion().updatePrestamos(p.getEquipo_serial(), usuario,p.getFechaVencimiento());
@@ -305,5 +306,18 @@ public class Services {
         df.commitTransaction();
         df.endSession();
     } 
+    
+    public void registrarNuevoPrestamo(PrestamoEquipo pe,PrestamoUsuario pu) throws ServicesException{
+        DaoFactory df= DaoFactory.getInstance(properties);
+        try{
+            df.beginSession();
+            df.getDaoPrestamo().registrarNuevoPrestamo(pe, pu);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+    }
     
 }

@@ -5,11 +5,16 @@
  */
 package edu.eci.pdsw.project.managedBeans;
 
+import edu.eci.pdsw.entities.PrestamoEquipo;
+import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.RolUsuario;
 import edu.eci.pdsw.entities.Usuario;
 import edu.eci.pdsw.services.Services;
 import edu.eci.pdsw.services.ServicesException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -39,9 +44,11 @@ public class ServiciosPrestamosBean implements Serializable{
     private String tipoEquipo="";
     private boolean codificado=false;
     private boolean noCodificado=false;
-    
+    private String tipoPrestamoSeleccionado;
+    private List<String> nombresTipoPrestamo;
     
     public void limpiarPaginaRegistrarUnPrestamo(){
+        nombresTipoPrestamo=new ArrayList<String>();
         setEstudianteExiste(false);
         usuarioSeleccionado=null;
         codigoUsuarioPrestamo=null;
@@ -51,12 +58,14 @@ public class ServiciosPrestamosBean implements Serializable{
         setTipoEquipo("");
         setCodificado(false);
         setNoCodificado(false);
+        tipoPrestamoSeleccionado=null;
     }
     
     /**
      * @param codigo codigo de usuario a quien se le va a realizar un prestamo
      */
     public void setCodigoUsuarioPrestamo(String codigo){
+        
         this.codigoUsuarioPrestamo = codigo;
     }
     
@@ -66,17 +75,51 @@ public class ServiciosPrestamosBean implements Serializable{
     public String getCodigoUsuarioPrestamo(){
         return codigoUsuarioPrestamo;
     }
+    /**
+     * registra un prestamo de un equipo
+     */
+    public void accionRegistrarPrestamoEquipo(){
+        try {
+            System.out.println(codigoUsuarioPrestamo);
+            System.out.println(codigoEquipo);
+            System.out.println(tipoPrestamoSeleccionado);
+            
+            PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
+            PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
+            services.registrarNuevoPrestamo(pe,pu);
+            System.out.println("pase");
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
+            //falta actualizar el estado del equipo a prestado
+        }
+        catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
+    }
+    
+    /**
+     * registra un prestamo de un equipo basico
+     */
+    public void accionRegistrarPrestamoEquipoBasico(){
+            
+        
+    }
     
     
     public void accionCambiarTipo(){
         if (tipoEquipo.equals("Codificado")){
             codificado=true;
             noCodificado=false;
+            
         }
-        else{
+        else if(tipoEquipo.equals("NO Codificado")){
             codificado=false;
             noCodificado=true;
         }
+        else{
+            codificado=false;
+            noCodificado=false;
+        }
+        tipoPrestamoSeleccionado=null;
     }
     /**
      * Actualiza los datos del usuario a quien se le realiza el prestamo
@@ -179,6 +222,7 @@ public class ServiciosPrestamosBean implements Serializable{
      * @param codigoEquipo the codigoEquipo to set
      */
     public void setCodigoEquipo(String codigoEquipo) {
+        
         this.codigoEquipo = codigoEquipo;
     }
 
@@ -222,5 +266,45 @@ public class ServiciosPrestamosBean implements Serializable{
      */
     public void setNoCodificado(boolean noCodificado) {
         this.noCodificado = noCodificado;
+    }
+
+    /**
+     * @return the tipoPrestamoSeleccionado
+     */
+    public String getTipoPrestamoSeleccionado() {
+        
+        return tipoPrestamoSeleccionado;
+    }
+
+    /**
+     * @param tipoPrestamoSeleccionado the tipoPrestamoSeleccionado to set
+     */
+    public void setTipoPrestamoSeleccionado(String tipoPrestamoSeleccionado) {
+        this.tipoPrestamoSeleccionado = tipoPrestamoSeleccionado;
+    }
+
+    /**
+     * @return the nombresTipoPrestamo
+     */
+    public List<String> getNombresTipoPrestamo() {
+        nombresTipoPrestamo=new ArrayList<String>();
+        String[] listaNombres=rolesUsuarioSeleccionado.split(", ");
+        nombresTipoPrestamo.add("Préstamo diario");
+        nombresTipoPrestamo.add("Préstamo 24 horas");
+        nombresTipoPrestamo.add("Préstamo por semestre");
+        for(int i=0;i<listaNombres.length;i++){
+            if(listaNombres[i].equals("profesor")){
+                nombresTipoPrestamo.add("Préstamo indefinido");
+            }
+        }
+        
+        return nombresTipoPrestamo;
+    }
+
+    /**
+     * @param nombresTipoPrestamo the nombresTipoPrestamo to set
+     */
+    public void setNombresTipoPrestamo(List<String> nombresTipoPrestamo) {
+        this.nombresTipoPrestamo = nombresTipoPrestamo;
     }
 }

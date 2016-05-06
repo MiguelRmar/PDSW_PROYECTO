@@ -18,6 +18,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import edu.eci.pdsw.persistence.DaoEquipo;
+import edu.eci.pdsw.persistence.DaoPrestamo;
 
 /**
  *
@@ -97,4 +98,9 @@ public class MyBatisDaoFactory extends DaoFactory{
     public DaoDevolucion getDaoDevolucion() {
         return new MyBatisDaoDevolucion(currentSession);
      }
+
+    @Override
+    public DaoPrestamo getDaoPrestamo() {
+        return new MyBatisDaoPrestamo(currentSession);
+    }
 }
