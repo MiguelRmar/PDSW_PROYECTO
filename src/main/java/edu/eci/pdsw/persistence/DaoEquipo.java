@@ -70,6 +70,9 @@ public interface DaoEquipo {
     public void registrarEquipoBasicoNuevo(EquipoBasico eq) throws PersistenceException;
     
     public void updateEquipoBasico(EquipoBasico equipoBasico,int cantidad);
-    
+
+    public void updateEstadoEquipo(int codigoEquipo, String tipoPrestamoSeleccionadoDos);
+
+    public void updateCantidadEquipoBasico(String nombreEquipoBasicoPrestar, int cantidadEquipoBasicoSeleccionada);
     
 }

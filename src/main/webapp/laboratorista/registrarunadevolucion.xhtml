@@ -12,6 +12,7 @@
     <h:body> 
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="devo_form">
+            <p:focus context="panelCodigoUsuario"/>
                 <p:layout>
                     <p:layoutUnit position="north">
                         <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
@@ -39,12 +40,16 @@
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
-                        <p:panel  header = "Equipo" style="height: 150px">
+                        <p:panel  header = "Equipo" style="height: 150px" id="panelCodigoUsuario">
                             <p:panelGrid columns="6">
-                                <h:outputLabel value="Serial:" />
+                                <h:form>
+-                                <p:defaultCommand target="botonEnviar"/>
+                                <h:outputLabel value="Serial: " />
                                 <h:inputText value="#{Devolucion.serialADevolver}" />
-                                <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update="devo_form"/>                                                                                                                      
+                                <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update=":devo_form" id="botonEnviar"/>                                                                                                                      
+                                 </h:form>
                             </p:panelGrid> 
+
                             <h:form id="devo_form1" rendered="#{Devolucion.yaBusqueEquipoADevolver}">
                             <br/>
                             <h:outputText id="value1" value="#{Devolucion.textoSalidaEquipoADevolver}"/>
@@ -59,7 +64,7 @@
                         <br/>
                         <br/>
                         <p:panel header ="Equipos Básicos" style="height: 150px">
-                            <p:panelGrid columns="6">
+                            <p:panelGrid columns="6" >
                                 <h:outputLabel value="Código Estudiante:" />
                                 <h:inputText value="#{Devolucion.condigoEstudianteBasicos}"/>
                                 <h:outputLabel value="Tipo Equipo:" />
@@ -69,8 +74,11 @@
                                 </p:selectOneMenu>
                                 <h:outputLabel value="Número de items:" />
                                 <h:inputText value="#{Devolucion.cantidadBasicaDevuelta}"/>
-                                <p:commandButton value="Confirmar devolución" action="#{Devolucion.accionRealizarDevolucionBasica()}" update="devo_form"/>
+                                
                             </p:panelGrid>
+                            
+                            <p:commandButton value="Confirmar devolución" action="#{Devolucion.accionRealizarDevolucionBasica()}" update="devo_form"/>
+                            
                         </p:panel>
                         <br/>
                         

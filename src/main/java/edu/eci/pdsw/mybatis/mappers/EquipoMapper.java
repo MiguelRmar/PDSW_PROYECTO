@@ -19,6 +19,8 @@ package edu.eci.pdsw.mybatis.mappers;
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.Modelo;
+import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
+import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.Usuario;
@@ -136,10 +138,32 @@ public interface EquipoMapper {
      * @param equipo_serial, serial del equipo devuelto
      */
     public void updateEquipoDevo(@Param("equipo_serial")int equipo_serial);
+    
     /**
      * 
      * @param pe
      * @param pu 
      */
     public void registrarNuevoPrestamo(@Param("pe")PrestamoEquipo pe,@Param("pu")PrestamoUsuario pu);
+    
+    /**
+     * 
+     * @param codigoEquipo
+     * @param tipoPrestamoSeleccionadoDos 
+     */
+    public void updateEstadoEquipo(@Param("serial") int codigoEquipo,@Param("prestamo") String tipoPrestamoSeleccionadoDos);
+
+    /**
+     * 
+     * @param nombreEquipoBasicoPrestar
+     * @param cantidadEquipoBasicoSeleccionada 
+     */
+    public void updateCantidadEquipoBasico(@Param("nombre") String nombreEquipoBasicoPrestar,@Param("cantidad") int cantidadEquipoBasicoSeleccionada);
+    
+    /**
+     * 
+     * @param pbe
+     * @param pbu 
+     */
+    public void registrarNuevoPrestamoBasico(@Param("pbe") PrestamoBasicoEquipo pbe,@Param("pbu") PrestamoBasicoUsuario pbu);
 }

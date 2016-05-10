@@ -108,5 +108,15 @@ public class MyBatisDaoEquipo implements DaoEquipo{
         emap.updateEquipoBasico(equipoBasico.getNombre(),cantidad);
     }
 
+    @Override
+    public void updateEstadoEquipo(int codigoEquipo, String tipoPrestamoSeleccionadoDos) {
+        emap.updateEstadoEquipo(codigoEquipo,tipoPrestamoSeleccionadoDos);
+    }
+
+    @Override
+    public void updateCantidadEquipoBasico(String nombreEquipoBasicoPrestar, int cantidadEquipoBasicoSeleccionada) {
+        emap.updateCantidadEquipoBasico(nombreEquipoBasicoPrestar,cantidadEquipoBasicoSeleccionada);
+    }
+
     
 }

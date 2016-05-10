@@ -10,6 +10,8 @@ import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.EquipoBasicoPrestamo;
 import edu.eci.pdsw.entities.EquipoPrestamo;
+import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
+import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.RolUsuario;
 import edu.eci.pdsw.entities.Usuario;
@@ -87,19 +89,16 @@ public class ServiciosPrestamosBean implements Serializable{
      * registra un prestamo de un equipo
      */
     public void accionRegistrarPrestamoEquipo(){
-        try {
-           //solo agrega el carro a la lista, el resto no se hace 
+        try {         
+           PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionadoDos);
+           PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionadoDos);
+           services.registrarNuevoPrestamo(pe,pu);
+           services.updateEstadoEquipo(codigoEquipo,tipoPrestamoSeleccionadoDos);
            Equipo nuevo=services.loadEquipoBySerial(Integer.parseInt(codigoEquipo));
            listaEquipos=getListaEquipos();
-            
            EquipoPrestamo aMeter=new EquipoPrestamo(nuevo, getTipoPrestamoSeleccionadoDos());
-           listaEquipos.add(aMeter);
-            //PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
-            //PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
-            //services.registrarNuevoPrestamo(pe,pu);
-            
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
-            //falta actualizar el estado del equipo a prestado
+           listaEquipos.add(aMeter);  
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
         }
         catch (ServicesException ex) { //ServicesException
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
@@ -110,18 +109,17 @@ public class ServiciosPrestamosBean implements Serializable{
      * registra un prestamo de un equipo basico
      */
     public void accionRegistrarPrestamoEquipoBasico(){
-            try {
-           //solo agrega el carro a la lista, el resto no se hace 
-           EquipoBasico nuevo=services.loadEquipoBasicoByName(nombreEquipoBasicoPrestar);
-           EquipoBasicoPrestamo aMeter=new EquipoBasicoPrestamo(nuevo,cantidadEquipoBasicoSeleccionada,tipoPrestamoSeleccionado);
-           listaEquiposBasicos=getListaEquiposBasicos();
-           listaEquiposBasicos.add(aMeter);
-            //PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
-            //PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
-            //services.registrarNuevoPrestamo(pe,pu);
-            
+        try {
+            PrestamoBasicoEquipo pbe=new PrestamoBasicoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado, cantidadEquipoBasicoSeleccionada);
+            PrestamoBasicoUsuario pbu=new PrestamoBasicoUsuario(nombreEquipoBasicoPrestar,new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado, cantidadEquipoBasicoSeleccionada);
+            services.registrarNuevoPrestamoBasico(pbe,pbu);
+            services.updateCantidadEquipoBasico(nombreEquipoBasicoPrestar,cantidadEquipoBasicoSeleccionada);
+            EquipoBasico nuevo=services.loadEquipoBasicoByName(nombreEquipoBasicoPrestar);
+            EquipoBasicoPrestamo aMeter=new EquipoBasicoPrestamo(nuevo,cantidadEquipoBasicoSeleccionada,tipoPrestamoSeleccionado);
+            listaEquiposBasicos=getListaEquiposBasicos();
+            listaEquiposBasicos.add(aMeter);
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
-            //falta actualizar el estado del equipo a prestado
+            
         }
         catch (ServicesException ex) { //ServicesException
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));

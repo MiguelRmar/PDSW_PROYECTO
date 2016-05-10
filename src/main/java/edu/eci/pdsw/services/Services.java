@@ -8,6 +8,7 @@ package edu.eci.pdsw.services;
 import edu.eci.pdsw.entities.Equipo;
 import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.Modelo;
+import edu.eci.pdsw.entities.PrestamoBasicoEquipo;
 import edu.eci.pdsw.entities.PrestamoBasicoUsuario;
 import edu.eci.pdsw.entities.PrestamoEquipo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
@@ -340,6 +341,47 @@ public class Services {
             df.getDaoPrestamo().registrarNuevoPrestamo(pe, pu);
             df.commitTransaction();
         }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+    }
+
+    public void updateEstadoEquipo(String codigoEquipo, String tipoPrestamoSeleccionadoDos) throws ServicesException {
+        DaoFactory df= DaoFactory.getInstance(properties);
+         try{
+            df.beginSession();
+            df.getDaoEquipo().updateEstadoEquipo(Integer.parseInt(codigoEquipo),tipoPrestamoSeleccionadoDos);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            df.rollbackTransaction();
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+    }
+
+    public void registrarNuevoPrestamoBasico(PrestamoBasicoEquipo pbe, PrestamoBasicoUsuario pbu) throws ServicesException {
+         DaoFactory df= DaoFactory.getInstance(properties);
+        try{
+            df.beginSession();
+            df.getDaoPrestamo().registrarNuevoPrestamoBasico(pbe, pbu);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            throw new ServicesException(e,e.getLocalizedMessage());
+        }finally{
+           df.endSession();  
+        }
+    }
+
+    public void updateCantidadEquipoBasico(String nombreEquipoBasicoPrestar, int cantidadEquipoBasicoSeleccionada) throws ServicesException {
+        DaoFactory df= DaoFactory.getInstance(properties);
+         try{
+            df.beginSession();
+            df.getDaoEquipo().updateCantidadEquipoBasico(nombreEquipoBasicoPrestar,cantidadEquipoBasicoSeleccionada);
+            df.commitTransaction();
+        }catch(PersistenceException e){
+            df.rollbackTransaction();
             throw new ServicesException(e,e.getLocalizedMessage());
         }finally{
            df.endSession();  

@@ -72,10 +72,7 @@
                                 <f:selectItem itemLabel="Codificado" itemValue="Codificado" />
                                 <f:selectItem itemLabel="NO Codificado" itemValue="No Codificado" />
                             </p:selectOneMenu>
-                            
-                            
-                            
-                            
+  
                             
                                 <p:panel id="cod" visible="#{Prestamo.codificado}">
                                     <h:panelGrid columns="2" cellpadding="5" id="panelGrid5">
@@ -121,9 +118,7 @@
                             <h:outputText value="Nombre: #{equipos.equipoBasico.nombre}, Serial: #{equipos.equipoBasico.serial}, Tipo préstamo: #{equipos.tipoPrestamo}" style="display:inline-block"/>
                         </p:dataList>
                         
-                        
-                        
-                        
+  
                         <p:spacer/>
                         
                         <p:dataList value="#{Prestamo.listaEquiposBasicos}" var="equiposbasicos" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
@@ -138,6 +133,7 @@
                         </p:dataList>
                         
                     </p:panel>
+                    <br/>
                     <p:commandButton value="Completar préstamo" actionListener="#{Prestamo.accionCompletarPrestamo()}" />
                                     
                     
