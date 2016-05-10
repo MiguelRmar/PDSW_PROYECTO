@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -81,7 +83,36 @@ public class ServiciosPrestamosBean implements Serializable{
     }
     
     public void accionCompletarPrestamo(){
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("INFO","en construcción"));
+        if(listaEquipos.size()>0 || listaEquiposBasicos.size()>0){
+            for(int i=0;i<listaEquipos.size();i++){
+                PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquipos.get(i).getTipoPrestamo());
+                PrestamoUsuario pu=new PrestamoUsuario(listaEquipos.get(i).getEquipoBasico().getSerial(),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquipos.get(i).getTipoPrestamo());
+                try {
+                    services.registrarNuevoPrestamo(pe,pu);
+                    services.updateEstadoEquipo(Integer.toString(listaEquipos.get(i).getEquipoBasico().getSerial()),listaEquipos.get(i).getTipoPrestamo());
+                } catch (ServicesException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+                }
+                
+            }
+            for(int j=0;j<listaEquiposBasicos.size();j++){
+                PrestamoBasicoEquipo pbe=new PrestamoBasicoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposBasicos.get(j).getTipoPrestamo(), listaEquiposBasicos.get(j).getCantidad());
+                PrestamoBasicoUsuario pbu=new PrestamoBasicoUsuario(listaEquiposBasicos.get(j).getEquipoBasico().getNombre(),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,listaEquiposBasicos.get(j).getTipoPrestamo(), listaEquiposBasicos.get(j).getCantidad());
+                try {
+                    services.registrarNuevoPrestamoBasico(pbe,pbu);
+                    services.updateCantidadEquipoBasico(listaEquiposBasicos.get(j).getEquipoBasico().getNombre(),listaEquiposBasicos.get(j).getCantidad());
+                } catch (ServicesException ex) {
+                    FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+                }
+                
+            }
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se han registrado todos los préstamos con éxito"));
+            limpiarPaginaRegistrarUnPrestamo();
+            
+        }
+        else{
+           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","Hay que registrar los préstamos que se quieran hacer")); 
+        }
     }
     
     
@@ -90,15 +121,18 @@ public class ServiciosPrestamosBean implements Serializable{
      */
     public void accionRegistrarPrestamoEquipo(){
         try {         
-           PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionadoDos);
-           PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionadoDos);
-           services.registrarNuevoPrestamo(pe,pu);
-           services.updateEstadoEquipo(codigoEquipo,tipoPrestamoSeleccionadoDos);
+           
            Equipo nuevo=services.loadEquipoBySerial(Integer.parseInt(codigoEquipo));
-           listaEquipos=getListaEquipos();
-           EquipoPrestamo aMeter=new EquipoPrestamo(nuevo, getTipoPrestamoSeleccionadoDos());
-           listaEquipos.add(aMeter);  
-           FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
+           if(nuevo.getSubEstado().equals("En almacén")){
+            listaEquipos=getListaEquipos();
+            EquipoPrestamo aMeter=new EquipoPrestamo(nuevo, getTipoPrestamoSeleccionadoDos());
+            listaEquipos.add(aMeter);  
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha agregado el préstamo a la lista de equipos codificados con éxito"));    
+           }
+           else{
+               FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","El equipo se encuentra en la base de datos, pero no esta disponible para préstamo"));
+           }
+           
         }
         catch (ServicesException ex) { //ServicesException
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
@@ -110,15 +144,21 @@ public class ServiciosPrestamosBean implements Serializable{
      */
     public void accionRegistrarPrestamoEquipoBasico(){
         try {
-            PrestamoBasicoEquipo pbe=new PrestamoBasicoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado, cantidadEquipoBasicoSeleccionada);
-            PrestamoBasicoUsuario pbu=new PrestamoBasicoUsuario(nombreEquipoBasicoPrestar,new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado, cantidadEquipoBasicoSeleccionada);
-            services.registrarNuevoPrestamoBasico(pbe,pbu);
-            services.updateCantidadEquipoBasico(nombreEquipoBasicoPrestar,cantidadEquipoBasicoSeleccionada);
+            
             EquipoBasico nuevo=services.loadEquipoBasicoByName(nombreEquipoBasicoPrestar);
-            EquipoBasicoPrestamo aMeter=new EquipoBasicoPrestamo(nuevo,cantidadEquipoBasicoSeleccionada,tipoPrestamoSeleccionado);
-            listaEquiposBasicos=getListaEquiposBasicos();
-            listaEquiposBasicos.add(aMeter);
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
+            if(nuevo.getCantidadInventario()>=cantidadEquipoBasicoSeleccionada && cantidadEquipoBasicoSeleccionada>0){
+                EquipoBasicoPrestamo aMeter=new EquipoBasicoPrestamo(nuevo,cantidadEquipoBasicoSeleccionada,tipoPrestamoSeleccionado);
+                listaEquiposBasicos=getListaEquiposBasicos();
+                listaEquiposBasicos.add(aMeter);
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha agregado el préstamo a la lista de equipos no codificados con éxito"));    
+            }
+            else if(cantidadEquipoBasicoSeleccionada<=0){
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","La cantidad ingresada para el prestamo debe ser mayor a 0"));    
+            }
+            else{
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error","La maxima cantidad que puede ser prestada para este equipo es: "+nuevo.getCantidadInventario()));    
+            }
+            
             
         }
         catch (ServicesException ex) { //ServicesException
@@ -151,12 +191,16 @@ public class ServiciosPrestamosBean implements Serializable{
     public void accionBotonUsuarioPrestamo(){
         usuarioSeleccionado=null;
         try {
+            
             usuarioSeleccionado = services.loadUsuarioById(Integer.parseInt(codigoUsuarioPrestamo));
             String roles="";
+            
             for (RolUsuario r: usuarioSeleccionado.getRoles()) {
                 roles+=r.getRol_r()+", ";
             }
-            rolesUsuarioSeleccionado=roles.substring(0,roles.length()-2);
+            if(usuarioSeleccionado.getRoles().size()>0){
+                rolesUsuarioSeleccionado=roles.substring(0,roles.length()-2);
+            }
             estudianteExiste=true;
         } 
         catch (ServicesException ex) {

@@ -111,7 +111,7 @@
                             <f:facet name="header">
                                 Lista equipos
                             </f:facet>
-                            <p:commandLink update=":form0:equipoinfo" oncomplete="PF('equipoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                            <p:commandLink update=":form0:equipoinfo" oncomplete="PF('equipoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:50px">
                                 <f:setPropertyActionListener value="#{equipos}" target="#{Prestamo.equipoSeleccionado}" />
                                 <h:outputText value="Nombre: #{equipos.equipoBasico.nombre}, Serial: #{equipos.equipoBasico.serial}, Tipo préstamo: #{equipos.tipoPrestamo}" />
                             </p:commandLink>
@@ -125,7 +125,7 @@
                             <f:facet name="header">
                                 Lista equipos básicos
                             </f:facet>
-                            <p:commandLink update=":form0:equipobasicoinfo" oncomplete="PF('equipobasicoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                            <p:commandLink update=":form0:equipobasicoinfo" oncomplete="PF('equipobasicoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:50px">
                                 <f:setPropertyActionListener value="#{equiposbasicos}" target="#{Prestamo.prestamoEquipoBasicoSeleccionado}" />
                                 <h:outputText value="Nombre: #{equiposbasicos.equipoBasico.nombre}, Cantidad: #{equiposbasicos.cantidad}, Tipo préstamo: #{equiposbasicos.tipoPrestamo}" />
                             </p:commandLink>
@@ -134,7 +134,7 @@
                         
                     </p:panel>
                     <br/>
-                    <p:commandButton value="Completar préstamo" actionListener="#{Prestamo.accionCompletarPrestamo()}" />
+                    <p:commandButton value="Completar préstamo" actionListener="#{Prestamo.accionCompletarPrestamo()}" update=":form0" />
                                     
                     
                 </p:layoutUnit>      

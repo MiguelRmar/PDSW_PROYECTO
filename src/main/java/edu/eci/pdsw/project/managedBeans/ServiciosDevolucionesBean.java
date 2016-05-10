@@ -340,6 +340,16 @@ public class ServiciosDevolucionesBean implements Serializable{
      * @return the nombresEquiposBasicos
      */
     public HashMap<String, String> getNombresEquiposBasicos() {
+        try {
+            se = Services.getInstance("applicationconfig.properties");
+            nombresEquiposBasicos = new HashMap<>();
+            Set<EquipoBasico> eb = se.loadEquiposBasicos();
+            for(EquipoBasico b:eb){
+                nombresEquiposBasicos.put(b.getNombre(),b.getNombre());
+            }
+        } catch (ServicesException ex) {
+            Logger.getLogger(ServiciosDevolucionesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return nombresEquiposBasicos;
     }
 
