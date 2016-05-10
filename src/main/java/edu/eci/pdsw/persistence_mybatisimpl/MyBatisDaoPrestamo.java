@@ -27,17 +27,17 @@ public class MyBatisDaoPrestamo implements DaoPrestamo{
     
     @Override
     public void registrarNuevoPrestamo(PrestamoEquipo pe, PrestamoUsuario pu) throws PersistenceException {
-        if(pe.getFechaExpedicion().getTime()!=Calendar.getInstance().getTime().getTime()){
+        if(pe.getFechaExpedicion().getYear()!=Calendar.getInstance().getTime().getYear() || pe.getFechaExpedicion().getMonth()!=Calendar.getInstance().getTime().getMonth() || pe.getFechaExpedicion().getDay()!= Calendar.getInstance().getTime().getDay()){
             throw new PersistenceException("La fecha ingresada no es igual a la fecha actual");
         }
         if(emap.loadUsuarioById(pe.getUsuario_id())==null){
             throw new PersistenceException("El usuario con id "+pe.getUsuario_id()+" no se encuentra registrado en la base de datos");
         }
         if(emap.loadEquipoBySerial(pu.getEquipo_serial())==null){
-            throw new PersistenceException("El equipo con serial"+pu.getEquipo_serial()+" no se encuentra registrado en la base de datos");
+            throw new PersistenceException("El equipo con serial "+pu.getEquipo_serial()+" no se encuentra registrado en la base de datos");
         }
         if(!emap.loadEquipoBySerial(pu.getEquipo_serial()).getSubEstado().equals("en almacén")){
-            throw new PersistenceException("El equipo con serial"+pu.getEquipo_serial()+" se encuentra registrado en la base de datos, pero no esta disponible para prestar");
+            throw new PersistenceException("El equipo con serial "+pu.getEquipo_serial()+" se encuentra registrado en la base de datos, pero no esta disponible para prestar");
         }
         emap.registrarNuevoPrestamo(pe, pu);
     }

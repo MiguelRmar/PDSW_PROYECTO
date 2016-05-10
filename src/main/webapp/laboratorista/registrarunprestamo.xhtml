@@ -12,6 +12,7 @@
     <h:body> 
         <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
         <h:form id="form0">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:defaultCommand target="botonOK" />
             <p:focus context="panelCodigoUsuario"/>
             <p:layout>
@@ -63,28 +64,30 @@
                     </p:panel>
                     
                     
-                    <p:panel header="Agregar equipos a préstamo" rendered="#{Prestamo.estudianteExiste}" id="equipos">
+                    <p:panel header="Agregar equipos a préstamo" visible="#{Prestamo.estudianteExiste}" id="equipos">
                         <h:panelGrid columns="2" cellpadding="5" id="panelGrid3">
                             <p:selectOneMenu value="#{Prestamo.tipoEquipo}" id="tipos" style="width:225px">
-                                <p:ajax listener="#{Prestamo.accionCambiarTipo()}" update="codynocod"/>
+                                <p:ajax listener="#{Prestamo.accionCambiarTipo()}" update="cod nocod"/>
                                 <f:selectItem itemLabel="Seleccione tipo de equipo" itemValue="" noSelectionOption="true"/>
                                 <f:selectItem itemLabel="Codificado" itemValue="Codificado" />
                                 <f:selectItem itemLabel="NO Codificado" itemValue="No Codificado" />
                             </p:selectOneMenu>
-                            <h:form id="codynocod">
+                            
+                            
+                            
+                            
+                            
                                 <p:panel id="cod" visible="#{Prestamo.codificado}">
                                     <h:panelGrid columns="2" cellpadding="5" id="panelGrid5">
                                         <h:outputText value="Equipo codificado:"/>
                                         <h:inputText value="#{Prestamo.codigoEquipo}"/>
                                         <h:outputText value="Seleccione tipo préstamo"/>
-                                        <p:selectOneMenu value="#{Prestamo.tipoPrestamoSeleccionado}" id="tipoprestamos" style="width:225px" immediate="true">
+                                        <p:selectOneMenu value="#{Prestamo.tipoPrestamoSeleccionadoDos}" id="tipoprestamos" style="width:225px" immediate="true">
                                             <f:selectItem itemLabel="Seleccione tipo préstamo" itemValue="" noSelectionOption="true"/>
                                             <f:selectItems value="#{Prestamo.nombresTipoPrestamo}" />
                                         </p:selectOneMenu>
-                                        <p:commandButton id="commandButton1" value="Registrar préstamo" actionListener="#{Prestamo.accionRegistrarPrestamoEquipo()}">
-                                            
-                                        </p:commandButton>
                                     </h:panelGrid>
+                                    <p:commandButton value="Registrar préstamo" actionListener="#{Prestamo.accionRegistrarPrestamoEquipo()}" update="panelLista" />
                                 </p:panel>
                                 <p:panel id="nocod" visible="#{Prestamo.noCodificado}">
                                     <h:panelGrid columns="2" cellpadding="5" id="panelGrid4">
@@ -93,13 +96,94 @@
                                             <f:selectItem itemLabel="Seleccione nombre" itemValue="" noSelectionOption="true"/>
                                             <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
                                     </p:selectOneMenu>
+                                    <h:outputText value="Cantidad:"/>
+                                    <p:spinner value="#{Prestamo.cantidadEquipoBasicoSeleccionada}" />
+                                    <h:outputText value="Seleccione tipo préstamo"/>
+                                        <p:selectOneMenu value="#{Prestamo.tipoPrestamoSeleccionado}" id="tipoprestamos2" style="width:225px" immediate="true">
+                                            <f:selectItem itemLabel="Seleccione tipo préstamo" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{Prestamo.nombresTipoPrestamo}" />
+                                        </p:selectOneMenu>
                                     </h:panelGrid>
+                                    <p:commandButton value="Registrar Préstamo" actionListener="#{Prestamo.accionRegistrarPrestamoEquipoBasico()}" update="panelLista" />
                                 </p:panel>
-                            </h:form>
+                            
                         </h:panelGrid>
-                    </p:panel>  
+                    </p:panel>
+                    <p:panel header="Lista Objetos a préstar" id="panelLista">
+                        <p:dataList value="#{Prestamo.listaEquipos}" var="equipos" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+                            <f:facet name="header">
+                                Lista equipos
+                            </f:facet>
+                            <p:commandLink update=":form0:equipoinfo" oncomplete="PF('equipoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                                <f:setPropertyActionListener value="#{equipos}" target="#{Prestamo.equipoSeleccionado}" />
+                                <h:outputText value="Nombre: #{equipos.equipoBasico.nombre}, Serial: #{equipos.equipoBasico.serial}, Tipo préstamo: #{equipos.tipoPrestamo}" />
+                            </p:commandLink>
+                            <h:outputText value="Nombre: #{equipos.equipoBasico.nombre}, Serial: #{equipos.equipoBasico.serial}, Tipo préstamo: #{equipos.tipoPrestamo}" style="display:inline-block"/>
+                        </p:dataList>
+                        
+                        
+                        
+                        
+                        <p:spacer/>
+                        
+                        <p:dataList value="#{Prestamo.listaEquiposBasicos}" var="equiposbasicos" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+                            <f:facet name="header">
+                                Lista equipos básicos
+                            </f:facet>
+                            <p:commandLink update=":form0:equipobasicoinfo" oncomplete="PF('equipobasicoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                                <f:setPropertyActionListener value="#{equiposbasicos}" target="#{Prestamo.prestamoEquipoBasicoSeleccionado}" />
+                                <h:outputText value="Nombre: #{equiposbasicos.equipoBasico.nombre}, Cantidad: #{equiposbasicos.cantidad}, Tipo préstamo: #{equiposbasicos.tipoPrestamo}" />
+                            </p:commandLink>
+                            <h:outputText value="Nombre: #{equiposbasicos.equipoBasico.nombre}, Cantidad: #{equiposbasicos.cantidad}, Tipo préstamo: #{equiposbasicos.tipoPrestamo}" style="display:inline-block"/>
+                        </p:dataList>
+                        
+                    </p:panel>
+                    <p:commandButton value="Completar préstamo" actionListener="#{Prestamo.accionCompletarPrestamo()}" />
+                                    
+                    
                 </p:layoutUnit>      
             </p:layout>
+            
+            
+            
+            <p:dialog header="Equipo info" widgetVar="equipoinformacion" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+                <p:outputPanel id="equipoinfo" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty Prestamo.equipoSeleccionado}" columnClasses="label,value">
+                     
+
+                        <h:outputText value="Serial:" />
+                        <h:outputText value="#{Prestamo.equipoSeleccionado.equipoBasico.serial}" />
+
+                        <h:outputText value="Nombre:" />
+                        <h:outputText value="#{Prestamo.equipoSeleccionado.equipoBasico.nombre}" />
+
+                        <h:outputText value="Descripción:" />
+                        <h:outputText value="#{Prestamo.equipoSeleccionado.equipoBasico.descripcion}"/>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+            
+            <p:dialog header="Equipo Básico info" widgetVar="equipobasicoinformacion" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+                <p:outputPanel id="equipobasicoinfo" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty Prestamo.prestamoEquipoBasicoSeleccionado}" columnClasses="label,value">
+                     
+                        <f:facet name="header">
+                            <p:graphicImage value="#{Prestamo.prestamoEquipoBasicoSeleccionado.equipoBasico.foto}" width="100%" style="max-width:200px; max-height:200px;min-height:200px;min-width:200px"/> 
+                        </f:facet>
+                        <h:outputText value="Nombre:" />
+                        <h:outputText value="#{Prestamo.prestamoEquipoBasicoSeleccionado.equipoBasico.nombre}" />
+
+                        <h:outputText value="Descripción:" />
+                        <h:outputText value="#{Prestamo.prestamoEquipoBasicoSeleccionado.equipoBasico.descripcion}"/>
+                        
+                        <h:outputText value="Cantidad a préstar:"/>
+                        <h:outputText value="#{Prestamo.prestamoEquipoBasicoSeleccionado.cantidad}"/>
+                                      
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+            
         </h:form>
     </h:body>
 </html>

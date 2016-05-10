@@ -5,12 +5,17 @@
  */
 package edu.eci.pdsw.project.managedBeans;
 
+import edu.eci.pdsw.entities.Equipo;
+import edu.eci.pdsw.entities.EquipoBasico;
 import edu.eci.pdsw.entities.PrestamoEquipo;
+import edu.eci.pdsw.entities.EquipoBasicoPrestamo;
+import edu.eci.pdsw.entities.EquipoPrestamo;
 import edu.eci.pdsw.entities.PrestamoUsuario;
 import edu.eci.pdsw.entities.RolUsuario;
 import edu.eci.pdsw.entities.Usuario;
 import edu.eci.pdsw.services.Services;
 import edu.eci.pdsw.services.ServicesException;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,8 +51,20 @@ public class ServiciosPrestamosBean implements Serializable{
     private boolean noCodificado=false;
     private String tipoPrestamoSeleccionado;
     private List<String> nombresTipoPrestamo;
+    private List<EquipoPrestamo> listaEquipos;
+    private List<EquipoBasicoPrestamo> listaEquiposBasicos;
+    private EquipoPrestamo equipoSeleccionado;
+    private EquipoBasicoPrestamo prestamoEquipoBasicoSeleccionado;
+    private int cantidadEquipoBasicoSeleccionada;
+    private String  tipoPrestamoSeleccionadoDos; 
+    
     
     public void limpiarPaginaRegistrarUnPrestamo(){
+        cantidadEquipoBasicoSeleccionada=0;
+        equipoSeleccionado=null;
+        prestamoEquipoBasicoSeleccionado=null;
+        listaEquipos= new ArrayList<EquipoPrestamo>();
+        listaEquiposBasicos= new ArrayList<EquipoBasicoPrestamo>();
         nombresTipoPrestamo=new ArrayList<String>();
         setEstudianteExiste(false);
         usuarioSeleccionado=null;
@@ -61,37 +78,30 @@ public class ServiciosPrestamosBean implements Serializable{
         tipoPrestamoSeleccionado=null;
     }
     
-    /**
-     * @param codigo codigo de usuario a quien se le va a realizar un prestamo
-     */
-    public void setCodigoUsuarioPrestamo(String codigo){
-        
-        this.codigoUsuarioPrestamo = codigo;
+    public void accionCompletarPrestamo(){
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("INFO","en construcción"));
     }
     
-    /**
-     * @return codigo del usuario a quien se le realiza el prestamo
-     */
-    public String getCodigoUsuarioPrestamo(){
-        return codigoUsuarioPrestamo;
-    }
+    
     /**
      * registra un prestamo de un equipo
      */
     public void accionRegistrarPrestamoEquipo(){
         try {
-            System.out.println(codigoUsuarioPrestamo);
-            System.out.println(codigoEquipo);
-            System.out.println(tipoPrestamoSeleccionado);
+           //solo agrega el carro a la lista, el resto no se hace 
+           Equipo nuevo=services.loadEquipoBySerial(Integer.parseInt(codigoEquipo));
+           listaEquipos=getListaEquipos();
             
-            PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
-            PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
-            services.registrarNuevoPrestamo(pe,pu);
-            System.out.println("pase");
+           EquipoPrestamo aMeter=new EquipoPrestamo(nuevo, getTipoPrestamoSeleccionadoDos());
+           listaEquipos.add(aMeter);
+            //PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
+            //PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
+            //services.registrarNuevoPrestamo(pe,pu);
+            
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
             //falta actualizar el estado del equipo a prestado
         }
-        catch (ServicesException ex) {
+        catch (ServicesException ex) { //ServicesException
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
     }
@@ -100,18 +110,34 @@ public class ServiciosPrestamosBean implements Serializable{
      * registra un prestamo de un equipo basico
      */
     public void accionRegistrarPrestamoEquipoBasico(){
+            try {
+           //solo agrega el carro a la lista, el resto no se hace 
+           EquipoBasico nuevo=services.loadEquipoBasicoByName(nombreEquipoBasicoPrestar);
+           EquipoBasicoPrestamo aMeter=new EquipoBasicoPrestamo(nuevo,cantidadEquipoBasicoSeleccionada,tipoPrestamoSeleccionado);
+           listaEquiposBasicos=getListaEquiposBasicos();
+           listaEquiposBasicos.add(aMeter);
+            //PrestamoEquipo pe=new PrestamoEquipo(Integer.parseInt(codigoUsuarioPrestamo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
+            //PrestamoUsuario pu=new PrestamoUsuario(Integer.parseInt(codigoEquipo),new java.sql.Date(Calendar.getInstance().getTime().getTime()),null,tipoPrestamoSeleccionado);
+            //services.registrarNuevoPrestamo(pe,pu);
             
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Succes","Se ha registrado el préstamo con éxito"));
+            //falta actualizar el estado del equipo a prestado
+        }
+        catch (ServicesException ex) { //ServicesException
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
+        }
         
     }
     
     
     public void accionCambiarTipo(){
+        
         if (tipoEquipo.equals("Codificado")){
             codificado=true;
             noCodificado=false;
             
         }
-        else if(tipoEquipo.equals("NO Codificado")){
+        else if(tipoEquipo.equals("No Codificado")){
             codificado=false;
             noCodificado=true;
         }
@@ -139,6 +165,21 @@ public class ServiciosPrestamosBean implements Serializable{
             estudianteExiste=false;
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Error",ex.getMessage()));
         }
+    }
+    
+    /**
+     * @param codigo codigo de usuario a quien se le va a realizar un prestamo
+     */
+    public void setCodigoUsuarioPrestamo(String codigo){
+        
+        this.codigoUsuarioPrestamo = codigo;
+    }
+    
+    /**
+     * @return codigo del usuario a quien se le realiza el prestamo
+     */
+    public String getCodigoUsuarioPrestamo(){
+        return codigoUsuarioPrestamo;
     }
     
     /**
@@ -306,5 +347,97 @@ public class ServiciosPrestamosBean implements Serializable{
      */
     public void setNombresTipoPrestamo(List<String> nombresTipoPrestamo) {
         this.nombresTipoPrestamo = nombresTipoPrestamo;
+    }
+
+    /**
+     * @return the listaEquipos
+     */
+    public List<EquipoPrestamo> getListaEquipos() {
+        if(listaEquipos==null){
+            listaEquipos=new ArrayList<EquipoPrestamo>();
+        }
+        return listaEquipos;
+    }
+
+    /**
+     * @param listaEquipos the listaEquipos to set
+     */
+    public void setListaEquipos(List<EquipoPrestamo> listaEquipos) {
+        this.listaEquipos = listaEquipos;
+    }
+
+    /**
+     * @return the listaEquiposBasicos
+     */
+    public List<EquipoBasicoPrestamo> getListaEquiposBasicos() {
+        if(listaEquiposBasicos==null){
+            listaEquiposBasicos=new ArrayList<EquipoBasicoPrestamo>();
+        }
+        return listaEquiposBasicos;
+    }
+
+    /**
+     * @param listaEquiposBasicos the listaEquiposBasicos to set
+     */
+    public void setListaEquiposBasicos(List<EquipoBasicoPrestamo> listaEquiposBasicos) {
+        this.listaEquiposBasicos = listaEquiposBasicos;
+    }
+
+    /**
+     * @return the equipoSeleccionado
+     */
+    public EquipoPrestamo getEquipoSeleccionado() {
+        return equipoSeleccionado;
+    }
+
+    /**
+     * @param equipoSeleccionado the equipoSeleccionado to set
+     */
+    public void setEquipoSeleccionado(EquipoPrestamo equipoSeleccionado) {
+        this.equipoSeleccionado = equipoSeleccionado;
+    }
+
+
+
+    /**
+     * @return the cantidadEquipoBasicoSeleccionada
+     */
+    public int getCantidadEquipoBasicoSeleccionada() {
+        return cantidadEquipoBasicoSeleccionada;
+    }
+
+    /**
+     * @param cantidadEquipoBasicoSeleccionada the cantidadEquipoBasicoSeleccionada to set
+     */
+    public void setCantidadEquipoBasicoSeleccionada(int cantidadEquipoBasicoSeleccionada) {
+        this.cantidadEquipoBasicoSeleccionada = cantidadEquipoBasicoSeleccionada;
+    }
+
+    /**
+     * @return the prestamoEquipoBasicoSeleccionado
+     */
+    public EquipoBasicoPrestamo getPrestamoEquipoBasicoSeleccionado() {
+        return prestamoEquipoBasicoSeleccionado;
+    }
+
+    /**
+     * @param prestamoEquipoBasicoSeleccionado the prestamoEquipoBasicoSeleccionado to set
+     */
+    public void setPrestamoEquipoBasicoSeleccionado(EquipoBasicoPrestamo prestamoEquipoBasicoSeleccionado) {
+        this.prestamoEquipoBasicoSeleccionado = prestamoEquipoBasicoSeleccionado;
+    }
+
+    /**
+     * @return the tipoPrestamoSeleccionadoDos
+     */
+    public String getTipoPrestamoSeleccionadoDos() {
+        return tipoPrestamoSeleccionadoDos;
+    }
+
+    /**
+     * @param tipoPrestamoSeleccionadoDos the tipoPrestamoSeleccionadoDos to set
+     */
+    public void setTipoPrestamoSeleccionadoDos(String tipoPrestamoSeleccionadoDos) {
+        this.tipoPrestamoSeleccionadoDos = tipoPrestamoSeleccionadoDos;
     }
 }

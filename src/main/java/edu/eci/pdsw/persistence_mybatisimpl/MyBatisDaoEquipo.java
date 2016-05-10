@@ -55,6 +55,7 @@ public class MyBatisDaoEquipo implements DaoEquipo{
     @Override
     public Equipo loadEquipoBySerial(int serial) throws PersistenceException{
         Equipo eq=emap.loadEquipoBySerial(serial);
+        
         if(eq==null){
             throw new PersistenceException("El equipo con serial"+serial+" no se encuentra registrado en la base de datos");
         }

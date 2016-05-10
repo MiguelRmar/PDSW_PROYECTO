@@ -109,7 +109,8 @@ public class Services {
         Equipo ans=null;
         try{
             df.beginSession();
-            ans =df.getDaoEquipo().loadEquipoBySerial(serial);    
+            ans =df.getDaoEquipo().loadEquipoBySerial(serial);  
+            
         }catch(PersistenceException e){
             throw new ServicesException(e,e.getLocalizedMessage());
         }finally{
