@@ -15,7 +15,7 @@
         <h:form id="form0">
                 <p:layout >
                     <p:layoutUnit position="north">
-                        <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
+                        <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
                             <p:panelGrid columns="2">
                                 <h:outputLabel value="id:" />
                                 <h:outputText value="#{Equipos.id}"/>
@@ -23,19 +23,21 @@
                                 <h:outputText value="#{Equipos.nombre}"/>
                                 <h:outputLabel value="Correo:" />
                                 <h:outputText value="#{Equipos.correo}"/>
+                                <h:outputLabel value="Roles:" />
+                                <h:outputText value="#{Equipos.roles}"/>
                             </p:panelGrid>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
                         <p:panel style="width:200px;border: 0">
                             <h:form>
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
+                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Equipos.limpiarPaginaRegistrarUnEquipo()}" ajax="false" immediate="true" update="form0"/>
                             </h:form>
                         </p:panel>
                     </p:layoutUnit>
@@ -167,12 +169,10 @@
                     <h:outputLabel value="Estado: " />
                     <p:selectOneMenu value="#{Equipos.estadoEquipo}" required="true" id="estadoEquipo" style="width:225px">
                             <p:ajax listener="#{Equipos.onEstadoChange}" update="subEstadoEquipo" />
-                            <f:selectItem itemLabel="Seleccione estado" itemValue="" noSelectionOption="true"/>
-                            <f:selectItems value="#{Equipos.estados}"/> 
+                            <f:selectItems value="#{Equipos.estados}" /> 
                     </p:selectOneMenu>
                     <h:outputLabel value="Sub estado: " />
                     <p:selectOneMenu value="#{Equipos.subEstadoEquipo}" required="true" id="subEstadoEquipo" style="width:225px">
-                           <f:selectItem itemLabel="Seleccione Subestado" itemValue="" noSelectionOption="true" />
                            <f:selectItems value="#{Equipos.subestados}" />
                     </p:selectOneMenu>
                     <h:outputLabel value="Proveedor: " />
@@ -234,7 +234,7 @@
                     <h:outputLabel value="Nueva cantidad: ">
                         <p:tooltip value="tenga en cuenta que si por ejemplo ingresa una cantidad de 20 y antes tenia una cantidad de 10 items, en el sistema quedará registrado como cantidad de 20"/>
                     </h:outputLabel>
-                    <p:spinner id="step" value="#{Equipos.cantidadEquipoBasicoAactualizar}" stepFactor="1" required="true"/>
+                    <p:spinner id="step" value="#{Equipos.cantidadEquipoBasicoAactualizar}" stepFactor="1" required="true" min="0"/>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Actualizar equipo basico" actionListener="#{Equipos.accionBotonActualizarEquipoBasico()}" process="@this,panelGrid24" update=":form2;:form0:equiposbasicos" ajax="false"/>

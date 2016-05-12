@@ -17,7 +17,7 @@
             <p:panel style="height:850px" > 
                 <p:layout>
                     <p:layoutUnit position="north">
-                        <p:panel header="Datos de usuario" style="height:150px">
+                        <p:panel header="Datos de usuario" style="height:200px">
                            
                             <p:panelGrid columns="2">
                                 <h:outputLabel value="id:" />
@@ -26,19 +26,21 @@
                                 <h:outputText value="#{Equipos.nombre}"/>
                                 <h:outputLabel value="Correo:" />
                                 <h:outputText value="#{Equipos.correo}"/>
+                                <h:outputLabel value="Roles:" />
+                                <h:outputText value="#{Equipos.roles}"/>
                             </p:panelGrid>
                             
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
                         <p:panel style="width:200px">
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
+                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="/laboratorista/registrarunprestamo"/>
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="/laboratorista/registrarunadevolucion"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="/laboratorista/registrarunprestamo"/>
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center" visible="false" >

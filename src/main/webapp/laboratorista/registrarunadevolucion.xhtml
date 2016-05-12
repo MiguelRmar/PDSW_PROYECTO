@@ -15,7 +15,7 @@
             <p:focus context="panelCodigoUsuario"/>
                 <p:layout>
                     <p:layoutUnit position="north">
-                        <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
+                        <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
                            
                             <p:panelGrid columns="2">
                                 <h:outputLabel value="id:" />
@@ -24,32 +24,33 @@
                                 <h:outputText value="#{Equipos.nombre}"/>
                                 <h:outputLabel value="Correo:" />
                                 <h:outputText value="#{Equipos.correo}"/>
+                                <h:outputLabel value="Roles:" />
+                                <h:outputText value="#{Equipos.roles}"/>
                             </p:panelGrid>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="west">
 
                         <p:panel style="width:220px">
-                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
+                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" actionListener="#{Devolucion.limpiarPaginaRegistrarUnaDevolucion()}" ajax="false" immediate="true" update="form0"/>
                             <br/>
                             <br/>
-                            <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo" immediate="true"/>
+                            <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center">
-                        <p:panel  header = "Equipo" style="height: 150px" id="panelCodigoUsuario">
-                            <p:panelGrid columns="6">
-                                <h:form>
--                                <p:defaultCommand target="botonEnviar"/>
+                        <p:panel  header = "Equipo" id="panelCodigoUsuario">
+                            <h:form>
+                            <p:defaultCommand target="botonEnviar" />
+                            <p:panelGrid columns="2">    
                                 <h:outputLabel value="Serial: " />
                                 <h:inputText value="#{Devolucion.serialADevolver}" />
-                                <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update=":devo_form" id="botonEnviar"/>                                                                                                                      
-                                 </h:form>
-                            </p:panelGrid> 
-
+                            </p:panelGrid>
+                            <br/>
+                            <p:commandButton value ="Enviar" actionListener="#{Devolucion.accionBuscarDevolucion()}" update=":devo_form" id="botonEnviar"/>                                                                                                                      
                             <h:form id="devo_form1" rendered="#{Devolucion.yaBusqueEquipoADevolver}">
                             <br/>
                             <h:outputText id="value1" value="#{Devolucion.textoSalidaEquipoADevolver}"/>
@@ -58,12 +59,10 @@
                             <h:outputText value ="#{Devolucion.usuarioDevolucion.nombre}" rendered="#{Devolucion.serialDevolucionEncontrado}" style= " height: 150px" />   
                             <br/>
                             </h:form>
+                            </h:form>
                         <p:commandButton value="Confirmar devolución" rendered="#{Devolucion.serialDevolucionEncontrado}" actionListener="#{Devolucion.accionRealizarDevolucion()}" update="devo_form"/>
                         </p:panel> 
-                        <br/>
-                        <br/>
-                        <br/>
-                        <p:panel header ="Equipos Básicos" style="height: 150px">
+                        <p:panel header ="Equipos Básicos" >
                             <p:panelGrid columns="6" >
                                 <h:outputLabel value="Código Estudiante:" />
                                 <h:inputText value="#{Devolucion.condigoEstudianteBasicos}"/>
@@ -73,10 +72,9 @@
                                     <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
                                 </p:selectOneMenu>
                                 <h:outputLabel value="Número de items:" />
-                                <h:inputText value="#{Devolucion.cantidadBasicaDevuelta}"/>
-                                
+                                <p:spinner value="#{Devolucion.cantidadBasicaDevuelta}" stepFactor="1" required="true" min="1"/>
                             </p:panelGrid>
-                            
+                            <br/>
                             <p:commandButton value="Confirmar devolución" action="#{Devolucion.accionRealizarDevolucionBasica()}" update="devo_form"/>
                             
                         </p:panel>

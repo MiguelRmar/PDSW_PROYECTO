@@ -59,12 +59,12 @@ public class ServiciosPrestamosBean implements Serializable{
     private List<EquipoBasicoPrestamo> listaEquiposBasicos;
     private EquipoPrestamo equipoSeleccionado;
     private EquipoBasicoPrestamo prestamoEquipoBasicoSeleccionado;
-    private int cantidadEquipoBasicoSeleccionada;
+    private int cantidadEquipoBasicoSeleccionada=1;
     private String  tipoPrestamoSeleccionadoDos; 
     
     
     public void limpiarPaginaRegistrarUnPrestamo(){
-        cantidadEquipoBasicoSeleccionada=0;
+        cantidadEquipoBasicoSeleccionada=1;
         equipoSeleccionado=null;
         prestamoEquipoBasicoSeleccionado=null;
         listaEquipos= new ArrayList<EquipoPrestamo>();

@@ -62,7 +62,7 @@ public class ServiciosDevolucionesBean implements Serializable{
     //datos para una devolucion de un equipo basico
     private String condigoEstudianteBasicos;
     private String nombreEquipoBasicoDevolver;
-    private int cantidadBasicaDevuelta;
+    private int cantidadBasicaDevuelta=1;
     private Usuario usuarioDevolucionBasico;
     
     private HashMap<String, String> nombresEquiposBasicos;
@@ -87,7 +87,7 @@ public class ServiciosDevolucionesBean implements Serializable{
     public void limpiarDevolucionBasica(){
         condigoEstudianteBasicos = null;
         nombreEquipoBasicoDevolver = null;
-        cantidadBasicaDevuelta = 0;
+        cantidadBasicaDevuelta = 1;
         usuarioDevolucionBasico = null;
     }
     /**
@@ -105,10 +105,11 @@ public class ServiciosDevolucionesBean implements Serializable{
         try {
             setUsuarioDevolucion(null);
             Set<Usuario> usuarios = se.loadUsuarios();
+            int serial=Integer.parseInt(getSerialADevolver());
             for (Usuario u : usuarios) {
                 Set<PrestamoUsuario> prestamos = u.getPrestamos();
                 for (PrestamoUsuario p : prestamos) {
-                    if (p.getEquipo_serial() == Integer.parseInt(getSerialADevolver()) && p.getFechaVencimiento() == null) {
+                    if (p.getEquipo_serial() == serial && p.getFechaVencimiento() == null) {
                         setUsuarioDevolucion(u);
                         setSerialDevolucionEncontrado(true);
                         setSerialDevolucionNoEncontrado(false);
@@ -122,10 +123,16 @@ public class ServiciosDevolucionesBean implements Serializable{
                 setTextoSalidaEquipoADevolver("No fue encontrado un usuario con el presente equipo  " + getSerialADevolver() + " en prestamo ");
             }
             setYaBusqueEquipoADevolver(true);
-        } catch (ServicesException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "Ocurrio un error inesperado"));
+            
+        }
+        catch(NumberFormatException ex){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "El serial "+serialADevolver+" no esta permitido, debe ser un numero positivo"));
             RequestContext context = RequestContext.getCurrentInstance();
-            Logger.getLogger(ServiciosDevolucionesBean.class.getName()).log(Level.SEVERE, null, ex);
+            setTextoSalidaEquipoADevolver("");
+        }
+        catch (ServicesException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error", "Ocurrio un error inemin=\"0\"erado"));
+            RequestContext context = RequestContext.getCurrentInstance();
         }
     }
     

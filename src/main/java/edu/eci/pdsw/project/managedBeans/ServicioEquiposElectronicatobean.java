@@ -106,6 +106,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private String id;
     private String nombre;
     private String correo;
+    private String roles;
     private Services services;
     private String nombreDeModelo;
     private boolean elModeloYaExiste=false;
@@ -125,8 +126,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int placaEquipo;
     private String marcaEquipo;
     private String descripcionEquipo;
-    private String estadoEquipo;
-    private String subEstadoEquipo;
+    private String estadoEquipo="Activo";
+    private String subEstadoEquipo="En almacén";
     private String proveedorEquipo;
     private Map<String,String> estados;
     private Map<String,String> subestados;
@@ -163,8 +164,8 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         placaEquipo=0;
         marcaEquipo=null;
         descripcionEquipo=null;
-        estadoEquipo=null;
-        subEstadoEquipo=null;
+        estadoEquipo="Activo";
+        subEstadoEquipo="En almacén";
         proveedorEquipo=null;
         nombreEquipoBasico=null;
     }
@@ -657,6 +658,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the subEstadoEquipo
      */
     public String getSubEstadoEquipo() {
+        onEstadoChange();
         return subEstadoEquipo;
     }
 
@@ -896,6 +898,21 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setCantidadEquipoBasicoAactualizar(int cantidadEquipoBasicoAactualizar) {
         this.cantidadEquipoBasicoAactualizar = cantidadEquipoBasicoAactualizar;
+    }
+
+    /**
+     * @return the roles
+     */
+    public String getRoles() {
+        roles= "Laboratorista";
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
       
     

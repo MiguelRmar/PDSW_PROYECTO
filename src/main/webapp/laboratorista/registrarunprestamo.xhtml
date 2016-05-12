@@ -17,28 +17,30 @@
             <p:focus context="panelCodigoUsuario"/>
             <p:layout>
                 <p:layoutUnit position="north">
-                    <p:panel header="Datos de usuario" style="height:150px;background-color: transparent;border: 0;">
+                    <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
                         <p:panelGrid columns="2">
-                            <h:outputLabel value="id:" />
-                            <h:outputText value="#{Equipos.id}"/>
-                            <h:outputLabel value="Nombre:" />
-                            <h:outputText value="#{Equipos.nombre}"/>
-                            <h:outputLabel value="Correo:" />
-                            <h:outputText value="#{Equipos.correo}"/>
-                        </p:panelGrid>  
+                                <h:outputLabel value="id:" />
+                                <h:outputText value="#{Equipos.id}"/>
+                                <h:outputLabel value="Nombre:" />
+                                <h:outputText value="#{Equipos.nombre}"/>
+                                <h:outputLabel value="Correo:" />
+                                <h:outputText value="#{Equipos.correo}"/>
+                                <h:outputLabel value="Roles:" />
+                                <h:outputText value="#{Equipos.roles}"/>
+                        </p:panelGrid>
                     </p:panel>
                 </p:layoutUnit>
                 
                 <p:layoutUnit position="west">
                     <p:panel style="width:200px; border: 0">
                         <h:form>
-                        <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
+                        <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" actionListener="#{Prestamo.limpiarPaginaRegistrarUnPrestamo()}" ajax="false" immediate="true" update="form0"/>
                         <br/>
                         <br/>
                         <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
                         <br/>
                         <br/>
-                        <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" actionListener="#{Prestamo.limpiarPaginaRegistrarUnPrestamo()}" ajax="false" immediate="true" update="form0"/>
+                        <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
                         </h:form>
                     </p:panel>
                 </p:layoutUnit>
@@ -94,7 +96,7 @@
                                             <f:selectItems value="#{Devolucion.nombresEquiposBasicos}"/> 
                                     </p:selectOneMenu>
                                     <h:outputText value="Cantidad:"/>
-                                    <p:spinner value="#{Prestamo.cantidadEquipoBasicoSeleccionada}" />
+                                    <p:spinner value="#{Prestamo.cantidadEquipoBasicoSeleccionada}" min="1"/>
                                     <h:outputText value="Seleccione tipo préstamo"/>
                                         <p:selectOneMenu value="#{Prestamo.tipoPrestamoSeleccionado}" id="tipoprestamos2" style="width:225px" immediate="true">
                                             <f:selectItem itemLabel="Seleccione tipo préstamo" itemValue="" noSelectionOption="true"/>
