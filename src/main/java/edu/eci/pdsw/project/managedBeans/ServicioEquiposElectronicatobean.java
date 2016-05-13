@@ -326,7 +326,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the nombre
      */
     public String getNombre() {
-        return "Carlos Andres Sanchez Venegas";
+        return "Miguel Angel Rojas Martinez";
     }
 
     /**
@@ -356,7 +356,7 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      * @return the correo
      */
     public String getCorreo() {
-        return "carlos.sanchez-v@mail.escuelaing.edu.co";
+        return "miguel.rojas-ma@mail.escuelaing.edu.co";
     }
 
     /**

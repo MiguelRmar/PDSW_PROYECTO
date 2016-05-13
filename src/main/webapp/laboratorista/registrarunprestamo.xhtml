@@ -125,7 +125,7 @@
                         
                         <p:dataList value="#{Prestamo.listaEquiposBasicos}" var="equiposbasicos" type="ordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
                             <f:facet name="header">
-                                Lista equipos básicos
+                                Lista Herramientas
                             </f:facet>
                             <p:commandLink update=":form0:equipobasicoinfo" oncomplete="PF('equipobasicoinformacion').show()" title="Ver Detalle" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:50px">
                                 <f:setPropertyActionListener value="#{equiposbasicos}" target="#{Prestamo.prestamoEquipoBasicoSeleccionado}" />
