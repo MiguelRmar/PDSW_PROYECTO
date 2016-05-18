@@ -14,7 +14,8 @@
         
         <h:form>
             <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
-            <p:panel style="height:850px" > 
+            <p:panel style="background-image: url(/imagenes/fondoeci.jpg);margin-top:0px;height:600px" >
+           
                 <p:layout>
                     <p:layoutUnit position="north">
                         <p:panel header="Datos de usuario" style="height:200px">
@@ -32,7 +33,9 @@
                             
                         </p:panel>
                     </p:layoutUnit>
+                    
                     <p:layoutUnit position="west">
+                        
                         <p:panel style="width:200px">
                             <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="/laboratorista/registrarunprestamo"/>
                             <br/>
@@ -41,6 +44,9 @@
                             <br/>
                             <br/>
                             <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="/laboratorista/registrarunequipo"/>
+                            <br/>
+                            <br/>
+                            <p:commandButton value="Reportes" rendered="#{loginBean.botonReportes}" action="/laboratorista/reportes"/>
                         </p:panel>
                     </p:layoutUnit>
                     <p:layoutUnit position="center" visible="false" >
