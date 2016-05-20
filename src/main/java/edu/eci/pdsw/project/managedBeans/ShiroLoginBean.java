@@ -139,7 +139,7 @@ this.rememberMe = lembrar;
     /**
      * @param botonReportes the botonReportes to set
      */
-    public void setBotonReportes(boolean botonReeportes) {
+    public void setBotonReportes(boolean botonReportes) {
         this.botonReportes = botonReportes;
     }
 
