@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
@@ -10,11 +8,8 @@
     </h:head>
     
     <h:body> 
-        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>        
         <h:form id="form0">
-            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:defaultCommand target="botonOK" />
-            <p:focus context="panelCodigoUsuario"/>
             <p:layout>
                 <p:layoutUnit position="north">
                     <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
@@ -43,11 +38,19 @@
                         <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
                         <br/>
                         <br/>
-                        <p:commandButton value="Reportes" rendered="#{loginBean.botonReportes}" action="reportes" immediate="true" ajax="false" update="form0"/>
+                        <p:commandButton value="Reportes" rendered="#{loginBean.botonReportes}" action="registrarunequipo"/>
+                        
                         </h:form>
                     </p:panel>
                 </p:layoutUnit>
+                
+                <p:layoutUnit position="center">
+                    <p:panelGrid columns="2" >
+                        <p:commandButton value="Equipos en mora de devolución" rendered="#{loginBean.botonEquiposEnMora}" action="equiposenmora" immediate="true"/>
+                        <p:commandButton value="Tiempo de vida equipos" rendered="#{loginBean.botonTiempoDeVidaEquipos}" action="tiempodevidaequipos" immediate="true"/>
+                    </p:panelGrid>
+                </p:layoutUnit>
             </p:layout>
-        </h:form>
+        </h:form>        
     </h:body>
 </html>

@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+         <title>reportes</title>         
+    </h:head>
+    
+    <h:body> 
+        <p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>        
+        <h:form id="form0">
+            <p:layout>
+                <p:layoutUnit position="north">
+                    <p:panel header="Datos de usuario" style="height:200px;background-color: transparent;border: 0;">
+                        <p:panelGrid columns="2">
+                                <h:outputLabel value="id:" />
+                                <h:outputText value="#{Equipos.id}"/>
+                                <h:outputLabel value="Nombre:" />
+                                <h:outputText value="#{Equipos.nombre}"/>
+                                <h:outputLabel value="Correo:" />
+                                <h:outputText value="#{Equipos.correo}"/>
+                                <h:outputLabel value="Roles:" />
+                                <h:outputText value="#{Equipos.roles}"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="west">
+                    <p:panel style="width:200px; border: 0">
+                        <h:form>
+                        <p:commandButton value="Registrar Un Préstamo" rendered="#{loginBean.botonRegistrarUnPrestamo}" action="registrarunprestamo"  immediate="true"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Registrar Una Devolución" rendered="#{loginBean.botonRegistrarUnaDevolucion}" action="registrarunadevolucion" immediate="true"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Registrar Equipo En Inventario" rendered="#{loginBean.botonRegistrarEquipoEnInventario}" action="registrarunequipo" immediate="true"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Reportes" rendered="#{loginBean.botonReportes}" action="reportesusuario"/>
+                        </h:form>
+                    </p:panel>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <h3>Equipos en mora</h3>
+                    <p:outputLabel value="#{loginBean.isfechaSistema()}"/>
+                    <br/>
+                    <br/>
+                    <h:form>
+                        <p:dataTable id="tbl" var="car" value="#{dataExporterView.cars}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     paginator="true" rows="10" style="margin-bottom:20px">
+ 
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <p:graphicImage name="../imagenes/excel-logo.png" width="24"/>
+                                    <p:dataExporter type="xls" target="tbl" fileName="cars" />
+                                </h:commandLink>
+ 
+                                <h:commandLink>
+                                    <p:graphicImage name="../imagenes/pdf-logo.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+                                </h:commandLink>
+ 
+                                <h:commandLink>
+                                    <p:graphicImage name="../imagenes/csv-logo.png" width="24"/>
+                                    <p:dataExporter type="csv" target="tbl" fileName="cars" />
+                                </h:commandLink>
+ 
+                                <h:commandLink>
+                                    <p:graphicImage name="../imagenes/xml-logo.png" width="24"/>
+                                    <p:dataExporter type="xml" target="tbl" fileName="cars" />
+                                </h:commandLink>
+                            </f:facet>
+ 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Equipo" />
+                                </f:facet>
+                                <h:outputText value="#{car.id}" />
+                            </p:column>
+ 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Valor del Equipo"/>
+                                </f:facet>
+                                <h:outputText value="#{car.year}" />
+                            </p:column>
+ 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="tiempo de mora" />
+                                </f:facet>
+                                <h:outputText value="#{car.brand}" />
+                            </p:column>
+ 
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre Estudiante" />
+                                </f:facet>
+                                <h:outputText value="#{car.color}" />
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Correo Electronico" />
+                                </f:facet>
+                                <h:outputText value="#{car.color}" />
+                            </p:column>
+                        </p:dataTable>
+ 
+                        <h3>Export Page Data Only</h3>
+                        <h:commandLink>
+                            <p:graphicImage name="../imagenes/excel-logo.png" />
+                            <p:dataExporter type="xls" target="tbl" fileName="cars" pageOnly="true"/>
+                        </h:commandLink>
+ 
+                        <h:commandLink>
+                            <p:graphicImage name="../imagenes/pdf-logo.png" />
+                            <p:dataExporter type="pdf" target="tbl" fileName="cars" pageOnly="true" />
+                        </h:commandLink>
+ 
+                        <h:commandLink>
+                            <p:graphicImage name="../imagenes/csv-logo.png" />
+                            <p:dataExporter type="csv" target="tbl" fileName="cars" pageOnly="true" />
+                        </h:commandLink>
+ 
+                        <h:commandLink>
+                            <p:graphicImage name="../imagenes/xml-logo.png" />
+                            <p:dataExporter type="xml" target="tbl" fileName="cars" pageOnly="true" />
+                        </h:commandLink>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </h:form>
+    </h:body>
+</html>

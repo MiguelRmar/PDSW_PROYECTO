@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 @ManagedBean(name = "loginBean")
@@ -25,6 +27,7 @@ private static final Logger log = LoggerFactory.getLogger(ShiroLoginBean.class);
 private String username;
 private String password;
 private Boolean rememberMe;
+private String fechaSistema;
 
 //botonesDisponibles 
 //laboratorista
@@ -32,6 +35,8 @@ private boolean botonRegistrarEquipoEnInventario=false;
 private boolean botonRegistrarUnaDevolucion=false;
 private boolean botonRegistrarUnPrestamo =false;
 private boolean botonReportes =false;
+private boolean botonEquiposEnMora = false;
+private boolean botonTiempoDeVidaEquipos = false;
 
 public ShiroLoginBean() {
 }
@@ -50,6 +55,9 @@ public void doLogin() {
             botonRegistrarEquipoEnInventario=true;
             botonRegistrarUnaDevolucion=true;
             botonRegistrarUnPrestamo=true;
+            botonReportes = true;
+            botonEquiposEnMora =true;
+            botonTiempoDeVidaEquipos = true;
             FacesContext.getCurrentInstance().getExternalContext().redirect("restricted/usuario.xhtml");
         }
         else if (subject.hasRole("administrador")) {
@@ -115,6 +123,23 @@ public void setRememberMe(Boolean lembrar) {
 this.rememberMe = lembrar;
 }
 
+/**
+ * @return fechaSistema
+ */
+public String isfechaSistema(){
+    Calendar fecha = new GregorianCalendar();
+    int año = fecha.get(Calendar.YEAR);
+    int mes = fecha.get(Calendar.MONTH);
+    int dia = fecha.get(Calendar.DAY_OF_MONTH);
+    int hora = fecha.get(Calendar.HOUR_OF_DAY);
+    int minuto = fecha.get(Calendar.MINUTE);
+    int segundo = fecha.get(Calendar.SECOND);
+    
+    fechaSistema = "Fecha: "+String.valueOf(dia)+"/"+String.valueOf(mes+1)+"/"+String.valueOf(año)+"  "+String.valueOf(hora)+":"+String.valueOf(minuto)+":"+String.valueOf(segundo);
+    return fechaSistema;
+   
+}
+
     /**
      * @return the botonRegistrarEquipoEnInventario
      */
@@ -141,6 +166,34 @@ this.rememberMe = lembrar;
      */
     public void setBotonReportes(boolean botonReportes) {
         this.botonReportes = botonReportes;
+    }
+    
+    /**
+     * @return the botonEquiposEnMora
+     */
+    public boolean isBotonEquiposEnMora() {
+        return botonEquiposEnMora;
+    }
+
+    /**
+     * @param botonEquiposEnMora the botonEquiposEnMora to set
+     */
+    public void setBotonEquiposEnMora(boolean botonEquiposEnMora) {
+        this.botonEquiposEnMora = botonEquiposEnMora;
+    }
+    
+    /**
+     * @return the botonTiempoDeVidaEquipos
+     */
+    public boolean isBotonTiempoDeVidaEquipos() {
+        return botonTiempoDeVidaEquipos;
+    }
+
+    /**
+     * @param botonTiempoDeVidaEquipos the botonTiempoDeVidaEquipos to set
+     */
+    public void setBotonTiempoDeVidaEquipos(boolean botonTiempoDeVidaEquipos) {
+        this.botonTiempoDeVidaEquipos = botonTiempoDeVidaEquipos;
     }
 
     /**
