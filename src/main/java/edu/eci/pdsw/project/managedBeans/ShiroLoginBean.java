@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.Calendar;
@@ -28,6 +29,7 @@ private String username;
 private String password;
 private Boolean rememberMe;
 private String fechaSistema;
+private Date fechaPrestamo;  
 
 //botonesDisponibles 
 //laboratorista
@@ -140,6 +142,25 @@ public String isfechaSistema(){
    
 }
 
+/**
+ * @param fechaVenci fecha en la que se vence el plazo de entrega
+ * @return true si el equipo esta en mora deacuerdo a las fechas de prestamo
+ */
+public boolean enMora(Date fechaVenci){
+    Calendar fechaSistemaM = new GregorianCalendar();
+    fechaPrestamo = fechaVenci;
+    int mesSis = fechaSistemaM.get(Calendar.MONTH);
+    int mesVen = fechaVenci.getMonth();
+    
+    if(mesSis > mesVen){
+        return true;
+    }
+    else if(fechaSistemaM.get(Calendar.DAY_OF_MONTH) > fechaVenci.getDay()){
+        return true;
+    }
+    
+    return false;
+}
     /**
      * @return the botonRegistrarEquipoEnInventario
      */

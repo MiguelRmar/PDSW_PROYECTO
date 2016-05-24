@@ -48,7 +48,7 @@
                     <br/>
                     <br/>
                     <h:form>
-                        <p:dataTable id="tbl" var="car" value="#{dataExporterView.cars}"
+                        <p:dataTable id="tbl" var="modelos" value="#{Equipos.filteredListaModelos}"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                      paginator="true" rows="10" style="margin-bottom:20px">
  
@@ -78,7 +78,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Equipo" />
                                 </f:facet>
-                                <h:outputText value="#{car.id}" />
+                                <h:outputText value="#{modelos}" />
                             </p:column>
  
                             <p:column>

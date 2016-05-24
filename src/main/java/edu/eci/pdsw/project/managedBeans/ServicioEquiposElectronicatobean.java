@@ -142,6 +142,9 @@ public class ServicioEquiposElectronicatobean implements Serializable{
     private int cantidadEquipoBasico;
     private EquipoBasico equipoBasicoSeleccionado;
     private int cantidadEquipoBasicoAactualizar;
+    //elementos equipos seleccionados
+    private int cont = 0;
+    private int serialEquipom;
    
     /**
      * deja todos los elementos que se usan en la vista en su estado original
@@ -740,6 +743,13 @@ public class ServicioEquiposElectronicatobean implements Serializable{
         
         this.modeloSeleccionado = modeloSeleccionado;
     }
+    
+    /**
+     * 
+     */
+    public void setSerialModelo(int SerialModelo){
+        
+    }
 
     /**
      * @return the filteredListaModelos
@@ -913,6 +923,36 @@ public class ServicioEquiposElectronicatobean implements Serializable{
      */
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+    
+    /**
+     *Modifica un contador en uno
+     */
+    public void setCont(){
+        this.cont = cont+1;
+    }
+    
+    /**
+     * @return SerialEquipo
+     */
+    public int  isSerialEquipom(){
+        
+        try{
+            Modelo a = modeloSeleccionado;
+            Equipo b = (Equipo) a.getEquipos();
+            serialEquipom = b.getSerial();
+        }
+        catch(Exception e){
+            serialEquipom = 0;
+        }
+        return serialEquipom;
+    }
+    
+    /**
+     * @param serialEquipom serial del equipo 
+     */
+    public void setSerialEquipom(int serialEquipom){
+        this.serialEquipom = serialEquipom;
     }
       
     
